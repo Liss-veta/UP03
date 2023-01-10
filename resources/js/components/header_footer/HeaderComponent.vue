@@ -1,5 +1,5 @@
 <template>
-        <v-card>
+        <v-card style="z-index: 50;">
             <v-layout>
             <v-navigation-drawer
                 expand-on-hover
@@ -16,20 +16,21 @@
                 <v-divider></v-divider>
 
                 <v-list class="h-75 d-flex flex-column align-start justify-center" density="compact" nav>
-                <v-list-item prepend-icon="mdi-folder" title="My Files" value="myfiles" class="w-100"></v-list-item>
-                <v-list-item prepend-icon="mdi-account-multiple" title="Shared with me" value="shared" class="w-100"></v-list-item>
-                <v-list-item prepend-icon="mdi-star" title="Starred" value="starred" class="w-100"></v-list-item>
+                <router-link class="w-100" to="/message"><v-list-item prepend-icon="mdi-chat-processing" title="Сообщения" value="myfiles" class="w-100"></v-list-item></router-link>
+                <router-link class="w-100" to="/news"><v-list-item prepend-icon="mdi-text-box" title="Новости" value="shared" class="w-100"></v-list-item></router-link>
+                <router-link class="w-100" to="/friends"><v-list-item prepend-icon="mdi-account-multiple" title="Друзья" value="starred" class="w-100"></v-list-item></router-link>
                 </v-list>
                 <v-divider></v-divider>
                 <v-list>
-                <v-list-item
-                    prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
+                <router-link to="/profile">
+                    <v-list-item
+                    prepend-avatar="img/avatar.png"
                     title="Sandra Adams"
                     subtitle="sandra_a88@gmail.com"
                 ></v-list-item>
+                </router-link>
                 </v-list>
             </v-navigation-drawer>
-
             <v-main style="height: 100%"></v-main>
             </v-layout>
         </v-card>

@@ -1,23 +1,26 @@
 <template>
     <div class="d-flex justify-center align-center h-100vw">
-        <div class="w-50 h-50vw bg-pink-lighten-4 d-flex align-center">
-            <div class="h-100 d-flex flex-column justify-space-between">
-                <h1 class="pt-8 text-h2 w-100 text-center">Ithiantes</h1>
+        <div class="w-55 h-50vw bg-pink-lighten-4 d-flex align-center">
+            <div class="h-100-log d-flex flex-column justify-space-between">
+                <h1 class="pt-2 pt-sm-14 pt-md-14 pt-lg-14 pt-xl-14 text-h2 w-100 text-center">Ithiantes</h1>
                 <img class="w-90 logo-auth" src="img/logo-gol.png" alt="">
             </div>
             <form class="w-65 d-flex flex-column justify-center">
+                <!-- Input email -->
                 <v-text-field
                     class="w-75 mx-auto"
                     variant="underlined"
                     label="Электронная почта"
                     append-inner-icon="mdi-email"
                 ></v-text-field>
+                <!-- Input name -->
                 <v-text-field
                     class="w-75 mx-auto"
                     variant="underlined"
                     label="Ваше имя"
                     append-inner-icon="mdi-account"
                 ></v-text-field>
+                <!-- Input password -->
                 <v-text-field
                     class="w-75 mx-auto"
                     variant="underlined"
@@ -25,6 +28,7 @@
                     label="Придумайте пароль"
                     append-inner-icon="mdi-lock"
                 ></v-text-field>
+                <!-- Input password confirm -->
                 <v-text-field
                     class="w-75 mx-auto"
                     variant="underlined"
@@ -32,15 +36,16 @@
                     label="Повторите пароль"
                     append-inner-icon="mdi-lock"
                 ></v-text-field>
+                <!-- Checkbox politikal -->
                 <v-checkbox
-                    v-model="ex4"
                     label="Нажимая на кнопку, я соглашаюсь с политикой конфинденциальности"
                     color="indigo-darken-3"
-                    value="indigo-darken-3"
                     class="w-75 mx-auto"
                     hide-details
+                    :model-value="true"
                 ></v-checkbox>
-                <div class="d-flex align-center ma-auto pt-4">
+                <!-- Button -->
+                <div class="w-75 d-flex align-center ma-auto pt-4">
                     <v-btn>
                         Создать
                     </v-btn>
@@ -176,23 +181,71 @@ export default {
 
 <style>
 .w-90{
-    width: 80%;
+    width: 90%;
+}
+.h-100-log{
+    height: 100%;
 }
 .w-65{
     width: 55%;
 }
+.w-55{
+    width: 70%;
+}
 .h-50vw{
-    height: 70vh;
+    height: 70%;
+    justify-content: space-between
 }
 .h-100vw{
     height: 100vh;
 }
 .v-selection-control--inline .v-label {
     font-size: 14px;
+    opacity: 60%;
 }
 .logo-auth{
     object-fit: contain;
-    align-self: flex-end;
-    justify-self: start;
+    align-self: flex-start;
+}
+@media screen and (min-width: 1500px){
+    .w-65{
+        width: 45%;
+    }
+}
+@media screen and (max-width: 1400px){
+    .w-55{
+        width: 80%;
+    }
+}
+@media screen and (max-width: 1000px){
+    .w-55{
+        width: 90%;
+    }
+}
+@media screen and (max-width: 800px){
+    .w-55{
+        width: 100%;
+    }
+}
+@media screen and (max-width: 600px){
+    .logo-auth{
+        display: none;
+    }
+    .h-50vw{
+        flex-direction: column;
+        justify-content: space-evenly;
+        height: 90%;
+    }
+    .h-100-log{
+        height: auto;
+    }
+    .w-65{
+        width: 90%;
+    }
+}
+@media screen and (max-width: 400px){
+    .w-65{
+        width: 100%;
+    }
 }
 </style>

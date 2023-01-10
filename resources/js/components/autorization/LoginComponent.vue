@@ -1,6 +1,6 @@
 <template>
     <div class="d-flex justify-center align-center h-100vw">
-        <div class="w-50 h-50vw bg-pink-lighten-4 d-flex align-center justify-space-between">
+        <div class="w-50 h-50vw bg-pink-lighten-4 d-flex align-center justify-space-between ">
             <div class="h-100 d-flex flex-column justify-space-between">
                 <h1 class="pt-8 text-h2 w-100 text-center">Ithiantes</h1>
                 <img class="w-90 logo-auth" src="img/logo-gol.png" alt="">
@@ -23,7 +23,7 @@
                     <v-btn>
                         Войти
                     </v-btn>
-                    <p>или <router-link to="/login">зарегистрируйтесь</router-link></p>
+                    <p>или <router-link to="/register">зарегистрируйтесь</router-link></p>
                 </div>
             </form>
         </div>
@@ -82,5 +82,5 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 </style>

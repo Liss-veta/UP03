@@ -4,9 +4,9 @@ import RegisterComponent from '../components/autorization/RegisterComponent.vue'
 import LoginComponent from '../components/autorization/LoginComponent.vue';
 // import GetComponent from '../components/GetComponent.vue';
 import DashboardComponent from '../components/autorization/DashboardComponent.vue';
-import AboutView from '../views/about/AboutView.vue';
+import MessageView from '../views/message/MessageView.vue';
 import AdminView from '../views/admin/AdminView.vue';
-import MenuView from '../views/menu/MenuView.vue';
+import ProfileView from '../views/profile/ProfileView.vue';
 
 const router = new createRouter({
     base: "/register",
@@ -17,9 +17,9 @@ const router = new createRouter({
         { path: "/login", component: LoginComponent },
         // { path: "/get", component: GetComponent},
         { path: "/dashboard", component: DashboardComponent },
-        { path: "/about", component: AboutView },
+        { path: "/message", component: MessageView },
         { path: "/admin", component: AdminView },
-        { path: "/menu", component: MenuView }
+        { path: "/profile", component: ProfileView }
     ],
 });
 
