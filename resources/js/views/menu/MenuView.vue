@@ -10,6 +10,10 @@ import FirstSectionComponent from '../../components/MenuComponets/FirstSectionCo
         components:{
             FirstSectionComponent,
         },
+        mounted(){
+            document.title = 'Меню'
+        },
+
         data(){
             return{
 

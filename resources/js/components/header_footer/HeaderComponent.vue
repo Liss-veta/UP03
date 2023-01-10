@@ -1,55 +1,38 @@
 <template>
-    <div>
-        <header id="menu">
-            <div class="d-f_adaptive">
-                <div>
-                    <router-link to="/">
-                        <img src="/img/logo.png" alt="">
-                    </router-link>
-                </div>
+        <v-card>
+            <v-layout>
+            <v-navigation-drawer
+                expand-on-hover
+                rail
+                class="bg-pink-lighten-4 h-100"
+            >
+                <v-list>
+                <v-list-item
+                    prepend-avatar="img/1098360-200 1.png"
+                    title="Ithiantes"
+                ></v-list-item>
+                </v-list>
 
-                <div>
-                    <a class="burger" id="burger" v-on:click="display()">
-                        <img src="img/burger_menu.svg" alt="">
-                    </a>
-                </div>
-            </div>
+                <v-divider></v-divider>
 
-            <ul id="navig">
-                <li id="logo">
-                    <router-link to="/">
-                        <img src="/img/logo.png" alt="">
-                    </router-link>
-                </li>
-                <li><router-link to="/">Главная</router-link></li>
-                <li><router-link to="/menu">Меню</router-link></li>
-                <li v-show="token"><router-link to="">Корзина</router-link></li>
-                <li><router-link to="/about">О нас</router-link></li>
-                <li>
-                    <input type="search" placeholder="Поиск" />
-                    <!-- <img
-                        class="search"
-                        src="img/search.png"
-                        alt=""
-                    /> -->
-                </li>
-                <li>
-                    <router-link v-show="!token" class="register" to="/register"
-                        >Регистрация</router-link
-                    >
-                    <router-link v-show="token" to="/dashboard">{{
-                        this.$store.state.user.name
-                    }}</router-link>
-                </li>
-            </ul>
+                <v-list class="h-75 d-flex flex-column align-start justify-center" density="compact" nav>
+                <v-list-item prepend-icon="mdi-folder" title="My Files" value="myfiles" class="w-100"></v-list-item>
+                <v-list-item prepend-icon="mdi-account-multiple" title="Shared with me" value="shared" class="w-100"></v-list-item>
+                <v-list-item prepend-icon="mdi-star" title="Starred" value="starred" class="w-100"></v-list-item>
+                </v-list>
+                <v-divider></v-divider>
+                <v-list>
+                <v-list-item
+                    prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
+                    title="Sandra Adams"
+                    subtitle="sandra_a88@gmail.com"
+                ></v-list-item>
+                </v-list>
+            </v-navigation-drawer>
 
-
-               
-                <!-- <a class="burger-menu_button" id="burger" v-on:click="display()">
-                    <span class="burger-menu_lines"></span>
-                </a> -->
-        </header>
-    </div>
+            <v-main style="height: 100%"></v-main>
+            </v-layout>
+        </v-card>
 </template>
 
 <script>
@@ -114,112 +97,10 @@ export default {
 </script>
 
 <style lang="css" scoped>
-.d-f_adaptive{
-    display: none;
-}
-.burger{
-    display: none;
-}
-header {
-    margin-top: 30px;
-    margin-bottom: 30px;
-}
-ul {
+.v-navigation-drawer__content{
+    height: 100%;
     display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-}
-img {
-    width: 150px;
-    height: 40px;
-}
-a {
-    color: white;
-    font-family: "Comfortaa", cursive;
-    font-size: 18px;
-}
-li input {
-    height: 44px;
-    width: 400px;
-    background: transparent;
-    border: white 2px solid;
-    border-radius: 13px;
-    color: white;
-    font-family: "Comfortaa", cursive;
-    padding-left: 10px;
-    margin-right: 20px;
-}
-li input::placeholder {
-    color: white;
-}
-.search {
-    position: relative;
-    width: 30px;
-    height: 30px;
-    /* margin-left: -70px; */
-    /* margin-bottom: -10px; */
-    left: -70px;
-    bottom: -10px;
-    z-index: 2;
-}
-button {
-    background: transparent;
-    border: none;
-}
-.register {
-    padding: 10px 30px;
-    border-radius: 12px;
-    border: 2px #af3131 solid;
-    transition: 0.5s;
-}
-.register:hover {
-    background-color: #af3131;
-    color: #212529;
-}
-@media screen and (max-width: 1024px) {
-    ul li a {
-        font-size: 15px;
-    }
-    .adaptive input {
-        width: 30vw;
-    }
-    ul li img {
-        width: 15vw;
-        height: 4vw;
-    }
-    ul li:last-child {
-        padding: 7px 25px;
-    }
-}
-@media screen and (max-width: 768px) {    
-    #logo{
-        display: none;
-    }
-    .burger{
-        display: block;
-        z-index: 10;
-    }
-    .burger img{        
-        width: 44px;
-        height: 44px;
-    }
-    ul{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 5vw;
-        margin-top: 5vw;
-        font-weight: bolder;
-        font-size: 30px;
-    }
-    li input{
-        width: 50vw;
-    }
-    .d-f_adaptive{
-        display: flex;
-        flex-direction: row; 
-        align-items: center;
-        justify-content: space-around;
-    }
+    flex-direction: column;
+    justify-items: space-between;
 }
 </style>

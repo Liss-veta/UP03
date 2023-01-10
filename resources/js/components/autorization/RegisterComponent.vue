@@ -1,6 +1,54 @@
 <template>
-    <div class="background">
-        <div class="form">
+    <div class="d-flex justify-center align-center h-100vw">
+        <div class="w-50 h-50vw bg-pink-lighten-4 d-flex align-center">
+            <div class="h-100 d-flex flex-column justify-space-between">
+                <h1 class="pt-8 text-h2 w-100 text-center">Ithiantes</h1>
+                <img class="w-90 logo-auth" src="img/logo-gol.png" alt="">
+            </div>
+            <form class="w-65 d-flex flex-column justify-center">
+                <v-text-field
+                    class="w-75 mx-auto"
+                    variant="underlined"
+                    label="Электронная почта"
+                    append-inner-icon="mdi-email"
+                ></v-text-field>
+                <v-text-field
+                    class="w-75 mx-auto"
+                    variant="underlined"
+                    label="Ваше имя"
+                    append-inner-icon="mdi-account"
+                ></v-text-field>
+                <v-text-field
+                    class="w-75 mx-auto"
+                    variant="underlined"
+                    type="password"
+                    label="Придумайте пароль"
+                    append-inner-icon="mdi-lock"
+                ></v-text-field>
+                <v-text-field
+                    class="w-75 mx-auto"
+                    variant="underlined"
+                    type="password"
+                    label="Повторите пароль"
+                    append-inner-icon="mdi-lock"
+                ></v-text-field>
+                <v-checkbox
+                    v-model="ex4"
+                    label="Нажимая на кнопку, я соглашаюсь с политикой конфинденциальности"
+                    color="indigo-darken-3"
+                    value="indigo-darken-3"
+                    class="w-75 mx-auto"
+                    hide-details
+                ></v-checkbox>
+                <div class="d-flex align-center ma-auto pt-4">
+                    <v-btn>
+                        Создать
+                    </v-btn>
+                    <p>или <router-link to="/login">войдите в систему</router-link></p>
+                </div>
+            </form>
+        </div>
+        <!-- <div class="form">
             <div style="width: 80%">
                 <router-link to="/"
                     ><img src="img/logo.png" alt=""
@@ -69,7 +117,7 @@
         </div>
         <div class="people">
             <img src="img/people_reg_log.png" alt="" />
-        </div>
+        </div> -->
     </div>
 </template>
 
@@ -126,116 +174,25 @@ export default {
 };
 </script>
 
-<style lang="css" scoped>
-.background {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-end;
-    justify-content: space-around;
-    margin-top: 2vh;
+<style>
+.w-90{
+    width: 80%;
 }
-img {
-    width: 200px;
-    height: 55px;
-    margin-bottom: 25px;
+.w-65{
+    width: 55%;
 }
-.welcome {
-    color: rgba(255, 255, 255, 0.5);
+.h-50vw{
+    height: 70vh;
 }
-h1 {
-    color: white;
-    font-size: 56px;
-    font-family: "Cabin", sans-serif;
+.h-100vw{
+    height: 100vh;
 }
-.form {
-    background: #1d2023;
-    box-shadow: 10px 11px 20px black;
-    border-radius: 20px;
-    width: 600px;
-    height: 900px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-.form p {
-    color: rgba(255, 255, 255, 0.2);
-    font-family: "Cabin", sans-serif;
-    font-size: 16px;
-    margin: 20px 0;
-}
-.form p a {
-    color: #af3131;
-}
-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    margin-top: 20px;
-}
-form div {
-    display: flex;
-    flex-direction: column;
-}
-input {
-    background: transparent;
-    border: 2px #af3131 solid;
-    border-radius: 4px;
-    width: 480px;
-    height: 45px;
-    color: white;
-    font-size: 16px;
-    padding-left: 10px;
-    font-family: "Cabin", sans-serif;
-}
-input::placeholder {
-    /* color: white; */
+.v-selection-control--inline .v-label {
     font-size: 14px;
-    font-family: "Cabin", sans-serif;
 }
-label {
-    color: white;
-    font-size: 16px;
-    font-weight: lighter;
-    font-family: "Cabin", sans-serif;
-    margin-bottom: 7px;
-}
-button {
-    width: 270px;
-    height: 45px;
-    border-radius: 23px;
-    background-color: #af3131;
-    border: none;
-    color: white;
-    font-size: 16px;
-    font-family: "Cabin", sans-serif;
-    font-weight: bolder;
-    cursor: pointer;
-}
-.people img {
-    width: 730px;
-    height: 740px;
-}
-@media screen and (max-width: 1350px) {
-    .people{
-        display: none;
-    }
-}
-@media screen and (max-width: 620px) {
-    .form{
-        width: 100vw;
-    }
-    input{
-        width: 400px;
-    }
-}
-@media screen and (max-width: 420px) {
-    input{
-        width: 300px;
-    }
-    h1{
-        font-size: 40px;
-    }
+.logo-auth{
+    object-fit: contain;
+    align-self: flex-end;
+    justify-self: start;
 }
 </style>

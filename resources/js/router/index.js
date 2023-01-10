@@ -9,7 +9,7 @@ import AdminView from '../views/admin/AdminView.vue';
 import MenuView from '../views/menu/MenuView.vue';
 
 const router = new createRouter({
-    base: "/",
+    base: "/register",
     history: createWebHistory(),
     routes: [
         { path: "/", component: MainView },

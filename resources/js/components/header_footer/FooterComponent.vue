@@ -1,14 +1,8 @@
 <template>
     <div>
-        <footer>
-            <ul>
-                <li>Политика конфедициальности</li>
-                <li>Условия возврата</li>
-                <li>О компании</li>
-                <li class="adaptive"><img src="img/logo.png" alt="" /></li>
-                <li>Соглашени на обработку данных</li>
-                <li>Партнеры</li>
-                <li>Условия сделки</li>
+        <footer class="w-100 border-top">
+            <ul class="d-flex justify-space-around align-center">
+                <li><img src="img/logo.png"/></li>
             </ul>
         </footer>
     </div>
@@ -21,29 +15,8 @@ export default {
     },
 };
 </script>
-
-<style lang="css" scoped>
-ul {
-    height: 200px;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    box-shadow: 0 -4px 30px black;
-}
-ul li {
-    color: white;
-    font-family: "Comfortaa", cursive;
-}
-ul li img {
-    width: 150px;
-    height: 40px;
-}
-@media screen and (max-width: 1439px) {
-    li {
-        display: none;
-    }
-    .adaptive {
-        display: block;
-    }
+<style>
+.border-top{
+    border-top: 1px solid #F8bbd0;
 }
 </style>
