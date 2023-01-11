@@ -1,5 +1,6 @@
 <template>
-        <v-card style="z-index: 50;">
+    <div>
+        <v-card id="navig" style="z-index: 50;">
             <v-layout>
             <v-navigation-drawer
                 expand-on-hover
@@ -34,6 +35,53 @@
             <v-main style="height: 100%"></v-main>
             </v-layout>
         </v-card>
+        <v-card id="navig2" style="z-index: 50;">
+            <v-layout>
+            <v-navigation-drawer
+                v-model="drawer"
+                :rail="rail"
+                permanent
+                temporary
+                class="bg-pink-lighten-4 h-100"
+                @click="rail = false"
+            >
+            <v-list-item
+                    prepend-avatar="img/1098360-200 1.png"
+                    title="Ithiantes"
+                    nav
+                >
+                <template v-slot:append>
+                    <v-btn
+                    variant="text"
+                    icon="mdi-chevron-left"
+                    @click.stop="rail = !rail"
+                    ></v-btn>
+                </template>
+                </v-list-item>
+
+                <v-divider></v-divider>
+
+                <v-list class="h-75 d-flex flex-column align-start justify-center" density="compact" nav>
+                <router-link class="w-100" to="/message"><v-list-item prepend-icon="mdi-chat-processing" title="Сообщения" value="myfiles" class="w-100"></v-list-item></router-link>
+                <router-link class="w-100" to="/news"><v-list-item prepend-icon="mdi-text-box" title="Новости" value="shared" class="w-100"></v-list-item></router-link>
+                <router-link class="w-100" to="/friends"><v-list-item prepend-icon="mdi-account-multiple" title="Друзья" value="starred" class="w-100"></v-list-item></router-link>
+                </v-list>
+                <v-divider></v-divider>
+                <v-list>
+                <router-link to="/profile">
+                    <v-list-item
+                    :prepend-avatar="this.$store.state.avatar"
+                    :title="this.$store.state.user.name"
+                    :subtitle="this.$store.state.user.email"
+                ></v-list-item>
+                </router-link>
+                </v-list>
+            </v-navigation-drawer>
+            <v-main style="height: 100%"></v-main>
+            </v-layout>
+        </v-card>
+    </div>
+
 </template>
 
 <script>
@@ -43,6 +91,8 @@ export default {
             token: "",
             name: "",
             width: window.innerWidth,
+            rail: true,
+            drawer: true,
         };
     },
 
@@ -56,9 +106,14 @@ export default {
     mounted() {
         this.getToken();
         this.getName();
+        this.getAvatar();
+        this.getEmail();
         window.addEventListener("resize", function(){
             let width_window = this.innerWidth;
-
+            if(width_window < 1280){
+                document.getElementById('navig').style.display = 'none'
+                document.getElementById('navig2').style.display = 'block'
+            }
             // console.log(width_window);
             if(width_window >= 768){
                 document.getElementById('navig').style.display = 'flex'
@@ -109,5 +164,11 @@ export default {
     display: flex;
     flex-direction: column;
     justify-items: space-between;
+}
+.navig2{
+    display: none;
+}
+.navig2:hover{
+    cursor: pointer;
 }
 </style>

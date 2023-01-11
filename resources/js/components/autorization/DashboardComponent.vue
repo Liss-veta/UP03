@@ -1,31 +1,25 @@
 <template>
-    <div class="d-f">
-        <div class="all_info">
-            <div class="info_user">
-                <div style="display: flex; flex-direction: row; align-items: flex-end;">
-                    <img
-                        class="avatar"
-                        src="img/no_avatar.jpg"
-                        v-if="
-                            this.$store.state.avatar === 'NULL' ||
-                            this.$store.state.avatar === 'undefined'
-                        "
-                        alt=""
-                    />                
-                    <img
-                        class="avatar"
-                        :src="this.$store.state.avatar"
-                        alt=""
-                        v-else
-                    />
-                    <img
-                        v-on:click="edit = 'show'"
-                        class="edit_avatar"
-                        src="img/Edit Profile.png"
-                        alt=""
-                    />
-                </div>
+    <div class="w-100 d-flex justify-end flex-column">
+        <div class="w-100 bg-grad d-flex flex-column justify-end align-end pb-4">
+            <h2 class="text-h3 mb-2 w-60"><span>{{ this.$store.state.user.name }}</span>, <span>20</span></h2>
+            <h3 class="text-h4 w-60">Astrahan</h3>
+        </div>
+        <div class="d-flex flex-row align-end mt-n16">
+            <img class="avatar" src="img/no_avatar.jpg"
+                v-if="
+                    this.$store.state.avatar === 'NULL' ||
+                    this.$store.state.avatar === 'undefined'"
+                alt=""/>
+            <img class="avatar" :src="this.$store.state.avatar"
+                alt=""  v-else />
+            <img v-on:click="edit = 'show'" class="edit_avatar"
+                src="img/Edit Profile.png" alt="" />
+        </div>
 
+    </div>
+     <div class="d-f">
+        <div class="all_info">
+             <!-- <div class="info_user"> -->
                 <transition name="bounce">
                     <div v-if="edit == 'show'" class="modal_bg">
                         <div class="modal">
@@ -47,7 +41,7 @@
                                     alt=""
                                 />
                                 <img
-                                    class="avatar"
+                                    class="avatar ml-0"
                                     :src="this.$store.state.avatar"
                                     alt=""
                                     v-else
@@ -69,25 +63,19 @@
                     </div>
                 </transition>
 
-                <p>
+                <!-- <p>
                     {{ this.$store.state.user.name }}
                 </p>
                 <p>{{ this.$store.state.user.email }}</p>
-            </div>
-            <div v-on:click="showView('change')" id="changeData" class="click">
-                <p>Изменить данные</p>
-            </div>
-            <div @click.prevent="logout" class="click">
-                <p>Выход</p>
-            </div>
+            </div> -->
         </div>
         <div>
-            <div>
+            <!-- <div>
                 <p class="pagination">
                     <router-link to="/"> Главная </router-link> / Профиль / {{ pagination }}
                 </p>
                 <h2>Профиль</h2>
-            </div>
+            </div> -->
             <div class="info_data">
                 <transition name="slide-fade" mode="out-in">
                     <ChangeComponent v-if="show == 'change'"></ChangeComponent>
@@ -152,18 +140,6 @@ export default {
             this.$emit("avatar");
         },
 
-        logout() {
-            axios.post("/logout").then((res) => {
-                localStorage.removeItem("x_xsrf_token");
-                localStorage.removeItem("name");
-                localStorage.removeItem("email");
-                localStorage.removeItem("id");
-                localStorage.removeItem("password");
-                localStorage.removeItem("adress");
-                this.$router.push("/");
-                // console.log(res);
-            });
-        },
         submitFile() {
             let formData = new FormData();
             formData.append("file", this.file);
@@ -230,7 +206,14 @@ export default {
 };
 </script>
 
-<style lang="css" scoped>
+<style scoped>
+.w-60{
+    width: 67%;
+}
+.bg-grad{
+    height: 300px;
+    background: #7986CB;
+}
 .bounce-enter-active {
     animation: bounce-in 0.5s;
 }
@@ -250,7 +233,7 @@ export default {
 }
 .modal_bg {
     width: 100%;
-    height: 100vh;
+    height: 60vw;
     position: fixed;
     top: 0;
     left: 0;
@@ -261,10 +244,10 @@ export default {
     align-items: center;
 }
 .modal {
+    margin-top: 5%;
+    padding: 20px;
     width: 60%;
-    height: 60vh;
-    border-radius: 15px;
-    border: 4px #af3131 solid;
+    border: 4px #f8bbd0 solid;
     background: #212529;
     display: flex;
     flex-direction: column;
@@ -353,18 +336,20 @@ export default {
     gap: 25px;
 }
 .avatar {
-    width: 150px;
-    height: 150px;
-    border-radius: 100%;
-    margin-top: 25px;
-    border: 5px rgba(255, 255, 255, 0.5) solid;
+    width: 300px;
+    height: 300px;
+    margin-top: -10%;
+    margin-left: 10%;
+    border: 2px rgba(255, 255, 255, 0.5) solid;
+    object-fit: cover;
 }
 .edit_avatar {
     border: none;
     cursor: pointer;
     width: 50px;
     height: 50px;
-    margin-left: -50px;
+    margin-bottom: -20px;
+    margin-left: -30px;
 }
 .info_user p {
     color: white;
@@ -432,7 +417,7 @@ h2 {
         width: 100px;
         height: 100px;
     }
-}  
+}
 @media screen and (max-width: 900px) {
     .d-f{
         flex-direction: column;
@@ -478,6 +463,6 @@ h2 {
     .d-f{
         width: 100%;
     }
-    
+
 }
 </style>

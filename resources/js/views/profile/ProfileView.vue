@@ -1,27 +1,21 @@
 <template>
     <div>
-        <FirstSectionComponent />
+        <DashboardComponent />
     </div>
 </template>
 
 <script>
-import FirstSectionComponent from '../../components/MenuComponets/FirstSectionComponent.vue';
+import DashboardComponent from '../../components/autorization/DashboardComponent.vue';
     export default {
         components:{
-            FirstSectionComponent,
+            DashboardComponent,
         },
         mounted(){
-            document.title = 'Меню'
-        },
-
-        data(){
-            return{
-
-            }
+            document.title = 'Профиль'
         }
     }
 </script>
 
-<style lang="css" scoped>
+<style scoped>
 
 </style>

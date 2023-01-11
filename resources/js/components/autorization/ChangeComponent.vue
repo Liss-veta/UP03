@@ -4,7 +4,7 @@
             <h2>Изенить даные</h2>
             <input v-model="name" type="text" placeholder="Имя" />
             <input v-model="email" type="text" placeholder="Email" />
-            <input v-model="password" type="password" placeholder="Пароль" />
+            <input v-model="password" required type="password" placeholder="Пароль" />
             <button @click.prevent="changeInfoUser">Сохранить</button>
         </form>
     </div>
