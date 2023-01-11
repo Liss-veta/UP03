@@ -11,6 +11,7 @@
                     variant="underlined"
                     label="Электронная почта"
                     append-inner-icon="mdi-email"
+                    v-model="email"
                 ></v-text-field>
                 <v-text-field
                     class="w-75 mx-auto"
@@ -18,9 +19,10 @@
                     type="password"
                     label="Введите пароль"
                     append-inner-icon="mdi-lock"
+                    v-model="password"
                 ></v-text-field>
                 <div class="d-flex align-center ma-auto pt-4">
-                    <v-btn>
+                    <v-btn @click.prevent="login">
                         Войти
                     </v-btn>
                     <p>или <router-link to="/register">зарегистрируйтесь</router-link></p>
@@ -61,12 +63,9 @@ export default {
                             r.config.headers["X-XSRF-TOKEN"]
                         );
                         localStorage.setItem("name", r.data["name"]);
-                        localStorage.setItem("surname", r.data["surname"]);
                         localStorage.setItem("email", r.data["email"]);
                         localStorage.setItem("id", r.data["id"]);
                         localStorage.setItem("avatar", r.data["avatar"]);
-                        localStorage.setItem("adress", r.data["adress"]);
-                        localStorage.setItem("number", r.data["number"]);
                         if (r.data["role"] == 0) {
                             this.$router.push("/dashboard");
                         } else {

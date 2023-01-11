@@ -3,7 +3,7 @@
             v-if="
                 this.$route.path === '/register' ||
                 this.$route.path === '/login' ||
-                this.$route.path === '/admin'
+                this.$route.path === '/'
             "
         ></div>
         <div v-else>
@@ -40,7 +40,7 @@
                         v-if="
                             this.$route.path === '/register' ||
                             this.$route.path === '/login' ||
-                            this.$route.path === '/admin'
+                            this.$route.path === '/'
                         "
                     ></div>
                     <FooterComponentVue v-else></FooterComponentVue>

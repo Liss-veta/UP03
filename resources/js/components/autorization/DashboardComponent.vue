@@ -71,21 +71,11 @@
 
                 <p>
                     {{ this.$store.state.user.name }}
-                    {{ this.$store.state.user.surname }}
                 </p>
                 <p>{{ this.$store.state.user.email }}</p>
             </div>
             <div v-on:click="showView('change')" id="changeData" class="click">
                 <p>Изменить данные</p>
-            </div>
-            <div v-on:click="showView('data_order')" id="orders" class="click">
-                <p>Данные для заказа</p>
-            </div>
-            <div class="click" id="historyOrders">
-                <p>История заказов</p>
-            </div>
-            <div class="click" id="nowOrders">
-                <p>Текущие заказы</p>
             </div>
             <div @click.prevent="logout" class="click">
                 <p>Выход</p>
@@ -166,12 +156,10 @@ export default {
             axios.post("/logout").then((res) => {
                 localStorage.removeItem("x_xsrf_token");
                 localStorage.removeItem("name");
-                localStorage.removeItem("surname");
                 localStorage.removeItem("email");
                 localStorage.removeItem("id");
-                localStorage.removeItem("avatar");
+                localStorage.removeItem("password");
                 localStorage.removeItem("adress");
-                localStorage.removeItem("number");
                 this.$router.push("/");
                 // console.log(res);
             });

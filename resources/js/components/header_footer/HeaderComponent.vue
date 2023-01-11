@@ -24,9 +24,9 @@
                 <v-list>
                 <router-link to="/profile">
                     <v-list-item
-                    prepend-avatar="img/avatar.png"
-                    title="Sandra Adams"
-                    subtitle="sandra_a88@gmail.com"
+                    :prepend-avatar="this.$store.state.avatar"
+                    :title="this.$store.state.user.name"
+                    :subtitle="this.$store.state.user.email"
                 ></v-list-item>
                 </router-link>
                 </v-list>
@@ -83,6 +83,12 @@ export default {
         },
         getName() {
             this.$store.state.user.name = localStorage.getItem("name");
+        },
+        getAvatar() {
+            this.$store.state.avatar = localStorage.getItem("avatar");
+        },
+        getEmail() {
+            this.$store.state.user.email = localStorage.getItem("email");
         },
         display(){
             if(document.getElementById('navig').style.opacity == '1'){

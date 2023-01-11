@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserOutputController extends Controller
 {
@@ -16,25 +17,13 @@ class UserOutputController extends Controller
     {
         $id = $request->input('id');
         $name = $request->input('name');
-        $surname = $request->input('surname');
         $email = $request->input('email');
+        $password = $request->input('password');
 
         DB::table('users')->where('id',$id)->update([
             'name' => $name,
-            'surname' => $surname,
-            'email' => $email
-        ]);
-    }
-
-    public function dataOrder(Request $request)
-    {
-        $id = $request->input('id');
-        $adress = $request->input('adress');
-        $number = $request->input('number');
-
-        DB::table('users')->where('id', $id)->update([
-            'adress' => $adress,
-            'number' => $number
+            'email' => $email,
+            'password' => Hash::make($password)
         ]);
     }
 }

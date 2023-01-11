@@ -12,6 +12,7 @@
                     variant="underlined"
                     label="Электронная почта"
                     append-inner-icon="mdi-email"
+                    v-model="email"
                 ></v-text-field>
                 <!-- Input name -->
                 <v-text-field
@@ -19,6 +20,7 @@
                     variant="underlined"
                     label="Ваше имя"
                     append-inner-icon="mdi-account"
+                    v-model="name"
                 ></v-text-field>
                 <!-- Input password -->
                 <v-text-field
@@ -27,6 +29,7 @@
                     type="password"
                     label="Придумайте пароль"
                     append-inner-icon="mdi-lock"
+                    v-model="password"
                 ></v-text-field>
                 <!-- Input password confirm -->
                 <v-text-field
@@ -35,6 +38,7 @@
                     type="password"
                     label="Повторите пароль"
                     append-inner-icon="mdi-lock"
+                    v-model="password_confirmation"
                 ></v-text-field>
                 <!-- Checkbox politikal -->
                 <v-checkbox
@@ -46,7 +50,7 @@
                 ></v-checkbox>
                 <!-- Button -->
                 <div class="w-75 d-flex align-center ma-auto pt-4">
-                    <v-btn>
+                    <v-btn @click.prevent="register">
                         Создать
                     </v-btn>
                     <p>или <router-link to="/login">войдите в систему</router-link></p>
@@ -131,7 +135,6 @@ export default {
     data() {
         return {
             name: "",
-            surname: "",
             email: "",
             password: "",
             password_confirmation: "",
@@ -148,7 +151,6 @@ export default {
                 axios
                     .post("/register", {
                         name: this.name,
-                        surname: this.surname,
                         email: this.email,
                         password: this.password,
                         password_confirmation: this.password_confirmation,
@@ -156,7 +158,6 @@ export default {
                     .then((r) => {
                         console.log(r);
                         this.name = "";
-                        this.surname = "";
                         this.email = "";
                         this.password = "";
                         this.password_confirmation = "";
@@ -165,12 +166,9 @@ export default {
                             r.config.headers["X-XSRF-TOKEN"]
                         );
                         localStorage.setItem("name", r.data["name"]);
-                        localStorage.setItem("surname", r.data["surname"]);
                         localStorage.setItem("email", r.data["email"]);
                         localStorage.setItem("id", r.data["id"]);
                         localStorage.setItem("avatar", r.data["avatar"]);
-                        localStorage.setItem("adress", r.data["adress"]);
-                        localStorage.setItem("number", r.data["number"]);
                         this.$router.push("/dashboard");
                     });
             });

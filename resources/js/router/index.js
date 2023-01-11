@@ -12,7 +12,7 @@ const router = new createRouter({
     base: "/register",
     history: createWebHistory(),
     routes: [
-        { path: "/", component: MainView },
+        { path: "/", component: RegisterComponent },
         { path: "/register", component: RegisterComponent },
         { path: "/login", component: LoginComponent },
         // { path: "/get", component: GetComponent},
