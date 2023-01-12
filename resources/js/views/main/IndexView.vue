@@ -65,6 +65,8 @@ export default {
             axios.post("/logout").then((res) => {
                 localStorage.removeItem("x_xsrf_token");
                 localStorage.removeItem("name");
+                localStorage.removeItem("avatar");
+                localStorage.removeItem("surname");
                 localStorage.removeItem("email");
                 localStorage.removeItem("id");
                 localStorage.removeItem("password");

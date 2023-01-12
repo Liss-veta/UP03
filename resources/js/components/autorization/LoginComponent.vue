@@ -63,6 +63,7 @@ export default {
                             r.config.headers["X-XSRF-TOKEN"]
                         );
                         localStorage.setItem("name", r.data["name"]);
+                        localStorage.setItem("surname", r.data["surname"]);
                         localStorage.setItem("email", r.data["email"]);
                         localStorage.setItem("id", r.data["id"]);
                         localStorage.setItem("avatar", r.data["avatar"]);

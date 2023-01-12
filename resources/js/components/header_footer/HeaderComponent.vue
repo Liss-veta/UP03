@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-card id="navig" style="z-index: 50;">
+        <v-card id="navig" style="z-index: 51;">
             <v-layout>
             <v-navigation-drawer
                 expand-on-hover
@@ -24,9 +24,14 @@
                 <v-divider></v-divider>
                 <v-list>
                 <router-link to="/profile">
-                    <v-list-item
+                    <v-list-item v-if="this.$store.state.avatar === 'NULL' || this.$store.state.avatar === 'undefined'"
+                    prepend-avatar="img/no_avatar.jpg"
+                    :title="this.$store.state.user.name + ' ' + this.$store.state.user.surname"
+                    :subtitle="this.$store.state.user.email"
+                ></v-list-item>
+                    <v-list-item v-else
                     :prepend-avatar="this.$store.state.avatar"
-                    :title="this.$store.state.user.name"
+                    :title="this.$store.state.user.name + ' ' + this.$store.state.user.surname"
                     :subtitle="this.$store.state.user.email"
                 ></v-list-item>
                 </router-link>
@@ -90,6 +95,7 @@ export default {
         return {
             token: "",
             name: "",
+            surname: "",
             width: window.innerWidth,
             rail: true,
             drawer: true,
@@ -106,24 +112,25 @@ export default {
     mounted() {
         this.getToken();
         this.getName();
+        this.getSurname();
         this.getAvatar();
         this.getEmail();
         window.addEventListener("resize", function(){
             let width_window = this.innerWidth;
-            if(width_window < 1280){
-                document.getElementById('navig').style.display = 'none'
-                document.getElementById('navig2').style.display = 'block'
-            }
+            // if(width_window < 1280){
+            //     document.getElementById('navig').style.display = 'none'
+            //     document.getElementById('navig2').style.display = 'block'
+            // }
             // console.log(width_window);
-            if(width_window >= 768){
-                document.getElementById('navig').style.display = 'flex'
-                document.getElementById('navig').style.opacity = '1'
-            }else{
-                document.getElementById('navig').style.display = 'none'
-                document.getElementById('burger').style.display = 'block'
-                document.getElementById('navig').style.opacity = '0'
-                document.getElementById('burger').style.opacity = '1'
-            }
+            // if(width_window >= 768){
+            //     document.getElementById('navig').style.display = 'flex'
+            //     document.getElementById('navig').style.opacity = '1'
+            // }else{
+            //     document.getElementById('navig').style.display = 'none'
+            //     document.getElementById('burger').style.display = 'block'
+            //     document.getElementById('navig').style.opacity = '0'
+            //     document.getElementById('burger').style.opacity = '1'
+            // }
         }, false);
     },
 
@@ -139,6 +146,9 @@ export default {
         getName() {
             this.$store.state.user.name = localStorage.getItem("name");
         },
+        getSurname() {
+            this.$store.state.user.surname = localStorage.getItem("surname");
+        },
         getAvatar() {
             this.$store.state.avatar = localStorage.getItem("avatar");
         },
@@ -146,29 +156,40 @@ export default {
             this.$store.state.user.email = localStorage.getItem("email");
         },
         display(){
-            if(document.getElementById('navig').style.opacity == '1'){
-                document.getElementById('navig').style.opacity = '0'
-                document.getElementById('navig').style.display = 'none'
-            }else{
-                document.getElementById('navig').style.opacity = '1'
-                document.getElementById('navig').style.display = 'flex'
-            }
+            // if(document.getElementById('navig').style.opacity == '1'){
+            //     document.getElementById('navig').style.opacity = '0'
+            //     document.getElementById('navig').style.display = 'none'
+            // }else{
+            //     document.getElementById('navig').style.opacity = '1'
+            //     document.getElementById('navig').style.display = 'flex'
+            // }
         }
     },
 };
 </script>
 
-<style lang="css" scoped>
+<style scoped>
 .v-navigation-drawer__content{
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-items: space-between;
 }
+.navig{
+    display: block;
+}
 .navig2{
     display: none;
 }
 .navig2:hover{
     cursor: pointer;
+}
+@media screen and (max-width: 1280px){
+    .navig2{
+        display: block;
+    }
+    .navig{
+        display: none;
+    }
 }
 </style>

@@ -3,6 +3,7 @@
         <form>
             <h2>Изенить даные</h2>
             <input v-model="name" type="text" placeholder="Имя" />
+            <input v-model="surname" type="text" placeholder="Имя" />
             <input v-model="email" type="text" placeholder="Email" />
             <input v-model="password" required type="password" placeholder="Пароль" />
             <button @click.prevent="changeInfoUser">Сохранить</button>
@@ -18,6 +19,7 @@ export default {
             id: "",
             avatar: "",
             name: localStorage.getItem("name"),
+            surname: localStorage.getItem("surname"),
             email: localStorage.getItem("email"),
         };
     },
@@ -25,6 +27,7 @@ export default {
     mounted() {
         this.getId();
         this.getName();
+        this.getSurname();
         this.getEmail();
     },
 
@@ -34,6 +37,7 @@ export default {
             this.getId();
             formData.append("id", this.id);
             formData.append("name", this.name);
+            formData.append("surname", this.surname);
             formData.append("email", this.email);
             formData.append("password", this.password);
             axios
@@ -44,11 +48,14 @@ export default {
                 })
                 .then((res) => {
                     localStorage.setItem("name", this.name);
+                    localStorage.setItem("surname", this.surname);
                     localStorage.setItem("email", this.email);
                     localStorage.setItem("password", this.password);
                     this.name = localStorage.getItem("name");
+                    this.surname = localStorage.getItem("surname");
                     this.email = localStorage.getItem("email");
                     this.getName();
+                    this.getSurname();
                     this.getEmail();
                 });
         },
@@ -86,6 +93,10 @@ export default {
 
         getName() {
             this.$store.state.user.name = localStorage.getItem("name");
+        },
+
+        getSurname() {
+            this.$store.state.user.surname = localStorage.getItem("surname");
         },
 
         getEmail() {

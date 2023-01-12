@@ -17,11 +17,13 @@ class UserOutputController extends Controller
     {
         $id = $request->input('id');
         $name = $request->input('name');
+        $surname = $request->input('surname');
         $email = $request->input('email');
         $password = $request->input('password');
 
         DB::table('users')->where('id',$id)->update([
             'name' => $name,
+            'surname' => $surname,
             'email' => $email,
             'password' => Hash::make($password)
         ]);

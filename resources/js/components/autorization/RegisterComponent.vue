@@ -23,13 +23,13 @@
                     v-model="name"
                 ></v-text-field>
                 <!-- Input surname -->
-                <!-- <v-text-field
+                <v-text-field
                     class="w-75 mx-auto"
                     variant="underlined"
                     label="Ваша фамилия"
                     append-inner-icon="mdi-account"
                     v-model="surname"
-                ></v-text-field> -->
+                ></v-text-field>
                 <!-- Input password -->
                 <v-text-field
                     class="w-75 mx-auto"
@@ -160,6 +160,7 @@ export default {
                 axios
                     .post("/register", {
                         name: this.name,
+                        surname: this.surname,
                         email: this.email,
                         password: this.password,
                         password_confirmation: this.password_confirmation,
@@ -167,6 +168,7 @@ export default {
                     .then((r) => {
                         console.log(r);
                         this.name = "";
+                        this.surname = "";
                         this.email = "";
                         this.password = "";
                         this.password_confirmation = "";
@@ -175,6 +177,7 @@ export default {
                             r.config.headers["X-XSRF-TOKEN"]
                         );
                         localStorage.setItem("name", r.data["name"]);
+                        localStorage.setItem("surname", r.data["surname"]);
                         localStorage.setItem("email", r.data["email"]);
                         localStorage.setItem("id", r.data["id"]);
                         localStorage.setItem("avatar", r.data["avatar"]);
