@@ -1,7 +1,7 @@
 <template>
     <div class="w-100 d-flex justify-end flex-column">
         <div class="w-100 bg-grad d-flex flex-column justify-end align-end pb-4">
-            <h2 class="text-h3 mb-2 w-60"><span>{{ this.$store.state.user.name + ' ' + this.$store.state.user.surname}}</span> <span v-if="this.$store.state.user.age != 'NULL'">{{ this.$store.state.user.age }}</span></h2>
+            <h2 class="text-h3 mb-2 w-60"><span>{{ this.$store.state.user.name + ' ' + this.$store.state.user.surname}}</span> <span v-if="this.$store.state.user.age != 'NULL' || this.$store.state.user.age != 'undefined'">{{ this.$store.state.user.age }}</span></h2>
             <h3 class="text-h4 w-60" v-if="this.$store.state.user.city != 'NULL'">{{this.$store.state.user.city}}</h3>
         </div>
         <div class="d-flex flex-row align-end mt-n16">

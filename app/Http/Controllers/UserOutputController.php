@@ -13,6 +13,14 @@ class UserOutputController extends Controller
         return User::all();
     }
 
+    public function index($id){
+        return User::find($id);
+    }
+
+    public function get($id){
+        return User::find($id);
+    }
+
     public function changeInfoUser(Request $request)
     {
         $id = $request->input('id');

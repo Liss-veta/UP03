@@ -3,6 +3,7 @@
 use App\Http\Controllers\AddProductController;
 use App\Http\Controllers\DeleteProductController;
 use App\Http\Controllers\DeleteUser;
+use App\Http\Controllers\FriendsController;
 use App\Http\Controllers\LoadAvatarController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -33,3 +34,9 @@ Route::post('/load-avatar', [LoadAvatarController::class, 'store']);
 Route::post('/changeInfoUser', [UserOutputController::class, 'changeInfoUser']);
 Route::post('/dataOrder', [UserOutputController::class, 'dataOrder']);
 Route::post('/dop_info', [UserOutputController::class, 'dop_info']);
+Route::get("/all_users", [UserOutputController::class, 'all']);
+Route::get('/user/{id}', [UserOutputController::class, 'index']);
+Route::get('/view/{id}', [UserOutputController::class, 'get']);
+Route::post('/addFriend', [FriendsController::class, 'addFriend']);
+
+Route::get('/friends/{id}', [FriendsController::class, 'index']);

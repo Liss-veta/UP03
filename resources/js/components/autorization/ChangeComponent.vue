@@ -16,7 +16,13 @@
             <input v-model="city" type="text" placeholder="Ваш город" />
             <button @click.prevent="dop_info">Отправить</button>
         </form>
+
     </div>
+        <div class="all_users">
+            <div v-for="user in users" :key="user">
+                <router-link :to="{ path: '/user/'+user.id }"><p>{{ user.name + ' ' + user.surname }}</p></router-link>
+            </div>
+        </div>
 </template>
 
 <script>
@@ -30,7 +36,8 @@ export default {
             surname: localStorage.getItem("surname"),
             email: localStorage.getItem("email"),
             age: '',
-            city: ''
+            city: '',
+            users: []
         };
     },
 
@@ -39,6 +46,12 @@ export default {
         this.getName();
         this.getSurname();
         this.getEmail();
+
+        axios.get('/api/all_users')
+            .then(res => {
+                console.log(res.data);
+                this.users = res.data;
+            })
     },
 
     methods: {

@@ -44,17 +44,18 @@
             <v-window class="mt-6 w-76" v-model="tab">
                 <!-- Список друзей -->
                 <v-window-item value="one">
-                    <div class="d-flex pb-6" v-for="index in 10" :key="index">
-                        <row class="px-2 px-sm-4 px-md-4 px-lg-4 px-xl-4 py-1 d-flex align-center border-pink-hov w-100">
+                    <div class="d-flex pb-6" v-for="request in requests" :key="request">
+                        <row class="px-2 px-sm-4 px-md-4 px-lg-4 px-xl-4 py-1 d-flex align-center border-pink-hov w-100" v-if="request.status == 'true'">
                                 <!-- Аватарка друга -->
                                 <!-- Добавить ссылку -->
                                 <v-col cols="2" sm="2" md="1" lg="1" xl="1" >
-                                    <v-avatar image="img/avatar.png" size="50"></v-avatar>
+                                    <v-avatar v-if="request.avatar === 'NULL'" image="img/no_avatar.jpg" size="50" class="mr-2"></v-avatar>
+                                    <v-avatar v-else :image="request.avatar" size="50" class="mr-2"></v-avatar>
                                 </v-col>
                                 <!-- Имя фамилия друга -->
                                 <!-- Добавить ссылку -->
                                 <v-col cols="5" sm="5" md="7" lg="7" xl="7">
-                                    <h4 class="text-xl-h4">Имя Фамилия</h4>
+                                    <h4>{{ request.name + ' ' + request.surname}}</h4>
                                 </v-col>
                                 <!-- Добавить в чс -->
                                 <v-col cols="2.5" sm="3" md="2" lg="2" xl="2">
@@ -73,17 +74,18 @@
                 </v-window-item>
                 <!-- Список заявок в друзья -->
                 <v-window-item value="two">
-                    <div class="d-flex pb-6" v-for="index in 10" :key="index">
-                        <row class="px-4 py-1 d-flex align-center border-pink-hov w-100">
+                    <div class="d-flex pb-6" v-for="request in requests" :key="request">
+                        <row class="px-4 py-1 d-flex align-center border-pink-hov w-100" v-if="request.status == 'false'">
                                 <!-- Аватарка друга -->
                                 <!-- Добавить ссылку -->
                                 <v-col cols="2" sm="2" md="1" lg="1" xl="1">
-                                    <v-avatar image="img/avatar.png" size="50" class="mr-2"></v-avatar>
+                                    <v-avatar v-if="request.avatar === 'NULL'" image="img/no_avatar.jpg" size="50" class="mr-2"></v-avatar>
+                                    <v-avatar v-else :image="request.avatar" size="50" class="mr-2"></v-avatar>
                                 </v-col>
                                 <!-- Имя фамилия друга -->
                                 <!-- Добавить ссылку -->
                                 <v-col cols="7" sm="7"  md="9" lg="9" xl="9">
-                                    <h4>Имя Фамилия</h4>
+                                    <h4>{{ request.name + ' ' + request.surname}}</h4>
                                 </v-col>
                                 <!-- Принять в друзья -->
                                 <v-col cols="3" sm="4"  md="2" lg="2" xl="2">
@@ -127,7 +129,25 @@
     export default {
         data: ()=>({
             tab: null,
+            id: localStorage.getItem("id"),
+            requests: [],
+            // requests_1: []
         }),
+        mounted() {
+            this.friends_request()
+        },
+        methods: {
+            friends_request(){
+                axios.get(`/api/friends/${this.id}`)
+                    .then(res => {
+                        console.log(res.data)
+                            this.requests = res.data;
+                            // this.requests_1 = res.data[1];
+                            // console.log(this.requests_0);
+                            // console.log(this.requests_1);
+                    })
+            }
+        },
     }
 </script>
 

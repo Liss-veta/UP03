@@ -23,7 +23,7 @@ const router = new createRouter({
         { path: "/admin", component: AdminView },
         { path: "/profile", component: ProfileView },
         { path: "/friends", component: FriendsView },
-        { path: "/user/id", component: FriendProfileView}
+        { path: "/user/:id", component: FriendProfileView}
     ],
 });
 
