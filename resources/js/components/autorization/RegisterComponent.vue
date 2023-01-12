@@ -181,6 +181,8 @@ export default {
                         localStorage.setItem("email", r.data["email"]);
                         localStorage.setItem("id", r.data["id"]);
                         localStorage.setItem("avatar", r.data["avatar"]);
+                        localStorage.setItem("age", r.data["age"]);
+                        localStorage.setItem("city", r.data["city"]);
                         this.$router.push("/profile");
                     });
             });

@@ -1,8 +1,8 @@
 <template>
     <div class="w-100 d-flex justify-end flex-column">
         <div class="w-100 bg-grad d-flex flex-column justify-end align-end pb-4">
-            <h2 class="text-h3 mb-2 w-60"><span>{{ this.$store.state.user.name + ' ' + this.$store.state.user.surname}}</span>, <span>20</span></h2>
-            <h3 class="text-h4 w-60">Astrahan</h3>
+            <h2 class="text-h3 mb-2 w-60"><span>{{ this.$store.state.user.name + ' ' + this.$store.state.user.surname}}</span> <span v-if="this.$store.state.user.age != 'NULL'">{{ this.$store.state.user.age }}</span></h2>
+            <h3 class="text-h4 w-60" v-if="this.$store.state.user.city != 'NULL'">{{this.$store.state.user.city}}</h3>
         </div>
         <div class="d-flex flex-row align-end mt-n16">
             <img class="avatar" src="img/no_avatar.jpg"
@@ -121,6 +121,8 @@ export default {
         this.getEmail();
         this.getAvatar();
         this.getId();
+        this.getAge();
+        this.getCity();
         document.title = this.$store.state.user.name;
         this.showView(this.show);
     },
@@ -174,15 +176,26 @@ export default {
             this.$store.state.user.surname = localStorage.getItem("surname");
         },
 
+        getAge() {
+            this.$store.state.user.age = localStorage.getItem("age");
+        },
+
+        getCity() {
+            this.$store.state.user.city = localStorage.getItem("city");
+        },
+
         getEmail() {
             this.$store.state.user.email = localStorage.getItem("email");
         },
+
         getId() {
             this.id = localStorage.getItem("id");
         },
+
         getAvatar() {
             this.$store.state.avatar = localStorage.getItem("avatar");
         },
+
         showView(text) {
             let btns = document.querySelectorAll(".click");
             this.show = text;

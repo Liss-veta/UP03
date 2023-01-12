@@ -67,6 +67,8 @@ export default {
                         localStorage.setItem("email", r.data["email"]);
                         localStorage.setItem("id", r.data["id"]);
                         localStorage.setItem("avatar", r.data["avatar"]);
+                        localStorage.setItem("age", r.data["age"]);
+                        localStorage.setItem("city", r.data["city"]);
                         if (r.data["role"] == 0) {
                             this.$router.push("/dashboard");
                         } else {

@@ -8,7 +8,9 @@ export default createStore({
                 surname: '',
                 email: '',
                 adress: '',
-                number: ''
+                number: '',
+                age: '',
+                city: ''
             }
         }
     },

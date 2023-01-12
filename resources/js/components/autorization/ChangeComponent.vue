@@ -1,12 +1,20 @@
 <template>
     <div class="background">
         <form>
-            <h2>Изенить даные</h2>
+            <h2>Изменить данные</h2>
             <input v-model="name" type="text" placeholder="Имя" />
             <input v-model="surname" type="text" placeholder="Имя" />
             <input v-model="email" type="text" placeholder="Email" />
             <input v-model="password" required type="password" placeholder="Пароль" />
             <button @click.prevent="changeInfoUser">Сохранить</button>
+        </form>
+    </div>
+    <div class="background">
+        <form>
+            <h2>Заполните информацию о себе</h2>
+            <input v-model="age" type="text" placeholder="Введите ваш возраст" />
+            <input v-model="city" type="text" placeholder="Ваш город" />
+            <button @click.prevent="dop_info">Отправить</button>
         </form>
     </div>
 </template>
@@ -21,6 +29,8 @@ export default {
             name: localStorage.getItem("name"),
             surname: localStorage.getItem("surname"),
             email: localStorage.getItem("email"),
+            age: '',
+            city: ''
         };
     },
 
@@ -61,6 +71,28 @@ export default {
 
         },
 
+        dop_info() {
+            let formData = new FormData();
+            this.getId();
+            formData.append("id", this.id);
+            formData.append("age", this.age);
+            formData.append("city", this.city);
+            axios.post("/api/dop_info", formData, {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                })
+                .then((res) => {
+                    localStorage.setItem("age", this.age);
+                    localStorage.setItem("city", this.city);
+                    this.age = localStorage.getItem("age");
+                    this.city = localStorage.getItem("city");
+                    this.getAge();
+                    this.getCity();
+                });
+
+        },
+
         submitFile() {
             let formData = new FormData();
             formData.append("file", this.file);
@@ -96,6 +128,14 @@ export default {
             this.$store.state.user.name = localStorage.getItem("name");
         },
 
+        getAge() {
+            this.$store.state.user.age = localStorage.getItem("age");
+        },
+
+        getCity() {
+            this.$store.state.user.city = localStorage.getItem("city");
+        },
+
         getSurname() {
             this.$store.state.user.surname = localStorage.getItem("surname");
         },
@@ -115,6 +155,7 @@ export default {
     height: auto;
     border-radius: 15px;
     color: white;
+    margin-bottom: 10%;
 }
 h2 {
     font-size: 24px;

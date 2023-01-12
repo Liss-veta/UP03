@@ -70,7 +70,8 @@ export default {
                 localStorage.removeItem("email");
                 localStorage.removeItem("id");
                 localStorage.removeItem("password");
-                localStorage.removeItem("adress");
+                localStorage.removeItem("age");
+                localStorage.removeItem("city");
                 this.$router.push("/");
                 // console.log(res);
             });

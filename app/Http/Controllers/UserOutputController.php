@@ -28,4 +28,16 @@ class UserOutputController extends Controller
             'password' => Hash::make($password)
         ]);
     }
+
+    public function dop_info(Request $request)
+    {
+        $id = $request->input('id');
+        $age = $request->input('age');
+        $city = $request->input('city');
+
+        DB::table('users')->where('id',$id)->update([
+            'age' => $age,
+            'city' => $city
+        ]);        
+    }
 }
