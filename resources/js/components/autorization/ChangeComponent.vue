@@ -58,6 +58,7 @@ export default {
                     this.getSurname();
                     this.getEmail();
                 });
+
         },
 
         submitFile() {
