@@ -73,10 +73,15 @@
                 </v-list>
                 <v-divider></v-divider>
                 <v-list>
-                <router-link to="/profile">
-                    <v-list-item
+                    <router-link to="/profile">
+                    <v-list-item v-if="this.$store.state.avatar === 'NULL' || this.$store.state.avatar === 'undefined'"
+                    prepend-avatar="img/no_avatar.jpg"
+                    :title="this.$store.state.user.name + ' ' + this.$store.state.user.surname"
+                    :subtitle="this.$store.state.user.email"
+                ></v-list-item>
+                    <v-list-item v-else
                     :prepend-avatar="this.$store.state.avatar"
-                    :title="this.$store.state.user.name"
+                    :title="this.$store.state.user.name + ' ' + this.$store.state.user.surname"
                     :subtitle="this.$store.state.user.email"
                 ></v-list-item>
                 </router-link>

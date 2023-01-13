@@ -15,7 +15,6 @@
             <img v-on:click="edit = 'show'" class="edit_avatar"
                 src="img/Edit Profile.png" alt="" />
         </div>
-
     </div>
      <div class="d-f">
         <div class="all_info">

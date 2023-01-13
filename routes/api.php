@@ -40,3 +40,7 @@ Route::get('/view/{id}', [UserOutputController::class, 'get']);
 Route::post('/addFriend', [FriendsController::class, 'addFriend']);
 
 Route::get('/friends/{id}', [FriendsController::class, 'index']);
+Route::post('/friends/accept/{id}', [FriendsController::class, 'accept_friend']);
+Route::post('/friends/delete/{id}', [FriendsController::class, 'delete_friend']);
+Route::post('/friends/block/{id}', [FriendsController::class, 'block_friend']);
+

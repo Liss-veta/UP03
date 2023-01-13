@@ -7,15 +7,15 @@
             >
             <!-- Счетчик количества друзей -->
                 <v-tab class="text-white" link slider-color="pink-lighten-4" value="one">
-                    Мои друзья <v-badge :content="41" color="pink-lighten-4" inline class="ml-6"></v-badge>
+                    Мои друзья <v-badge :content="col_true" color="pink-lighten-4" inline class="ml-6"></v-badge>
                 </v-tab>
                 <!-- Счетчик заявок в друзья -->
                 <v-tab class="text-white" slider-color="pink-lighten-4" value="two">
-                    Заявки в друзья <v-badge :content="+3" color="success" inline class="ml-6"></v-badge>
+                    Заявки в друзья <v-badge :content="col_false" color="success" inline class="ml-6"></v-badge>
                 </v-tab>
                 <!-- Счетчик заявок в друзья -->
                 <v-tab class="text-white" slider-color="pink-lighten-4" value="three">
-                    Черный список <v-badge :content="5" inline class="ml-6"></v-badge>
+                    Черный список <v-badge :content="col_block" inline class="ml-6"></v-badge>
                 </v-tab>
             </v-tabs>
         </div>
@@ -27,15 +27,15 @@
             >
             <!-- Счетчик количества друзей -->
             <v-tab class="text-white" link slider-color="pink-lighten-4" value="one">
-                <v-icon size="40">mdi-account-multiple</v-icon><v-badge :content="41" color="pink-lighten-4" inline class="ml-4"></v-badge>
+                <v-icon size="40">mdi-account-multiple</v-icon><v-badge :content="col_true" color="pink-lighten-4" inline class="ml-4"></v-badge>
             </v-tab>
             <!-- Счетчик заявок в друзья -->
             <v-tab class="text-white" link slider-color="pink-lighten-4" value="two">
-                <v-icon size="40">mdi-account-multiple-plus</v-icon> <v-badge :content="+3" color="success" inline class="ml-4"></v-badge>
+                <v-icon size="40">mdi-account-multiple-plus</v-icon> <v-badge :content="col_false" color="success" inline class="ml-4"></v-badge>
             </v-tab>
             <!-- Счетчик чс -->
             <v-tab class="text-white" link slider-color="pink-lighten-4" value="three">
-                <v-icon size="40">mdi-account-cancel</v-icon> <v-badge :content="5" inline class="ml-4"></v-badge>
+                <v-icon size="40">mdi-account-cancel</v-icon> <v-badge :content="col_block" inline class="ml-4"></v-badge>
             </v-tab>
             </v-tabs>
         </div>
@@ -44,7 +44,34 @@
             <v-window class="mt-6 w-76" v-model="tab">
                 <!-- Список друзей -->
                 <v-window-item value="one">
-                    <div class="d-flex pb-6" v-for="request in requests" :key="request">
+                    <div class="d-flex pb-6" v-for="request in requests_0" :key="request">
+                        <row class="px-2 px-sm-4 px-md-4 px-lg-4 px-xl-4 py-1 d-flex align-center border-pink-hov w-100" v-if="request.status == 'true'">
+                                <!-- Аватарка друга -->
+                                <!-- Добавить ссылку -->
+                                <router-link :to="{ path: '/user/'+request.id_user }"><v-col cols="2" sm="2" md="1" lg="1" xl="1" >
+                                    <v-avatar v-if="request.avatar === 'NULL'" image="img/no_avatar.jpg" size="50" class="mr-2"></v-avatar>
+                                    <v-avatar v-else :image="request.avatar" size="50" class="mr-2"></v-avatar>
+                                </v-col></router-link>
+                                <!-- Имя фамилия друга -->
+                                <!-- Добавить ссылку -->
+                                <v-col cols="5" sm="5" md="7" lg="7" xl="7">
+                                    <router-link :to="{ path: '/user/'+request.id_user }"><h4>{{ request.name + ' ' + request.surname}}</h4></router-link>
+                                </v-col>
+                                <!-- Добавить в чс -->
+                                <v-col cols="2.5" sm="3" md="2" lg="2" xl="2">
+                                    <v-btn class="d-none d-sm-block d-md-block d-lg-block d-xl-block" variant="text" @click.prevent="block_friend(request.id)">Заблокировать</v-btn>
+                                    <v-btn class="d-block d-sm-none d-md-none d-lg-none d-xl-none" variant="outlined" color="pink-lighten-4" icon="mdi-account-cancel">
+                                    </v-btn>
+                                </v-col>
+                                <!-- Удалить из друзей -->
+                                <v-col cols="2.5" sm="2" md="2" lg="2" xl="2" >
+                                    <v-btn class="d-none d-sm-block d-md-block d-lg-block d-xl-block" variant="text" @click.prevent="delete_friend(request.id)">Удалить</v-btn>
+                                    <v-btn class="d-block d-sm-none d-md-none d-lg-none d-xl-none" variant="outlined" color="pink-lighten-4" icon="mdi-trash-can">
+                                    </v-btn>
+                                </v-col>
+                        </row>
+                    </div>
+                    <div class="d-flex pb-6" v-for="request in requests_1" :key="request">
                         <row class="px-2 px-sm-4 px-md-4 px-lg-4 px-xl-4 py-1 d-flex align-center border-pink-hov w-100" v-if="request.status == 'true'">
                                 <!-- Аватарка друга -->
                                 <!-- Добавить ссылку -->
@@ -55,17 +82,17 @@
                                 <!-- Имя фамилия друга -->
                                 <!-- Добавить ссылку -->
                                 <v-col cols="5" sm="5" md="7" lg="7" xl="7">
-                                    <h4>{{ request.name + ' ' + request.surname}}</h4>
+                                    <router-link :to="{ path: '/user/'+request.id_friend }"><h4>{{ request.name + ' ' + request.surname}}</h4></router-link>
                                 </v-col>
                                 <!-- Добавить в чс -->
                                 <v-col cols="2.5" sm="3" md="2" lg="2" xl="2">
-                                    <v-btn class="d-none d-sm-block d-md-block d-lg-block d-xl-block" variant="text">Заблокировать</v-btn>
+                                    <v-btn class="d-none d-sm-block d-md-block d-lg-block d-xl-block" variant="text" @click.prevent="block_friend(request.id)">Заблокировать</v-btn>
                                     <v-btn class="d-block d-sm-none d-md-none d-lg-none d-xl-none" variant="outlined" color="pink-lighten-4" icon="mdi-account-cancel">
                                     </v-btn>
                                 </v-col>
                                 <!-- Удалить из друзей -->
                                 <v-col cols="2.5" sm="2" md="2" lg="2" xl="2" >
-                                    <v-btn class="d-none d-sm-block d-md-block d-lg-block d-xl-block" variant="text">Удалить</v-btn>
+                                    <v-btn class="d-none d-sm-block d-md-block d-lg-block d-xl-block" variant="text" @click.prevent="delete_friend(request.id)">Удалить</v-btn>
                                     <v-btn class="d-block d-sm-none d-md-none d-lg-none d-xl-none" variant="outlined" color="pink-lighten-4" icon="mdi-trash-can">
                                     </v-btn>
                                 </v-col>
@@ -74,7 +101,7 @@
                 </v-window-item>
                 <!-- Список заявок в друзья -->
                 <v-window-item value="two">
-                    <div class="d-flex pb-6" v-for="request in requests" :key="request">
+                    <div class="d-flex pb-6" v-for="request in requests_0" :key="request">
                         <row class="px-4 py-1 d-flex align-center border-pink-hov w-100" v-if="request.status == 'false'">
                                 <!-- Аватарка друга -->
                                 <!-- Добавить ссылку -->
@@ -89,7 +116,7 @@
                                 </v-col>
                                 <!-- Принять в друзья -->
                                 <v-col cols="3" sm="4"  md="2" lg="2" xl="2">
-                                    <v-btn class="d-none d-sm-block d-md-block d-lg-block d-xl-block" variant="text">Принять</v-btn>
+                                    <v-btn class="d-none d-sm-block d-md-block d-lg-block d-xl-block" variant="text" @click.prevent="accept_friend(request.id)">Принять</v-btn>
                                     <v-btn class="d-block d-sm-none d-md-none d-lg-none d-xl-none" variant="outlined" color="pink-lighten-4" icon="mdi-check">
                                     </v-btn>
                                 </v-col>
@@ -99,21 +126,44 @@
                 <!-- Черный список -->
                 <v-window-item value="three">
                     <!-- Цикл перебора списка -->
-                    <div class="d-flex pb-6"  v-for="index in 10" :key="index">
-                        <row class="px-4 py-1 d-flex align-center border-pink-hov w-100">
+                    <div class="d-flex pb-6" v-for="request in requests_0" :key="request">
+                        <row class="px-4 py-1 d-flex align-center border-pink-hov w-100"  v-if="request.status == 'block'">
                                 <!-- Аватарка друга -->
                                 <!-- Добавить ссылку -->
                                 <v-col cols="2" sm="2" md="1" lg="1" xl="1">
-                                    <v-avatar @click="$router.push('/user/id')" image="img/avatar.png" size="50" class="mr-2"></v-avatar>
+                                    <v-avatar v-if="request.avatar === 'NULL'" image="img/no_avatar.jpg" size="50" class="mr-2"></v-avatar>
+                                    <v-avatar v-else :image="request.avatar" size="50" class="mr-2"></v-avatar>
                                 </v-col>
                                 <!-- Имя фамилия друга -->
                                 <!-- Добавить ссылку -->
-                                <v-col cols="7" sm="7" md="9" lg="9" xl="9">
-                                    <router-link to="/user/id"><h4>Имя Фамилия</h4></router-link>
+                                <v-col cols="7" sm="7"  md="9" lg="9" xl="9">
+                                    <h4>{{ request.name + ' ' + request.surname}}</h4>
                                 </v-col>
                                 <!-- Вытащить из чс -->
                                 <v-col cols="3" sm="4" md="2" lg="2" xl="2">
-                                    <v-btn class="d-none d-sm-block d-md-block d-lg-block d-xl-block" variant="text">Разблокировать</v-btn>
+                                    <v-btn class="d-none d-sm-block d-md-block d-lg-block d-xl-block" variant="text" @click.prevent="accept_friend(request.id)">Разблокировать</v-btn>
+                                    <v-btn class="d-block d-sm-none d-md-none d-lg-none d-xl-none" variant="outlined" color="pink-lighten-4" icon="mdi-account-check">
+                                    </v-btn>
+                                </v-col>
+                        </row>
+                    </div>
+                    <!-- Черный список -->
+                    <div class="d-flex pb-6" v-for="request in requests_1" :key="request">
+                        <row class="px-4 py-1 d-flex align-center border-pink-hov w-100"  v-if="request.status == 'block'">
+                                <!-- Аватарка друга -->
+                                <!-- Добавить ссылку -->
+                                <v-col cols="2" sm="2" md="1" lg="1" xl="1">
+                                    <v-avatar v-if="request.avatar === 'NULL'" image="img/no_avatar.jpg" size="50" class="mr-2"></v-avatar>
+                                    <v-avatar v-else :image="request.avatar" size="50" class="mr-2"></v-avatar>
+                                </v-col>
+                                <!-- Имя фамилия друга -->
+                                <!-- Добавить ссылку -->
+                                <v-col cols="7" sm="7"  md="9" lg="9" xl="9">
+                                    <h4>{{ request.name + ' ' + request.surname}}</h4>
+                                </v-col>
+                                <!-- Вытащить из чс -->
+                                <v-col cols="3" sm="4" md="2" lg="2" xl="2">
+                                    <v-btn class="d-none d-sm-block d-md-block d-lg-block d-xl-block" variant="text" @click.prevent="accept_friend(request.id)">Разблокировать</v-btn>
                                     <v-btn class="d-block d-sm-none d-md-none d-lg-none d-xl-none" variant="outlined" color="pink-lighten-4" icon="mdi-account-check">
                                     </v-btn>
                                 </v-col>
@@ -130,28 +180,70 @@
         data: ()=>({
             tab: null,
             id: localStorage.getItem("id"),
-            requests: [],
-            // requests_1: []
+            requests_0: [],
+            requests_1: [],
+            col_true: 0,
+            col_false: 0,
+            col_block: 0
         }),
         mounted() {
             this.friends_request()
+        },
+        updated() {
+            
         },
         methods: {
             friends_request(){
                 axios.get(`/api/friends/${this.id}`)
                     .then(res => {
-                        console.log(res.data)
-                            this.requests = res.data;
-                            // this.requests_1 = res.data[1];
-                            // console.log(this.requests_0);
+                            this.requests_0 = res.data[0];
+                            this.requests_1 = res.data[1];
+
+                            this.col_true = 0;
+                            this.col_false = 0;
+                            this.col_block = 0;
+
+                            // console.log(res.data)
+                            for(let count = 0; res.data.length >= count; count++){
+                                    for(let count1 = 0; res.data[count].length >= count1; count1++){
+                                        if(res.data[count][count1]['status'] == 'true'){
+                                            this.col_true++;
+                                        }
+                                        if(res.data[count][count1]['status'] == 'false'){
+                                            this.col_false++;
+                                        }
+                                        if(res.data[count][count1]['status'] == 'block'){
+                                            this.col_block++;
+                                        }
+                                    }                                
+                            }
+                      // console.log(this.requests_0);
                             // console.log(this.requests_1);
+                    })
+            },
+            accept_friend(id){
+                axios.post(`/api/friends/accept/${id}`)
+                    .then(res =>{
+                        this.friends_request();
+                    })
+            },
+            delete_friend(id){
+                axios.post(`/api/friends/delete/${id}`)
+                    .then(res =>{
+                        this.friends_request();
+                    })
+            },
+            block_friend(id){
+                axios.post(`/api/friends/block/${id}`)
+                    .then(res =>{
+                        this.friends_request();
                     })
             }
         },
     }
 </script>
 
-<style>
+<style scoped>
 .w-80{
     width: 83%;
 }

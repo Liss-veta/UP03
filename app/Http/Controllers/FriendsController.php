@@ -41,4 +41,29 @@ class FriendsController extends Controller
 
         return $arr;
     }
+
+    public function accept_friend($id)
+    {
+        // $friends = Friends::find($id);
+        // $user = $friends->users;
+        // $friends->update([
+        //     'status' => 'true',
+        // ]);
+
+        DB::table('friends')->where('id',$id)->update([
+            'status' => 'true'
+        ]);
+    }
+
+    public function delete_friend($id)
+    {
+        DB::table('friends')->where('id',$id)->delete();
+    }
+
+    public function block_friend($id)
+    {
+        DB::table('friends')->where('id',$id)->update([
+            'status' => 'block'
+        ]);
+    }
 }

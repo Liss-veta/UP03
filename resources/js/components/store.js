@@ -4,6 +4,7 @@ export default createStore({
         return {
             avatar: '',
             user: {
+                id: 0,
                 name: '',
                 surname: '',
                 email: '',
@@ -11,6 +12,14 @@ export default createStore({
                 number: '',
                 age: '',
                 city: ''
+            },
+            check_profile: {
+                name: '',
+                surname: '',
+                email: '',
+                avatar_prof: '',
+                city: '',
+                age: ''
             }
         }
     },

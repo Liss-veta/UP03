@@ -22,7 +22,7 @@
                     <div class="d-flex justify-space-between">
                         <div class="w-10 d-flex justify-space-around">
                             <button>
-                                <img src="img/search.png" alt="">
+                                <img src="../../../../public/img/search.png" alt="">
                             </button>
                             <button  @click.prevent="logout" class="click">
                                 <img src="img/exit.png" alt="">
