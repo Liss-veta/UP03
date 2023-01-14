@@ -20,7 +20,7 @@
     </div>
         <div class="all_users">
             <div v-for="user in users" :key="user">
-                <router-link :to="{ path: '/user/'+user.id }"><p>{{ user.name + ' ' + user.surname }}</p></router-link>
+                <router-link v-if="this.id != user.id" :to="{ path: '/user/'+user.id }"><p>{{ user.name + ' ' + user.surname }}</p></router-link>
             </div>
         </div>
 </template>

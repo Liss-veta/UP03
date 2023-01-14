@@ -5,7 +5,7 @@
                 <!-- Имя Возраст пользователя друга -->
                 <h2 class="text-h3 mb-2 w-60"><span>{{this.$store.state.check_profile.name}}</span>, <span>{{ this.$store.state.check_profile.age }}</span></h2>
                 <!-- Город пользователя -->
-                <h3 class="text-h4 w-60">{{ this.$store.state.check_profile.city }}</h3>
+                <h3 class="text-h4 w-60">{{ user['city'] }}</h3>
             </div>
             <div class="d-flex flex-row align-end">
                 <img class="avatar" src="../../../../public/img/no_avatar.jpg"
@@ -23,6 +23,11 @@
 
 <script>
     export default {
+        data() {
+            return {
+                user: []
+            }
+        },
         mounted(){
             document.title = 'Профиль'
             console.log(this.$store.state.check_profile.avatar)

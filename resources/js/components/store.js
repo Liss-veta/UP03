@@ -12,14 +12,6 @@ export default createStore({
                 number: '',
                 age: '',
                 city: ''
-            },
-            check_profile: {
-                name: '',
-                surname: '',
-                email: '',
-                avatar_prof: '',
-                city: '',
-                age: ''
             }
         }
     },

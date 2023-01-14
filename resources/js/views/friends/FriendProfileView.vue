@@ -3,21 +3,21 @@
         <div class="w-100 d-flex justify-end flex-column">
             <div class="w-100 bg-grad d-flex flex-column justify-end align-end pb-4">
                 <!-- Имя Возраст пользователя друга -->
-                <h2 class="text-h3 mb-2 w-60"><span>{{this.$store.state.check_profile.name}}</span>, <span>{{ this.$store.state.check_profile.age }}</span></h2>
+                <h2 class="text-h3 mb-2 w-60"><span>{{user['name']}}</span>, <span>{{ user['age'] }}</span></h2>
                 <!-- Город пользователя -->
-                <h3 class="text-h4 w-60">{{ this.$store.state.check_profile.city }}</h3>
+                <h3 class="text-h4 w-60">{{ user['city'] }}</h3>
             </div>
             <div class="d-flex flex-row align-end">
                 <img class="avatar" src="../../../../public/img/no_avatar.jpg"
                     v-if="
-                       this.$store.state.check_profile.avatar === 'NULL' ||
-                       this.$store.state.check_profile.avatar === 'undefined'"
+                       user['avatar'] === 'NULL' ||
+                       user['avatar'] === 'undefined'"
                     alt=""/>
-                <img class="avatar" :src="this.$store.state.check_profile.avatar"
+                <img class="avatar" :src="user['avatar']"
                     alt=""  v-else />
             </div>
         </div>
-    <v-btn class="w-25" @click.prevent="addFriend">Добавить в друзья</v-btn>
+    <v-btn class="w-25" id="add" @click.prevent="addFriend">{{ request_status }}</v-btn>    
     </div>
 </template>
 
@@ -26,6 +26,9 @@
         data() {
             return {
                 user: [],
+                id: '', 
+                my_id: localStorage.getItem('id'),
+                request_status: 'Добавить в друзья'
             }
         },
         mounted(){
@@ -39,12 +42,6 @@
                     .then(res =>{
                         this.user = res.data
                         document.title = this.user['name']
-                        this.$store.state.check_profile.name = this.user['name'];
-                        this.$store.state.check_profile.surname = this.user['surname'];
-                        this.$store.state.check_profile.email = this.user['email'];
-                        this.$store.state.check_profile.avatar = this.user['avatar'];
-                        this.$store.state.check_profile.age = this.user['age'];
-                        this.$store.state.check_profile.city = this.user['city'];
                     })
             },
 
@@ -66,14 +63,46 @@
                 )
                 .then(res => {
                     console.log(res);
+                    this.friends_request()
                 })
             },
             friends_request(){
-                axios.get(`/api/friends/${this.id}`)
+                axios.get(`/api/friends/${this.my_id}`)
                     .then(res => {
-                        console.log(res.data)
+                        
                             this.requests_0 = res.data[0];
                             this.requests_1 = res.data[1];
+
+                            if(res.data[0].length == 0){
+                                if(this.user['id'] == res.data[1][0]['id_friend'] || this.user['id'] == res.data[1][0]['id_user']){
+                                if(res.data[1][0]['status'] == 'false'){
+                                    this.request_status = 'Заявка отправлена'                                
+                                }
+
+                                if(res.data[1][0]['status'] == 'true'){
+                                    this.request_status = 'У вас в друзьях'                                
+                                }
+
+                                if(res.data[1][0]['status'] == 'block'){
+                                    this.request_status = 'В черном списке'                                
+                                }
+                            }
+                            }else if(this.user['id'] == res.data[0][0]['id_friend'] || this.user['id'] == res.data[0][0]['id_user']){
+                                    if(res.data[0][0]['status'] == 'false'){
+                                        this.request_status = 'Заявка отправлена'                                
+                                    }
+
+                                    if(res.data[0][0]['status'] == 'true'){
+                                        this.request_status = 'У вас в друзьях'                                
+                                    }
+
+                                    if(res.data[0][0]['status'] == 'block'){
+                                        this.request_status = 'В черном списке'                                
+                                    }
+                                }
+
+                            
+                           
                             // console.log(this.requests_0);
                             // console.log(this.requests_1);
                     })
