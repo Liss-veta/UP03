@@ -2,22 +2,29 @@
     <div class="background">
         <form>
             <h2>Изменить данные</h2>
-            <input v-model="name" type="text" placeholder="Имя" />
-            <input v-model="surname" type="text" placeholder="Имя" />
+            <v-text-field class="w-75" v-model="name" type="text" label="Имя"></v-text-field>
+            <v-text-field class="w-75" v-model="surname" type="text" label="Фамилия"></v-text-field>
+            <v-text-field class="w-75" v-model="email" type="text" label="Электронная почта"></v-text-field>
+            <v-text-field class="w-75" v-model="age" type="text" label="Возраст"></v-text-field>
+            <v-text-field class="w-75" v-model="city" type="text" label="Город"></v-text-field>
+            <v-text-field class="w-75" v-model="password" required type="password" label="Пароль"></v-text-field>
+
+            <!-- <input type="text" placeholder="Имя" />
+            <input v-model="surname" placeholder="Имя" />
             <input v-model="email" type="text" placeholder="Email" />
             <input v-model="password" required type="password" placeholder="Пароль" />
-            <button @click.prevent="changeInfoUser">Сохранить</button>
+            <input v-model="age" type="text" placeholder="Введите ваш возраст" />
+            <input v-model="city" type="text" placeholder="Ваш город" /> -->
+            <button @click.prevent="changeInfoUser"><button style="opasity: 0" @click.prevent="dop_info"></button>Сохранить</button>
         </form>
     </div>
-    <div class="background">
+    <!-- <div class="background">
         <form>
             <h2>Заполните информацию о себе</h2>
-            <input v-model="age" type="text" placeholder="Введите ваш возраст" />
-            <input v-model="city" type="text" placeholder="Ваш город" />
             <button @click.prevent="dop_info">Отправить</button>
         </form>
 
-    </div>
+    </div> -->
         <div class="all_users">
             <div v-for="user in users" :key="user">
                 <router-link v-if="this.id != user.id" :to="{ path: '/user/'+user.id }"><p>{{ user.name + ' ' + user.surname }}</p></router-link>
@@ -35,8 +42,8 @@ export default {
             name: localStorage.getItem("name"),
             surname: localStorage.getItem("surname"),
             email: localStorage.getItem("email"),
-            age: '',
-            city: '',
+            age: localStorage.getItem("age"),
+            city: localStorage.getItem("city"),
             users: []
         };
     },
@@ -160,13 +167,13 @@ export default {
 };
 </script>
 
-<style lang="css" scoped>
+<style scoped>
 .background {
     background: #202428;
-    border: 3px #af3131 solid;
+    border-left: 4px solid #f8bbd0;
+    border-right: 4px solid #f8bbd0;
     width: 60vw;
     height: auto;
-    border-radius: 15px;
     color: white;
     margin-bottom: 10%;
 }
@@ -178,15 +185,14 @@ form {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 80px;
+    gap: 20px;
     margin: 40px 0;
 }
 input {
     width: 80%;
     height: 60px;
     background: #1d2023;
-    border: 2px #af3131 solid;
-    border-radius: 9px;
+    border-bottom: 2px solid #f8bbd0 ;
     color: white;
     font-size: 20px;
     padding-left: 20px;
@@ -207,7 +213,7 @@ button {
     width: 350px;
     height: 45px;
     background: #1d2023;
-    border: 2px #af3131 solid;
+    border: 2px #f8bbd0 solid;
     border-radius: 9px;
     color: white;
     font-size: 16px;
@@ -215,7 +221,7 @@ button {
     transition: 0.5s;
 }
 button:hover {
-    background: #af3131;
+    background: #f8bbd0;
     color: #1d2023;
     cursor: pointer;
 }

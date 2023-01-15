@@ -17,7 +17,7 @@
         </div>
         <div class="w-100 d-flex justify-end">
             <div class="w-60 d-flex justify-space-between">
-                <v-btn variant="outlined" color="pink-lighten-4" class="w-25 mt-n12" id="add" @click.prevent="addFriend">Редактировать профиль</v-btn>
+                <v-btn variant="outlined" color="pink-lighten-4" class="w-25 mt-n12" v-on:click="edit_data = 'show'">Редактировать профиль</v-btn>
                 <div class="w-50 mt-min text-pink-lighten-4 d-flex text-h4 justify-space-around mr-12">
                     <p class="d-flex flex-column align-center">
                         <span>55</span>
@@ -91,11 +91,27 @@
                 <h2>Профиль</h2>
             </div> -->
             <div class="info_data">
+                <transition name="bounce">
+                    <div v-if="edit_data == 'show'" class="modal_bg">
+                        <div class="modal">
+                            <div class="modal_header">
+                                <img
+                                    v-on:click="edit_data = 'none'"
+                                    src="img/Close.png"
+                                    alt=""
+                                />
+                            </div>
+                            <div class="modal_body">
+                                <ChangeComponent v-if="show == 'change'"></ChangeComponent>
+                                <DataOrderComponent
+                                    v-else-if="show == 'data_order'"
+                                ></DataOrderComponent>
+                            </div>
+                        </div>
+                    </div>
+                </transition>
                 <transition name="slide-fade" mode="out-in">
-                    <ChangeComponent v-if="show == 'change'"></ChangeComponent>
-                    <DataOrderComponent
-                        v-else-if="show == 'data_order'"
-                    ></DataOrderComponent>
+
                 </transition>
             </div>
         </div>
@@ -123,6 +139,7 @@ export default {
             avatar: "",
             show: "change",
             pagination: " Изменить данные",
+            edit_data: "none"
         };
     },
 
@@ -293,7 +310,7 @@ export default {
     transition: 0.5s;
 }
 .modal label:hover {
-    background: #af3131;
+    background: #f8bbd0;
     color: #212529;
     font-weight: bold;
 }
@@ -301,7 +318,7 @@ export default {
     width: 40%;
     height: 40px;
     background: transparent;
-    border: 2px #af3131 solid;
+    border: 2px #f8bbd0 solid;
     color: white;
     font-size: 17px;
     font-family: "Comfortaa", serif;
@@ -310,7 +327,7 @@ export default {
     transition: 0.5s;
 }
 .modal button:hover {
-    background: #af3131;
+    background: #f8bbd0;
     color: #212529;
     font-weight: bold;
 }
@@ -328,7 +345,7 @@ export default {
     gap: 1vw;
 }
 .modal_body label {
-    border: 2px #af3131 solid;
+    border: 2px #f8bbd0 solid;
     padding: 15px 50px;
     border-radius: 10px;
 }

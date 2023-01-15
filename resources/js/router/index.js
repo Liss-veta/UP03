@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import MainView from '../views/main/MainView.vue';
+import NewView from '../views/main/NewView.vue';
 import RegisterComponent from '../components/autorization/RegisterComponent.vue';
 import LoginComponent from '../components/autorization/LoginComponent.vue';
 // import GetComponent from '../components/GetComponent.vue';
@@ -17,12 +17,14 @@ const router = new createRouter({
         { path: "/", component: RegisterComponent },
         { path: "/register", component: RegisterComponent },
         { path: "/login", component: LoginComponent },
+        { path: "/login", component: LoginComponent },
         // { path: "/get", component: GetComponent},
         { path: "/dashboard", component: DashboardComponent },
         { path: "/message", component: MessageView },
         { path: "/admin", component: AdminView },
         { path: "/profile", component: ProfileView },
         { path: "/friends", component: FriendsView },
+        { path: "/news", component: NewView },
         { path: "/user/:id", component: FriendProfileView}
     ],
 });

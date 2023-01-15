@@ -1,9 +1,9 @@
 <template>
   <div>
-11111111111111111111111111111111
+    
   </div>
 </template>
-<script lang="ts">
+<script>
 
 export default {
   data() {
@@ -19,6 +19,6 @@ export default {
   },
 };
 </script>
-<style lang="css" scoped>
+<style scoped>
 
 </style>

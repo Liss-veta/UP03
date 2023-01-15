@@ -17,6 +17,9 @@
                 <v-tab class="text-white" slider-color="pink-lighten-4" value="three">
                     Черный список <v-badge :content="col_block" inline class="ml-6"></v-badge>
                 </v-tab>
+                <v-tab class="text-white" slider-color="pink-lighten-4" value="four">
+                    Возможные друзья
+                </v-tab>
             </v-tabs>
         </div>
         <div class="tab-adap2">
@@ -36,6 +39,10 @@
             <!-- Счетчик чс -->
             <v-tab class="text-white" link slider-color="pink-lighten-4" value="three">
                 <v-icon size="40">mdi-account-cancel</v-icon> <v-badge :content="col_block" inline class="ml-4"></v-badge>
+            </v-tab>
+            <!-- Возможные друзья -->
+            <v-tab class="text-white" link slider-color="pink-lighten-4" value="four">
+                <v-icon size="40">mdi-account-question</v-icon>
             </v-tab>
             </v-tabs>
         </div>
@@ -170,6 +177,16 @@
                         </row>
                     </div>
                 </v-window-item>
+                <v-window-item value="four">
+                    <!-- Цикл перебора списка -->
+                    <div class="d-flex pb-6">
+                        <div class="all_users">
+                            <div v-for="user in users" :key="user">
+                                <router-link v-if="this.id != user.id" :to="{ path: '/user/'+user.id }"><p>{{ user.name + ' ' + user.surname }}</p></router-link>
+                            </div>
+                        </div>
+                    </div>
+                </v-window-item>
             </v-window>
             </div>
     </div>
@@ -184,13 +201,19 @@
             requests_1: [],
             col_true: 0,
             col_false: 0,
-            col_block: 0
+            col_block: 0,
+            users: []
         }),
         mounted() {
             this.friends_request()
+            axios.get('/api/all_users')
+            .then(res => {
+                console.log(res.data);
+                this.users = res.data;
+            })
         },
         updated() {
-            
+
         },
         methods: {
             friends_request(){
@@ -215,7 +238,7 @@
                                         if(res.data[count][count1]['status'] == 'block'){
                                             this.col_block++;
                                         }
-                                    }                                
+                                    }
                             }
                       // console.log(this.requests_0);
                             // console.log(this.requests_1);
