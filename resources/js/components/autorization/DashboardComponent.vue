@@ -1,10 +1,10 @@
 <template>
     <div class="w-100 d-flex justify-end flex-column">
         <div class="w-100 bg-grad d-flex flex-column justify-end align-end pb-4">
-            <h2 class="text-h3 mb-2 w-60"><span>{{ this.$store.state.user.name + ' ' + this.$store.state.user.surname}}</span> <span v-if="this.$store.state.user.age != 'NULL' || this.$store.state.user.age != 'undefined'">{{ this.$store.state.user.age }}</span></h2>
+            <h2 class="text-h3 mb-2 w-60"><span>{{ this.$store.state.user.name + ' ' + this.$store.state.user.surname}}</span>, <span v-if="this.$store.state.user.age != 'NULL' || this.$store.state.user.age != 'undefined'">{{ this.$store.state.user.age }}</span></h2>
             <h3 class="text-h4 w-60" v-if="this.$store.state.user.city != 'NULL'">{{this.$store.state.user.city}}</h3>
         </div>
-        <div class="d-flex flex-row align-end mt-n16">
+        <div class="d-flex flex-row align-end">
             <img class="avatar" src="img/no_avatar.jpg"
                 v-if="
                     this.$store.state.avatar === 'NULL' ||
@@ -14,6 +14,21 @@
                 alt=""  v-else />
             <img v-on:click="edit = 'show'" class="edit_avatar"
                 src="img/Edit Profile.png" alt="" />
+        </div>
+        <div class="w-100 d-flex justify-end">
+            <div class="w-60 d-flex justify-space-between">
+                <v-btn variant="outlined" color="pink-lighten-4" class="w-25 mt-n12" id="add" @click.prevent="addFriend">Редактировать профиль</v-btn>
+                <div class="w-50 mt-min text-pink-lighten-4 d-flex text-h4 justify-space-around mr-12">
+                    <p class="d-flex flex-column align-center">
+                        <span>55</span>
+                        <span>друзей</span>
+                    </p>
+                    <p class="d-flex flex-column align-center">
+                        <span>55</span>
+                        <span>друзей</span>
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
      <div class="d-f">
@@ -219,6 +234,9 @@ export default {
 </script>
 
 <style scoped>
+.mt-min {
+    margin-top: -7%;
+}
 .w-60{
     width: 67%;
 }

@@ -17,7 +17,21 @@
                     alt=""  v-else />
             </div>
         </div>
-    <v-btn class="w-25" id="add" @click.prevent="addFriend">{{ request_status }}</v-btn>    
+        <div class="w-100 d-flex justify-end">
+            <div class="w-60 d-flex justify-space-between">
+                <v-btn :variant="but" color="pink-lighten-4" :disabled="check_add" class="w-25 mt-n12" id="add" @click.prevent="addFriend">{{ request_status }}</v-btn>
+                <div class="w-50 text-pink-lighten-4 d-flex text-h4 justify-space-around mr-12 mt-min">
+                    <p class="d-flex flex-column align-center">
+                        <span>55</span>
+                        <span>друзей</span>
+                    </p>
+                    <p class="d-flex flex-column align-center">
+                        <span>55</span>
+                        <span>друзей</span>
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -26,9 +40,11 @@
         data() {
             return {
                 user: [],
-                id: '', 
+                id: '',
                 my_id: localStorage.getItem('id'),
-                request_status: 'Добавить в друзья'
+                request_status: 'Добавить в друзья',
+                check_add: false,
+                but: 'outlined',
             }
         },
         mounted(){
@@ -38,7 +54,7 @@
         },
         methods: {
             getUser(){
-                axios.get(`/api/view/${this.id}`)   
+                axios.get(`/api/view/${this.id}`)
                     .then(res =>{
                         this.user = res.data
                         document.title = this.user['name']
@@ -78,42 +94,52 @@
                                     // console.log(res.data[1][index]);
                                     if(this.user['id'] == res.data[1][index]['id_friend'] || this.user['id'] == res.data[1][index]['id_user']){
                                         if(res.data[1][index]['status'] == 'false'){
-                                            this.request_status = 'Заявка отправлена'                                
+                                            this.request_status = 'Заявка отправлена'
                                         }
 
                                         if(res.data[1][index]['status'] == 'true'){
-                                            this.request_status = 'У вас в друзьях'                                
+                                            this.request_status = 'У вас в друзьях'
                                         }
 
                                         if(res.data[1][index]['status'] == 'block'){
-                                            this.request_status = 'В черном списке'                                
+                                            this.request_status = 'В черном списке'
                                         }
                                     }
                                 }
-                                
+
                             }
 
                             if(res.data[1].length == 0){
                                 for (let index = 0; index < res.data[0].length; index++) {
                                     if(this.user['id'] == res.data[0][index]['id_friend'] || this.user['id'] == res.data[0][index]['id_user']){
                                         if(res.data[0][index]['status'] == 'false'){
-                                            this.request_status = 'Заявка отправлена'                                
+                                            this.request_status = 'Заявка отправлена'
                                         }
 
                                         if(res.data[0][index]['status'] == 'true'){
-                                            this.request_status = 'У вас в друзьях'                                
+                                            this.request_status = 'У вас в друзьях'
                                         }
 
                                         if(res.data[0][index]['status'] == 'block'){
-                                            this.request_status = 'В черном списке'                                
+                                            this.request_status = 'В черном списке'
                                         }
                                     }
                                 }
-                                
                             }
 
-                            
-                           
+                            console.log(this.request_status)
+
+                            if(this.request_status == 'Заявка отправлена' || this.request_status == 'В черном списке' || this.request_status == 'У вас в друзьях'){
+                                this.check_add = true;
+                                this.but = 'tonal';
+                            }
+                            else{
+                                this.check_add = false;
+                                this.but = 'outlined';
+                            }
+
+
+
                             // console.log(this.requests_0);
                             // console.log(this.requests_1);
                     })
@@ -125,6 +151,9 @@
 <style scoped>
 .w-60{
     width: 67%;
+}
+.mt-min{
+    margin-top: -7%
 }
 .bg-grad{
     height: 300px;
