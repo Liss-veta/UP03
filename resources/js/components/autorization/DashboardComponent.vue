@@ -20,8 +20,8 @@
                 <v-btn variant="outlined" color="pink-lighten-4" class="w-25 mt-n12" v-on:click="edit_data = 'show'">Редактировать профиль</v-btn>
                 <div class="w-50 mt-min text-pink-lighten-4 d-flex text-h4 justify-space-around mr-12">
                     <p class="d-flex flex-column align-center">
-                        <span>55</span>
-                        <span>друзей</span>
+                        <span>{{ col_true }}</span>
+                        <span>дру{{ ending }}</span>
                     </p>
                     <p class="d-flex flex-column align-center">
                         <span>55</span>
@@ -139,7 +139,9 @@ export default {
             avatar: "",
             show: "change",
             pagination: " Изменить данные",
-            edit_data: "none"
+            edit_data: "none",
+            col_true: 0,
+            ending: ''
         };
     },
 
@@ -156,6 +158,7 @@ export default {
         this.getCity();
         document.title = this.$store.state.user.name;
         this.showView(this.show);
+        this.friends_request()
     },
 
     computed: {
@@ -246,6 +249,37 @@ export default {
                 }
             });
         },
+
+        friends_request(){
+                axios.get(`/api/friends/${this.id}`)
+                    .then(res => {
+                            this.requests_0 = res.data[0];
+                            this.requests_1 = res.data[1];
+
+                            this.col_true = 0;
+
+                            for (let index = 0; index < res.data.length; index++) {
+                                console.log(res.data[index]);
+                                if(res.data[index] != 0){
+                                    for (let index1 = 0; index1 < res.data[index].length; index1++) {
+                                        if(res.data[index][index1]['status'] == 'true'){
+                                            this.col_true++;
+                                        }                                      
+                                    }
+                                }                              
+                            }
+
+                            if(this.col_true == 1){
+                                this.ending = 'г'
+                            } 
+                            else if(this.col_true > 1 && this.col_true < 5){
+                                this.ending = 'га'
+                            }
+                            else{
+                                this.ending = 'зей'
+                            }
+                    })
+            },
     },
 };
 </script>
