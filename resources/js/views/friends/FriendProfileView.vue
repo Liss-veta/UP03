@@ -92,18 +92,24 @@
                                 }
                                 
                             }
-                            else if(this.user['id'] == res.data[0][0]['id_friend'] || this.user['id'] == res.data[0][0]['id_user']){
-                                if(res.data[0][0]['status'] == 'false'){
-                                    this.request_status = 'Заявка отправлена'                                
-                                }
 
-                                if(res.data[0][0]['status'] == 'true'){
-                                    this.request_status = 'У вас в друзьях'                                
-                                }
+                            if(res.data[1].length == 0){
+                                for (let index = 0; index < res.data[0].length; index++) {
+                                    if(this.user['id'] == res.data[0][index]['id_friend'] || this.user['id'] == res.data[0][index]['id_user']){
+                                        if(res.data[0][index]['status'] == 'false'){
+                                            this.request_status = 'Заявка отправлена'                                
+                                        }
 
-                                if(res.data[0][0]['status'] == 'block'){
-                                    this.request_status = 'В черном списке'                                
+                                        if(res.data[0][index]['status'] == 'true'){
+                                            this.request_status = 'У вас в друзьях'                                
+                                        }
+
+                                        if(res.data[0][index]['status'] == 'block'){
+                                            this.request_status = 'В черном списке'                                
+                                        }
+                                    }
                                 }
+                                
                             }
 
                             
