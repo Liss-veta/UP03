@@ -208,7 +208,7 @@
             this.friends_request()
             axios.get('/api/all_users')
             .then(res => {
-                console.log(res.data);
+                // console.log(res.data);
                 this.users = res.data;
             })
         },
@@ -226,9 +226,9 @@
                             this.col_false = 0;
                             this.col_block = 0;
 
-                            // console.log(res.data)
-                            for(let count = 0; res.data.length >= count; count++){
-                                    for(let count1 = 0; res.data[count].length >= count1; count1++){
+                            console.log(res.data)
+                            for(let count = 0; res.data.length > count; count++){
+                                    for(let count1 = 0; res.data[count].length > count1; count1++){
                                         if(res.data[count][count1]['status'] == 'true'){
                                             this.col_true++;
                                         }
@@ -240,8 +240,8 @@
                                         }
                                     }
                             }
-                      // console.log(this.requests_0);
-                            // console.log(this.requests_1);
+
+
                     })
             },
             accept_friend(id){

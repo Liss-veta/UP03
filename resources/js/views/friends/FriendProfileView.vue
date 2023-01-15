@@ -95,7 +95,6 @@
                             this.col_true = 0;
 
                             for (let index = 0; index < res.data.length; index++) {
-                                console.log(res.data[index]);
                                 if(res.data[index] != 0){
                                     for (let index1 = 0; index1 < res.data[index].length; index1++) {
                                         if(res.data[index][index1]['status'] == 'true'){
