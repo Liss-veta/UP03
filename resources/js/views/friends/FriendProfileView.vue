@@ -69,37 +69,42 @@
             friends_request(){
                 axios.get(`/api/friends/${this.my_id}`)
                     .then(res => {
-                        
+                        console.log(res.data);
                             this.requests_0 = res.data[0];
                             this.requests_1 = res.data[1];
 
                             if(res.data[0].length == 0){
-                                if(this.user['id'] == res.data[1][0]['id_friend'] || this.user['id'] == res.data[1][0]['id_user']){
-                                if(res.data[1][0]['status'] == 'false'){
+                                for (let index = 0; index < res.data[1].length; index++) {
+                                    // console.log(res.data[1][index]);
+                                    if(this.user['id'] == res.data[1][index]['id_friend'] || this.user['id'] == res.data[1][index]['id_user']){
+                                        if(res.data[1][index]['status'] == 'false'){
+                                            this.request_status = 'Заявка отправлена'                                
+                                        }
+
+                                        if(res.data[1][index]['status'] == 'true'){
+                                            this.request_status = 'У вас в друзьях'                                
+                                        }
+
+                                        if(res.data[1][index]['status'] == 'block'){
+                                            this.request_status = 'В черном списке'                                
+                                        }
+                                    }
+                                }
+                                
+                            }
+                            else if(this.user['id'] == res.data[0][0]['id_friend'] || this.user['id'] == res.data[0][0]['id_user']){
+                                if(res.data[0][0]['status'] == 'false'){
                                     this.request_status = 'Заявка отправлена'                                
                                 }
 
-                                if(res.data[1][0]['status'] == 'true'){
+                                if(res.data[0][0]['status'] == 'true'){
                                     this.request_status = 'У вас в друзьях'                                
                                 }
 
-                                if(res.data[1][0]['status'] == 'block'){
+                                if(res.data[0][0]['status'] == 'block'){
                                     this.request_status = 'В черном списке'                                
                                 }
                             }
-                            }else if(this.user['id'] == res.data[0][0]['id_friend'] || this.user['id'] == res.data[0][0]['id_user']){
-                                    if(res.data[0][0]['status'] == 'false'){
-                                        this.request_status = 'Заявка отправлена'                                
-                                    }
-
-                                    if(res.data[0][0]['status'] == 'true'){
-                                        this.request_status = 'У вас в друзьях'                                
-                                    }
-
-                                    if(res.data[0][0]['status'] == 'block'){
-                                        this.request_status = 'В черном списке'                                
-                                    }
-                                }
 
                             
                            
