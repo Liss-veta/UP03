@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UserOutputController extends Controller
 {
     public function all(){
-        return User::all();
+        $id_user = Auth::user()->id;
+        return DB::table('users')->inRandomOrder()->limit(5)->where('id', '!=', $id_user)->get();
     }
 
     public function index($id){

@@ -56,15 +56,65 @@
                     hide-details
                     :model-value="true"
                 ></v-checkbox>
-                <!-- Button -->
-                <div class="w-75 d-flex align-center ma-auto pt-4">
-                    <v-btn @click.prevent="register">
-                        Создать
+                <!-- Button   -->
+                
+                <v-dialog
+                    v-model="dialog"
+                    persistent
+
+                    >
+                <template v-slot:activator="{ props }">
+                        <div class="w-75 d-flex align-center ma-auto pt-4">
+                                    <v-btn v-bind="props">
+                                        Создать
+                                    </v-btn>
+                                    <p>или <router-link to="/login">войдите в систему</router-link></p>
+                                </div>
+                </template>
+                <v-card class="bg-pink-lighten-4">
+                    <v-card-text>
+                        <v-container>
+                            <v-row>
+                            <v-col cols="12" sm="6" md="4">
+                                <v-text-field class="w-75" v-model="age" type="text" label="Возраст"></v-text-field>
+                            </v-col>
+                            <v-col cols="12" sm="6" md="4">
+                                <v-text-field class="w-75" v-model="city" type="text" label="Город"></v-text-field>
+                            </v-col>
+                            <v-col cols="12" sm="6" md="4">
+                                <label for="file">Выберите аватарку</label>
+                                <input
+                                    type="file"
+                                    id="file"
+                                    ref="file"
+                                    required
+                                    v-on:change="handleFileUpload()"
+                                />
+                                <p v-show="file.name">{{ file.name }}</p>
+                                <!-- <button @click.prevent="submitFile()">
+                                    Загрузить
+                                </button> -->
+                            </v-col>
+                            </v-row>
+                        </v-container>
+                    </v-card-text>
+                    <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                        color="indigo"
+                        variant="outline"
+                        @click.prevent="register"
+                        
+                    >
+                    <!-- <button style="opacity: 0" @click.prevent="submitFile()"></button> -->
+                        Save
                     </v-btn>
-                    <p>или <router-link to="/login">войдите в систему</router-link></p>
-                </div>
+                    </v-card-actions>
+                </v-card>
+                </v-dialog>
             </form>
         </div>
+        
         <!-- <div class="form">
             <div style="width: 80%">
                 <router-link to="/"
@@ -142,16 +192,22 @@
 export default {
     data() {
         return {
+            file: "",
+            dialog: false,
             name: "",
             email: "",
             surname: "",
             password: "",
             password_confirmation: "",
+            age: '',
+            city: '',
+            id: ''
         };
     },
 
     mounted() {
         document.title = "Регистрация";
+        
     },
 
     methods: {
@@ -164,14 +220,19 @@ export default {
                         email: this.email,
                         password: this.password,
                         password_confirmation: this.password_confirmation,
+                        age: this.age,
+                        city: this.city,
                     })
                     .then((r) => {
-                        console.log(r);
+                        
+                        // console.log(r);
                         this.name = "";
                         this.surname = "";
                         this.email = "";
                         this.password = "";
                         this.password_confirmation = "";
+                        this.age = "",
+                        this.city = "",
                         localStorage.setItem(
                             "x_xsrf_token",
                             r.config.headers["X-XSRF-TOKEN"]
@@ -183,9 +244,38 @@ export default {
                         localStorage.setItem("avatar", r.data["avatar"]);
                         localStorage.setItem("age", r.data["age"]);
                         localStorage.setItem("city", r.data["city"]);
-                        this.$router.push("/profile");
+
+                        this.submitFile()
                     });
             });
+        },
+        handleFileUpload() {
+            this.file = this.$refs.file.files[0];
+        },
+
+        submitFile() {
+            this.id = localStorage.getItem("id");
+            // console.log(this.id)
+            let formData = new FormData();
+            formData.append("file", this.file);
+            formData.append("id", this.id);
+            axios
+                .post("/api/load-avatar", formData, {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                })
+                .then((r) => {
+                    let fileName = "../uploads/" + this.file.name;
+                    localStorage.setItem("avatar", fileName);
+                    // console.log(fileName);
+                    this.$store.state.avatar = fileName;
+                    this.file = "";
+                    this.$router.push("/profile");
+                })
+                .catch(function () {
+                    console.log("FAILURE!!");
+                });
         },
     },
 };

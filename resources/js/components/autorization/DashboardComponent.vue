@@ -25,7 +25,7 @@
                     </p>
                     <p class="d-flex flex-column align-center">
                         <span>55</span>
-                        <span>друзей</span>
+                        <span>постов</span>
                     </p>
                 </div>
             </div>
@@ -90,7 +90,7 @@
                 </p>
                 <h2>Профиль</h2>
             </div> -->
-            <div class="info_data">
+            <!-- <div class="info_data"> -->
                 <transition name="bounce">
                     <div v-if="edit_data == 'show'" class="modal_bg">
                         <div class="modal">
@@ -110,10 +110,10 @@
                         </div>
                     </div>
                 </transition>
-                <transition name="slide-fade" mode="out-in">
+                <!-- <transition name="slide-fade" mode="out-in">
 
-                </transition>
-            </div>
+                </transition> -->
+            <!-- </div> -->
         </div>
     </div>
 </template>

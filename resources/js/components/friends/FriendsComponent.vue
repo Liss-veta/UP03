@@ -193,6 +193,7 @@
 </template>
 
 <script>
+
     export default {
         data: ()=>({
             tab: null,
@@ -202,7 +203,7 @@
             col_true: 0,
             col_false: 0,
             col_block: 0,
-            users: []
+            users: [],
         }),
         mounted() {
             this.friends_request()
@@ -210,11 +211,19 @@
             .then(res => {
                 // console.log(res.data);
                 this.users = res.data;
+                console.log(this.users);
+
+                // console.log(Math.floor(Math.random() * res.data.length));
+
+                // for(let i = 0; i < 3; i++){
+                //     this.users = Math.floor(Math.random() * res.data.length);                    
+                // }
             })
         },
         updated() {
 
         },
+        
         methods: {
             friends_request(){
                 axios.get(`/api/friends/${this.id}`)
