@@ -76,21 +76,8 @@
                         </div>
                     </div>
                 </transition>
-
-                <!-- <p>
-                    {{ this.$store.state.user.name }}
-                </p>
-                <p>{{ this.$store.state.user.email }}</p>
-            </div> -->
         </div>
         <div>
-            <!-- <div>
-                <p class="pagination">
-                    <router-link to="/"> Главная </router-link> / Профиль / {{ pagination }}
-                </p>
-                <h2>Профиль</h2>
-            </div> -->
-            <!-- <div class="info_data"> -->
                 <transition name="bounce">
                     <div v-if="edit_data == 'show'" class="modal_bg">
                         <div class="modal">
@@ -110,10 +97,6 @@
                         </div>
                     </div>
                 </transition>
-                <!-- <transition name="slide-fade" mode="out-in">
-
-                </transition> -->
-            <!-- </div> -->
         </div>
     </div>
 </template>
@@ -264,14 +247,14 @@ export default {
                                     for (let index1 = 0; index1 < res.data[index].length; index1++) {
                                         if(res.data[index][index1]['status'] == 'true'){
                                             this.col_true++;
-                                        }                                      
+                                        }
                                     }
-                                }                              
+                                }
                             }
 
                             if(this.col_true == 1){
                                 this.ending = 'г'
-                            } 
+                            }
                             else if(this.col_true > 1 && this.col_true < 5){
                                 this.ending = 'га'
                             }

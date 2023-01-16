@@ -1,9 +1,9 @@
 <template>
   <div class="mt-12 d-flex flex-column align-center justify-center">
-    <div class="d-flex justify-center">
+    <div class="d-flex justify-center w-75">
       <v-sheet
-        class="bd pa-2"
-        max-width="80%"
+        class="bd pa-2 w-100"
+
   >
     <v-slide-group
       show-arrows
@@ -62,30 +62,42 @@
           </v-icon>
         </v-tab>
       </v-tabs>
-      <v-window class="w-100" v-model="tab" style="min-height: 40vh;">
-        <v-window-item class="h-auto" value="option-1">
-          <v-card class="h-auto bg-pink-lighten-3 d-flex " variant="tonal">
-            <div class="w-50 pa-12">
-              <p>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Natus voluptatum magni mollitia consequuntur, molestiae sequi distinctio ad suscipit ratione unde earum vitae consectetur praesentium quo autem laboriosam corporis quae fuga!                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Natus voluptatum magni mollitia consequuntur, molestiae sequi distinctio ad suscipit ratione unde earum vitae consectetur praesentium quo autem laboriosam corporis quae fuga!
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Natus voluptatum magni mollitia consequuntur, molestiae sequi distinctio ad suscipit ratione unde earum vitae consectetur praesentium quo autem laboriosam corporis quae fuga!
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Natus voluptatum magni mollitia consequuntur, molestiae sequi distinctio ad suscipit ratione unde earum vitae consectetur praesentium quo autem laboriosam corporis quae fuga!
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Natus voluptatum magni mollitia consequuntur, molestiae sequi distinctio ad suscipit ratione unde earum vitae consectetur praesentium quo autem laboriosam corporis quae fuga!
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Natus voluptatum magni mollitia consequuntur, molestiae sequi distinctio ad suscipit ratione unde earum vitae consectetur praesentium quo autem laboriosam corporis quae fuga!
-
-              </p>
+      <v-window class="w-100" v-model="tab">
+        <v-window-item class="h-auto big_height" value="option-1">
+          <v-card class="h-auto bg-pink-lighten-3" style="align-self: stretch; align-content: stretch;" variant="tonal">
+            <v-card-title class="px-12 py-8 d-flex justify-space-between align-center">
+                <div class="d-flex w-25 align-center">
+                    <v-avatar size="60" class="mr-4" image="uploads/image 13.jpg"></v-avatar>
+                    <h4>Имя фамилия</h4>
+                </div>
+                <p class="text-disabled">22.12.2022</p>
+            </v-card-title>
+            <v-card-text class="w-100 d-flex px-12 pb-8">
+                <div class="w-50">
+                    <p class="text-body-1 pr-12 text-justify d-flex align-center">
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Natus voluptatum magni mollitia consequuntur, molestiae sequi distinctio ad suscipit ratione unde earum vitae consectetur praesentium quo autem laboriosam corporis quae fuga!                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Natus voluptatum magni mollitia consequuntur, molestiae sequi distinctio ad suscipit ratione unde earum vitae consectetur praesentium quo autem laboriosam corporis quae fuga!
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Natus voluptatum magni mollitia consequuntur, molestiae sequi distinctio ad suscipit ratione unde earum vitae consectetur praesentium quo autem laboriosam corporis quae fuga!
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Natus voluptatum magni mollitia consequuntur, molestiae sequi distinctio ad suscipit ratione unde earum vitae consectetur praesentium quo autem laboriosam corporis quae fuga!
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Natus voluptatum magni mollitia consequuntur, molestiae sequi distinctio ad suscipit ratione unde earum vitae consectetur praesentium quo autem laboriosam corporis quae fuga!
+                    </p>
+                </div>
+            <div class="w-50 align-stretch">
+                <v-carousel style="height: 100%" :show-arrows="false">
+                    <v-carousel-item
+                    v-for="(item,i) in items"
+                    :key="i"
+                    :src="item.src"
+                    cover
+                    ></v-carousel-item>
+                </v-carousel>
             </div>
-            <div class="w-50">
-              <img src="../../../../public/img/avatar.png">
-              <img src="../../../../public/img/avatar.png">
-            </div>
+            </v-card-text>
           </v-card>
-              
         </v-window-item>
-        <v-window-item class="h-100 w-100" value="option-2">
-          <v-card class="h-100 bg-pink-lighten-3" flat>
+        <v-window-item class="w-100 min_height" value="option-2">
+          <v-card style="align-self: stretch; align-content: stretch;" class="h-100 bg-pink-lighten-3" flat>
             <v-card-text class="h-100">
-             2222222222222222222222222
+                <v-avatar image="uploads/image 13.jpg"></v-avatar>
             </v-card-text>
           </v-card>
         </v-window-item>
@@ -117,22 +129,49 @@ export default {
         'Аниме',
         'Айти',
         'Такие как юра',
+        'Такие как юра',
+        'Такие как юра',
         'Киберспорт',
         'Хуйня',
-      ]
+      ],
+      items: [
+          {
+            src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
+          },
+          {
+            src: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
+          },
+          {
+            src: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg',
+          },
+          {
+            src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
+          },
+        ],
     };
   },
 
-  mounted(){
-        document.title = "Главная"
+    mounted(){
+        document.title = "Новости",
+        this.getBiggestHeight();
     },
 
-  components: {
-
-  },
+    methods: {
+    getBiggestHeight() {
+        let biggestHeight = 0;
+        let elements = document.querySelector('.big_height').offsetHeight;
+        // console.log(elements);
+        document.querySelector('.min_height').style.height = elements + 'px';
+        // console.log(document.querySelector('.min_height'))
+        // console.log('biggestHeight = ' + biggestHeight + 'px');
+    }
+  }
 };
 </script>
 <style scoped>
+.v-carousel{
+    height:100%
+}
 .bd{
   background-color: #0f1546;
 }

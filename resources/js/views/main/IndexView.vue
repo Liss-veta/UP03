@@ -19,14 +19,31 @@
                         <h1 v-else-if="this.$route.path === '/news'" class="text-h4 text-sm-h2 text-md-h2 text-lg-h2 text-xl-h2 text-pink-lighten-4 ">Новости</h1>
                         <h1 v-else class="text-pink-lighten-4 pl-16"></h1>
                     </div>
-                    <div class="d-flex justify-space-between">
-                        <div class="w-10 d-flex justify-space-around">
-                            <button>
-                                <img src="../../../../public/img/search.png" alt="">
-                            </button>
-                            <button  @click.prevent="logout" class="click">
+                    <div class="d-flex justify-end w-50">
+                        <div class="w-50 d-flex justify-space-around">
+                            <v-toolbar class="w-100 text-pink-lighten-4"
+
+                                color="transparent"
+                            >
+                                <v-autocomplete
+                                v-model="select"
+                                v-model:search="search"
+                                :loading="loading"
+                                :items="items"
+                                cache-items
+                                class="mx-12"
+                                flat
+                                hide-no-data
+                                append-icon="mdi-account-search-outline"
+                                hide-details
+                                label="Найти друга"
+                                solo-inverted
+                                ></v-autocomplete>
+                                <button  @click.prevent="logout" class="click">
                                 <img src="img/exit.png" alt="">
                             </button>
+                            </v-toolbar>
+
                         </div>
                     </div>
                 </div>
@@ -60,7 +77,22 @@ export default {
             }
         },
     },
+    watch: {
+      search (val) {
+        val && val !== this.select && this.querySelections(val)
+      },
+    },
     methods:{
+        querySelections (v) {
+        this.loading = true
+        // Simulated ajax query
+        setTimeout(() => {
+          this.items = this.states.filter(e => {
+            return (e || '').toLowerCase().indexOf((v || '').toLowerCase()) > -1
+          })
+          this.loading = false
+        }, 500)
+      },
         logout() {
             axios.post("/logout").then((res) => {
                 localStorage.removeItem("x_xsrf_token");
@@ -89,5 +121,13 @@ button > img {
 }
 .w-10{
     width: 10vw;
+}
+.v-input__append > .v-icon {
+    font-size: 48px;
+    text-align: center;
+
+}
+.v-input__append{
+    padding: 0;
 }
 </style>

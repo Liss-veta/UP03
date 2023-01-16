@@ -7,61 +7,88 @@
             </div>
             <form class="w-65 d-flex flex-column justify-center">
                 <!-- Input email -->
-                <v-text-field
+                <div :class="{ error: v$.email.$errors.length }">
+                    <v-text-field
                     class="w-75 mx-auto"
                     variant="underlined"
-                    label="Электронная почта"
+                    label="Ваша почта"
                     append-inner-icon="mdi-email"
-                    v-model="email"
-                ></v-text-field>
+                    v-model="v$.email.$model"
+                    ></v-text-field>
+                    <div class="w-75 mx-auto text-red input-errors" v-for="(error, index) of v$.email.$errors" :key="index">
+                        <div class="error-msg">{{ error.$message }}</div>
+                    </div>
+                </div>
                 <!-- Input name -->
-                <v-text-field
+                <div :class="{ error: v$.name.$errors.length }">
+                    <v-text-field
                     class="w-75 mx-auto"
                     variant="underlined"
                     label="Ваше имя"
                     append-inner-icon="mdi-account"
-                    v-model="name"
+                    v-model="v$.name.$model"
                 ></v-text-field>
+                <div class="w-75 mx-auto text-red input-errors" v-for="(error, index) of v$.name.$errors" :key="index">
+                    <div class="error-msg">{{ error.$message }}</div>
+                </div>
+                </div>
+
                 <!-- Input surname -->
+                <div :class="{ error: v$.surname.$errors.length }">
                 <v-text-field
                     class="w-75 mx-auto"
                     variant="underlined"
                     label="Ваша фамилия"
                     append-inner-icon="mdi-account"
-                    v-model="surname"
+                    v-model="v$.surname.$model"
                 ></v-text-field>
+                <div class="w-75 mx-auto text-red input-errors" v-for="(error, index) of v$.surname.$errors" :key="index">
+                    <div class="error-msg">{{ error.$message }}</div>
+                </div>
+                </div>
                 <!-- Input password -->
+                <div :class="{ error: v$.password.$errors.length }">
                 <v-text-field
                     class="w-75 mx-auto"
                     variant="underlined"
                     type="password"
                     label="Придумайте пароль"
                     append-inner-icon="mdi-lock"
-                    v-model="password"
+                    v-model="v$.password.$model"
                 ></v-text-field>
+                <div class="w-75 mx-auto text-red input-errors" v-for="(error, index) of v$.password.$errors" :key="index">
+                    <div class="error-msg">{{ error.$message }}</div>
+                </div>
+                </div>
                 <!-- Input password confirm -->
+                <div :class="{ error: v$.password_confirmation.$errors.length }">
                 <v-text-field
                     class="w-75 mx-auto"
                     variant="underlined"
                     type="password"
                     label="Повторите пароль"
                     append-inner-icon="mdi-lock"
-                    v-model="password_confirmation"
+                    v-model="v$.password_confirmation.$model"
                 ></v-text-field>
+                <div class="w-75 mx-auto text-red input-errors" v-for="(error, index) of v$.password_confirmation.$errors" :key="index">
+                    <div class="error-msg">{{ error.$message }}</div>
+                </div>
+                </div>
                 <!-- Checkbox politikal -->
                 <v-checkbox
                     label="Нажимая на кнопку, я соглашаюсь с политикой конфинденциальности"
                     color="indigo-darken-3"
                     class="w-75 mx-auto"
                     hide-details
+                    required
                     :model-value="true"
                 ></v-checkbox>
                 <!-- Button   -->
-                
+
                 <v-dialog
                     v-model="dialog"
                     persistent
-
+                    class="d-flex justify-center"
                     >
                 <template v-slot:activator="{ props }">
                         <div class="w-75 d-flex align-center ma-auto pt-4">
@@ -71,25 +98,29 @@
                                     <p>или <router-link to="/login">войдите в систему</router-link></p>
                                 </div>
                 </template>
-                <v-card class="bg-pink-lighten-4">
-                    <v-card-text>
+                <v-card class="w-25 bg-pink-lighten-4">
+                    <v-card-text class="w-100 pa-10">
                         <v-container>
-                            <v-row>
-                            <v-col cols="12" sm="6" md="4">
-                                <v-text-field class="w-75" v-model="age" type="text" label="Возраст"></v-text-field>
-                            </v-col>
-                            <v-col cols="12" sm="6" md="4">
-                                <v-text-field class="w-75" v-model="city" type="text" label="Город"></v-text-field>
-                            </v-col>
-                            <v-col cols="12" sm="6" md="4">
-                                <label for="file">Выберите аватарку</label>
-                                <input
-                                    type="file"
+                            <v-row class="d-flex flex-column">
+                                <div :class="{ error: v$.age.$errors.length }">
+                                    <v-text-field v-model="v$.age.$model" type="text" label="Возраст"></v-text-field>
+                                    <div class="w-75 mx-auto text-red input-errors" v-for="(error, index) of v$.age.$errors" :key="index">
+                                        <div class="error-msg">{{ error.$message }}</div>
+                                    </div>
+                                </div>
+                                <div :class="{ error: v$.city.$errors.length }">
+                                    <v-text-field v-model="v$.city.$model" type="text" label="Город"></v-text-field>
+                                    <div class="w-75 mx-auto text-red input-errors" v-for="(error, index) of v$.city.$errors" :key="index">
+                                        <div class="error-msg">{{ error.$message }}</div>
+                                    </div>
+                                </div>
+                            <v-col cols="12">
+                                <!-- <label for="file">Выберите аватарку</label> -->
+                                <v-file-input type="file"
                                     id="file"
                                     ref="file"
                                     required
-                                    v-on:change="handleFileUpload()"
-                                />
+                                    v-on:change="handleFileUpload()" clearable label="Выберите аватарку" variant="underlined"></v-file-input>
                                 <p v-show="file.name">{{ file.name }}</p>
                                 <!-- <button @click.prevent="submitFile()">
                                     Загрузить
@@ -104,7 +135,7 @@
                         color="indigo"
                         variant="outline"
                         @click.prevent="register"
-                        
+                        :disabled="v$.$invalid"
                     >
                     <!-- <button style="opacity: 0" @click.prevent="submitFile()"></button> -->
                         Save
@@ -114,7 +145,7 @@
                 </v-dialog>
             </form>
         </div>
-        
+
         <!-- <div class="form">
             <div style="width: 80%">
                 <router-link to="/"
@@ -189,6 +220,16 @@
 </template>
 
 <script>
+import useVuelidate from "@vuelidate/core"
+import { required, email, minLength, helpers, numeric } from "@vuelidate/validators"
+export function validName(name) {
+  let validNamePattern = new RegExp("^[а-яА-Я]+(?:[-'\\s][а-яА-Я]+)*$");
+  if (validNamePattern.test(name)){
+    return true;
+  }
+  return false;
+}
+
 export default {
     data() {
         return {
@@ -204,10 +245,10 @@ export default {
             id: ''
         };
     },
-
+    setup: () => ({ v$: useVuelidate() }),
     mounted() {
         document.title = "Регистрация";
-        
+
     },
 
     methods: {
@@ -224,7 +265,7 @@ export default {
                         city: this.city,
                     })
                     .then((r) => {
-                        
+
                         // console.log(r);
                         this.name = "";
                         this.surname = "";
@@ -278,6 +319,49 @@ export default {
                 });
         },
     },
+    validations() {
+    return {
+        name: {
+            required: helpers.withMessage('Обязательное поле для заполнения', required),
+            name_validation: {
+            $validator: validName,
+            $message: 'Недопустимое имя. Допустимое имя содержит только русские буквы, тире (-) и пробелы'
+          }
+        },
+        surname: {
+            required: helpers.withMessage('Обязательное поле для заполнения', required),
+            name_validation: {
+            $validator: validName,
+            $message: 'Недопустимая фамилия. Допустимая фамилия содержит только русские буквы, тире (-) и пробелы'
+          }
+        },
+        city: {
+            required: helpers.withMessage('Обязательное поле для заполнения', required),
+            name_validation: {
+            $validator: validName,
+            $message: 'Недопустимая фамилия. Допустимая фамилия содержит только русские буквы, тире (-) и пробелы'
+          }
+        },
+        age: {
+            required: helpers.withMessage('Обязательное поле для заполнения', required),
+            numeric: helpers.withMessage('Только положительные целые числа', numeric)
+        },
+        email: {
+            required: helpers.withMessage('Обязательное поле для заполнения', required),
+            email: helpers.withMessage('Значение не является действительным адресом электронной почты', email)
+        },
+        password: {
+            required: helpers.withMessage('Обязательное поле для заполнения', required),
+            min: helpers.withMessage('Минимальное количество символов 8', minLength(8))
+        },
+        password_confirmation: {
+            required: helpers.withMessage('Обязательное поле для заполнения', required),
+            // sameAsPassword: helpers.withMessage('Пароли не совпадают',sameAs('password'))
+        },
+      }
+    },
+
+   
 };
 </script>
 
