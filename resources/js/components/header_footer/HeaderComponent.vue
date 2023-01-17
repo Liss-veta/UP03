@@ -24,7 +24,7 @@
                 <v-divider></v-divider>
                 <v-list>
                 <router-link to="/profile">
-                    <v-list-item v-if="this.$store.state.avatar === 'NULL' || this.$store.state.avatar === 'undefined'"
+                    <v-list-item v-if="this.$store.state.avatar === 'NULL' || this.$store.state.avatar === '../uploads/undefined'"
                     prepend-avatar="img/no_avatar.jpg"
                     :title="this.$store.state.user.name + ' ' + this.$store.state.user.surname"
                     :subtitle="this.$store.state.user.email"
@@ -74,7 +74,7 @@
                 <v-divider></v-divider>
                 <v-list>
                     <router-link to="/profile">
-                    <v-list-item v-if="this.$store.state.avatar === 'NULL' || this.$store.state.avatar === 'undefined'"
+                    <v-list-item v-if="this.$store.state.avatar === 'NULL' || this.$store.state.avatar === '../uploads/undefined'"
                     prepend-avatar="img/no_avatar.jpg"
                     :title="this.$store.state.user.name + ' ' + this.$store.state.user.surname"
                     :subtitle="this.$store.state.user.email"

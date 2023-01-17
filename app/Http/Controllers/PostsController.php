@@ -11,6 +11,14 @@ class PostsController extends Controller
 {
     public function all()
     {
+        return DB::table('users')
+            ->join('posts', 'posts.id_user', '=', 'users.id')
+            // ->where('id_user', '=', $id)
+            ->get();
+    }
+
+    public function posts_user()
+    {
         $id = Auth::user()->id;
         return DB::table('users')
             ->join('posts', 'posts.id_user', '=', 'users.id')

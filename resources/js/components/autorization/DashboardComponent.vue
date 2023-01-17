@@ -8,7 +8,7 @@
             <img class="avatar" src="img/no_avatar.jpg"
                 v-if="
                     this.$store.state.avatar === 'NULL' ||
-                    this.$store.state.avatar === 'undefined'"
+                    this.$store.state.avatar === '../uploads/undefined'"
                 alt=""/>
             <img class="avatar" :src="this.$store.state.avatar"
                 alt=""  v-else />
@@ -124,7 +124,8 @@ export default {
             pagination: " Изменить данные",
             edit_data: "none",
             col_true: 0,
-            ending: ''
+            ending: '',
+            posts: []
         };
     },
 
@@ -142,6 +143,7 @@ export default {
         document.title = this.$store.state.user.name;
         this.showView(this.show);
         this.friends_request()
+        this.getPosts_user()
     },
 
     computed: {
@@ -151,6 +153,13 @@ export default {
     },
 
     methods: {
+        getPosts_user(){
+            axios.get('/api/user_post')
+                .then(res => {
+                    console.log(res.data);
+                    this.posts = res.data;
+                })
+        },
         getId() {
             this.id = localStorage.getItem("id");
         },

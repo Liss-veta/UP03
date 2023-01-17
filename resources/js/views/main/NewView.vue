@@ -22,7 +22,7 @@
                 v-model="category"
                   class="text-pink-lighten-4"
                   label="Select"
-                  :items="['Игры', 'Colorado', 'Florida', 'Georgia', 'Texas', 'Wyoming']"
+                  :items="tags"
               ></v-select>
               </v-col>
 
@@ -95,7 +95,7 @@
     <v-divider></v-divider>
     <!-- ПОСТЫ -->
     <div class="d-flex align-center flex-column w-100" v-for="post in posts" :key="post">
-      <div class="w-75 mt-10" >
+      <div class="w-75 mt-10" :id="post.category">
         <v-card class="bg-transparent">
       <div class="post d-flex flex-row">
         <v-tabs
@@ -130,7 +130,8 @@
               <v-card-text class="w-100 d-flex px-12 py-8">
                   <div class="w-50">
                     <div class="d-flex w-75 align-center mb-4">
-                        <v-avatar size="90" class="mr-4" :image="post.avatar"></v-avatar>
+                        <v-avatar size="90" class="mr-4" v-if="post.avatar == 'NULL' || post.avatar == '../uploads/undefined'" image="img/no_avatar.jpg"></v-avatar>
+                        <v-avatar size="90" class="mr-4" v-else :image="post.avatar"></v-avatar>
                         <h4 class="text-h5 ">{{ post.name + " " + post.surname }}</h4>
                     </div>
                     <p class="text-disabled mb-4">{{ getHumanDate(post.created_at) }}</p>
@@ -190,7 +191,7 @@ export default {
         'Игры',
         'Аниме',
         'Айти',
-        'Такие как юра',
+        'Автомобили',
         'Такие как юра',
         'Такие как юра',
         'Киберспорт',
@@ -266,11 +267,6 @@ export default {
         .then(res => {
           // console.log(res.data);
           this.posts = res.data;
-          for (let index = 0; index < res.data.length; index++) {
-            let created = res.data[index]['created_at'];
-            this.time = moment(created).fromNow();
-            console.log(this.time);
-          }
         })
     }
   }
