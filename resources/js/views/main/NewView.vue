@@ -133,7 +133,7 @@
                         <v-avatar size="90" class="mr-4" :image="post.avatar"></v-avatar>
                         <h4 class="text-h5 ">{{ post.name + " " + post.surname }}</h4>
                     </div>
-                    <p class="text-disabled mb-4">{{ post.created_at }}</p>
+                    <p class="text-disabled mb-4">{{ getHumanDate(post.created_at) }}</p>
                       <p class="text-body-1 mb-4 pr-12 text-justify d-flex align-center">
                           {{ post.text }}
                       </p>
@@ -168,7 +168,7 @@
   </div>
 </template>
 <script>
-
+import moment from 'moment';
 export default {
   data() {
     return {
@@ -213,7 +213,7 @@ export default {
       text: '',
       category: '',
       file: '',
-      posts: []
+      posts: [],
     };
   },
 
@@ -223,8 +223,10 @@ export default {
         // this.getBiggestHeight();
         this.all_post();
     },
-
     methods: {
+      getHumanDate : function (date) {
+        return moment(date).fromNow();
+      },
     // getBiggestHeight() {
     //     let biggestHeight = 0;
     //     let elements = document.querySelector('.big_height').offsetHeight;
@@ -262,11 +264,12 @@ export default {
     all_post(){
       axios.get('/api/all_posts')
         .then(res => {
-          console.log(res.data);
+          // console.log(res.data);
           this.posts = res.data;
           for (let index = 0; index < res.data.length; index++) {
-            this.items = res.data[index]['images']
-            console.log(this.items);
+            let created = res.data[index]['created_at'];
+            this.time = moment(created).fromNow();
+            console.log(this.time);
           }
         })
     }

@@ -4,11 +4,12 @@ import vuetify from './plugins/vuetify.js';
 import IndexComponent from './views/main/IndexView.vue';
 import router from './router';
 import {createApp} from 'vue';
+import moment from 'moment/moment';
 import store from './components/store';
 
 // const app = createApp({});
 // app.component(IndexComponent).use(router).use(vuetify)
 //     .mount('#app');
 
-createApp(IndexComponent).use(router).use(store).use(vuetify).mount('#app');
+createApp(IndexComponent).use(router).use(store).use(vuetify).use(moment).mount('#app');
 //require ('./bootstrap');
