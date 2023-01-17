@@ -9,8 +9,8 @@
               append-inner-icon="mdi-plus"
               class="text-pink-lighten-4 w-75"
           ></v-text-field>
-          <div class="w-25 h-100">
-              <v-btn class="w-100 h-100" variant="outlined" color="pink-lighten-4" @click.prevent="add_post">
+          <div class="w-25 h-100 d-flex justify-end align-center">
+              <v-btn class="w-75 pa-4" variant="outlined" color="pink-lighten-4" @click.prevent="add_post">
                   Добавить
               </v-btn>
           </div>
@@ -25,7 +25,7 @@
                   :items="['Игры', 'Colorado', 'Florida', 'Georgia', 'Texas', 'Wyoming']"
               ></v-select>
               </v-col>
-              
+
             <v-col cols="12" sm="3">
                 <v-file-input
                 v-on:change="handleFileUpload()"
@@ -58,19 +58,13 @@
                 ></v-file-input>
             </transition>
         </v-col>
-        <v-col cols="12" sm="3">
-             
-        </v-col>
-
         </v-row>
         </div>
     </div>
     <!-- КАТЕГОРИИ -->
     <div class="d-flex justify-center w-75">
       <v-sheet
-        class="bd pa-2 w-100"
-
-  >
+        class="bd pa-2 w-100">
     <v-slide-group
       show-arrows
     >
@@ -133,21 +127,21 @@
         <v-window class="w-100" v-model="tab">
           <v-window-item class="h-auto big_height" value="option-1">
             <v-card class="h-auto bg-pink-lighten-3" style="align-self: stretch; align-content: stretch;" variant="tonal">
-              <v-card-title class="px-12 py-8 d-flex justify-space-between align-center">
-                  <div class="d-flex w-25 align-center">
-                      <v-avatar size="60" class="mr-4" :image="post.avatar"></v-avatar>
-                      <h4>{{ post.name + " " + post.surname }}</h4>
-                  </div>
-                  <p class="text-disabled">{{ post.created_at }}</p>
-              </v-card-title>
-              <v-card-text class="w-100 d-flex px-12 pb-8">
+              <v-card-text class="w-100 d-flex px-12 py-8">
                   <div class="w-50">
-                      <p class="text-body-1 pr-12 text-justify d-flex align-center">
-                          {{ post.text }} {{ post.category }}
+                    <div class="d-flex w-75 align-center mb-4">
+                        <v-avatar size="90" class="mr-4" :image="post.avatar"></v-avatar>
+                        <h4 class="text-h5 ">{{ post.name + " " + post.surname }}</h4>
+                    </div>
+                    <p class="text-disabled mb-4">{{ post.created_at }}</p>
+                      <p class="text-body-1 mb-4 pr-12 text-justify d-flex align-center">
+                          {{ post.text }}
                       </p>
+                      <v-chip color="indigo" label variant="tonal">
+                         {{ post.category }}
+                      </v-chip>
                   </div>
               <div class="w-50 align-stretch">
-                <img :src="post.images" alt="">
                   <v-carousel style="height: 100%" :show-arrows="false">
                       <v-carousel-item
                       :src="post.images"
@@ -170,7 +164,7 @@
     </v-card>
       </div>
     </div>
-    
+
   </div>
 </template>
 <script>
@@ -180,7 +174,7 @@ export default {
     return {
       show: false,
       src_video: '',
-      tab: 'option-1',
+      tab: null,
       amenities: [1, 4],
       neighborhoods: [1],
       tags:[
@@ -247,6 +241,7 @@ export default {
             formData.append('text', this.text);
             formData.append('category', this.category);
             formData.append('file', this.file);
+            console.log(formData);
             axios.post('/api/add_post',
                 formData,
                 {
@@ -270,8 +265,8 @@ export default {
           console.log(res.data);
           this.posts = res.data;
           for (let index = 0; index < res.data.length; index++) {
-            this.items = res.data[index]['images']  
-            console.log(this.items);          
+            this.items = res.data[index]['images']
+            console.log(this.items);
           }
         })
     }

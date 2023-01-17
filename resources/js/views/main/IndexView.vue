@@ -38,6 +38,7 @@
                                 hide-details
                                 label="Найти друга"
                                 solo-inverted
+                                variant="underlined"
                                 ></v-autocomplete>
                                 <button  @click.prevent="logout" class="click">
                                 <img src="img/exit.png" alt="">
@@ -52,7 +53,6 @@
         <router-view></router-view>
         <div class="d-flex justify-end">
             <div class="w-97">
-
                             <div
                         v-if="
                             this.$route.path === '/register' ||

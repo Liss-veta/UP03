@@ -98,7 +98,7 @@
                                     <p>или <router-link to="/login">войдите в систему</router-link></p>
                                 </div>
                 </template>
-                <v-card class="w-25 bg-pink-lighten-4">
+                <v-card class="w-25 bg-pink-lighten-4 mx-auto">
                     <v-card-text class="w-100 pa-10">
                         <v-container>
                             <v-row class="d-flex flex-column">
@@ -129,16 +129,16 @@
                             </v-row>
                         </v-container>
                     </v-card-text>
-                    <v-card-actions>
-                    <v-spacer></v-spacer>
+                    <v-card-actions class="d-flex justify-center">
                     <v-btn
                         color="indigo"
-                        variant="outline"
+                        variant="outlined"
+                        class="w-75"
                         @click.prevent="register"
                         :disabled="v$.$invalid"
                     >
                     <!-- <button style="opacity: 0" @click.prevent="submitFile()"></button> -->
-                        Save
+                        Создать аккаунт
                     </v-btn>
                     </v-card-actions>
                 </v-card>
@@ -245,12 +245,12 @@ export default {
             id: ''
         };
     },
-    setup: () => ({ v$: useVuelidate() }),
     mounted() {
         document.title = "Регистрация";
-
     },
-
+    setup () {
+        return { v$: useVuelidate() }
+    },
     methods: {
         register() {
             axios.get("/sanctum/csrf-cookie").then((Response) => {
@@ -325,21 +325,21 @@ export default {
             required: helpers.withMessage('Обязательное поле для заполнения', required),
             name_validation: {
             $validator: validName,
-            $message: 'Недопустимое имя. Допустимое имя содержит только русские буквы, тире (-) и пробелы'
+            $message: 'Недопустимое имя. Допустимое имя содержит только русские буквы.'
           }
         },
         surname: {
             required: helpers.withMessage('Обязательное поле для заполнения', required),
             name_validation: {
             $validator: validName,
-            $message: 'Недопустимая фамилия. Допустимая фамилия содержит только русские буквы, тире (-) и пробелы'
+            $message: 'Недопустимая фамилия. Допустимая фамилия содержит только русские буквы.'
           }
         },
         city: {
             required: helpers.withMessage('Обязательное поле для заполнения', required),
             name_validation: {
             $validator: validName,
-            $message: 'Недопустимая фамилия. Допустимая фамилия содержит только русские буквы, тире (-) и пробелы'
+            $message: 'Недопустимое значение. Допустимый город содержит только русские буквы.'
           }
         },
         age: {
