@@ -34,7 +34,9 @@ Route::post('/load-avatar', [LoadAvatarController::class, 'store']);
 Route::post('/changeInfoUser', [UserOutputController::class, 'changeInfoUser']);
 Route::post('/dataOrder', [UserOutputController::class, 'dataOrder']);
 Route::post('/dop_info', [UserOutputController::class, 'dop_info']);
-Route::get("/all_users", [UserOutputController::class, 'all']);
+
+Route::get('/all_users', [UserOutputController::class, 'all_users']);
+Route::get("/five_users", [UserOutputController::class, 'random_five']);
 Route::get('/user/{id}', [UserOutputController::class, 'index']);
 Route::get('/view/{id}', [UserOutputController::class, 'get']);
 Route::post('/addFriend', [FriendsController::class, 'addFriend']);

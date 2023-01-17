@@ -207,7 +207,7 @@
         }),
         mounted() {
             this.friends_request()
-            axios.get('/api/all_users')
+            axios.get('/api/five_users')
             .then(res => {
                 // console.log(res.data);
                 this.users = res.data;
@@ -216,14 +216,14 @@
                 // console.log(Math.floor(Math.random() * res.data.length));
 
                 // for(let i = 0; i < 3; i++){
-                //     this.users = Math.floor(Math.random() * res.data.length);                    
+                //     this.users = Math.floor(Math.random() * res.data.length);
                 // }
             })
         },
         updated() {
 
         },
-        
+
         methods: {
             friends_request(){
                 axios.get(`/api/friends/${this.id}`)

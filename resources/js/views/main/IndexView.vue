@@ -9,8 +9,8 @@
         <div v-else>
             <HeaderComponentVue></HeaderComponentVue>
             <div class="d-flex justify-end">
-                <div class="w-97 d-flex justify-space-around justify-sm-space-between justify-md-space-between justify-lg-space-between justify-xl-space-between align-center pa-6">
-                    <div class="d-flex pl-4 pl-sm-16 pl-md-16 pl-lg-16 pl-xl-16">
+                <div class="w-97 mt-8 d-flex justify-space-around justify-sm-space-between justify-md-space-between justify-lg-space-around justify-xl-space-around align-center pa-6">
+                    <div class="d-flex otstup">
                         <v-btn icon class="mr-3 mr-sm-4 mr-md-4 mr-lg-4 mr-xl-4 bg-transparent" @click="$router.go(-1)">
                             <v-icon color="pink-lighten-4">mdi-arrow-left</v-icon>
                         </v-btn>
@@ -68,6 +68,76 @@
 import HeaderComponentVue from "../../components/header_footer/HeaderComponent.vue";
 import FooterComponentVue from "../../components/header_footer/FooterComponent.vue";
 export default {
+    data(){
+        return {
+            loading: false,
+            items: [],
+            search: null,
+            select: null,
+            users: [],
+            states: [
+                // 'Alabama',
+                // 'Alaska',
+                // 'American Samoa',
+                // 'Arizona',
+                // 'Arkansas',
+                // 'California',
+                // 'Colorado',
+                // 'Connecticut',
+                // 'Delaware',
+                // 'District of Columbia',
+                // 'Federated States of Micronesia',
+                // 'Florida',
+                // 'Georgia',
+                // 'Guam',
+                // 'Hawaii',
+                // 'Idaho',
+                // 'Illinois',
+                // 'Indiana',
+                // 'Iowa',
+                // 'Kansas',
+                // 'Kentucky',
+                // 'Louisiana',
+                // 'Maine',
+                // 'Marshall Islands',
+                // 'Maryland',
+                // 'Massachusetts',
+                // 'Michigan',
+                // 'Minnesota',
+                // 'Mississippi',
+                // 'Missouri',
+                // 'Montana',
+                // 'Nebraska',
+                // 'Nevada',
+                // 'New Hampshire',
+                // 'New Jersey',
+                // 'New Mexico',
+                // 'New York',
+                // 'North Carolina',
+                // 'North Dakota',
+                // 'Northern Mariana Islands',
+                // 'Ohio',
+                // 'Oklahoma',
+                // 'Oregon',
+                // 'Palau',
+                // 'Pennsylvania',
+                // 'Puerto Rico',
+                // 'Rhode Island',
+                // 'South Carolina',
+                // 'South Dakota',
+                // 'Tennessee',
+                // 'Texas',
+                // 'Utah',
+                // 'Vermont',
+                // 'Virgin Island',
+                // 'Virginia',
+                // 'Washington',
+                // 'West Virginia',
+                // 'Wisconsin',
+                // 'Wyoming',
+            ],
+        }
+    },
     components: { HeaderComponentVue, FooterComponentVue },
 
     computed: {
@@ -81,6 +151,15 @@ export default {
       search (val) {
         val && val !== this.select && this.querySelections(val)
       },
+    },
+    mounted(){
+            axios.get('/api/all_users')
+            .then(res => {
+                for (let index = 0; index < res.data.length; index++) {
+                    this.states.push(res.data[index]['name']+" "+res.data[index]['surname'])
+                    console.log(this.states);
+                }
+            })
     },
     methods:{
         querySelections (v) {
@@ -109,7 +188,7 @@ export default {
             });
         },
     }
-};
+}
 </script>
 <style>
 .w-97{
@@ -130,4 +209,7 @@ button > img {
 .v-input__append{
     padding: 0;
 }
+/* .otstup{
+    padding-left: 170px;
+} */
 </style>

@@ -10,9 +10,15 @@ use Illuminate\Support\Facades\Hash;
 
 class UserOutputController extends Controller
 {
-    public function all(){
+    public function random_five(){
         $id_user = Auth::user()->id;
         return DB::table('users')->inRandomOrder()->limit(5)->where('id', '!=', $id_user)->get();
+    }
+
+    public function all_users()
+    {
+        $id_user = Auth::user()->id;
+        return DB::table('users')->where('id', '!=', $id_user)->get();
     }
 
     public function index($id){
@@ -48,6 +54,6 @@ class UserOutputController extends Controller
         DB::table('users')->where('id',$id)->update([
             'age' => $age,
             'city' => $city
-        ]);        
+        ]);
     }
 }

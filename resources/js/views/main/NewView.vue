@@ -1,5 +1,52 @@
 <template>
   <div class="mt-12 d-flex flex-column align-center justify-center">
+    <!-- ДОБАВЛЕНИЕ ПОСТОВ -->
+    <div class="w-75">
+        <v-text-field
+            label="Добавить пост"
+            append-inner-icon="mdi-plus"
+            class="text-pink-lighten-4"
+          ></v-text-field>
+        <div class="d-flex align-stretch justify-space-between">
+            <v-row>
+            <v-col cols="12" sm="3">
+                <v-file-input
+                v-if="!show"
+                    label="Добавьте фотографию"
+                    variant="filled"
+                    class="text-pink-lighten-4"
+                ></v-file-input>
+            </v-col>
+            <v-col cols="12" sm="3">
+           <v-text-field
+                label="Вставьте ссылку на видео"
+                append-inner-icon="mdi-youtube"
+                class="text-pink-lighten-4"
+                v-model="src_video"
+                @click.prevent = "show = !show"
+            ></v-text-field>
+        </v-col>
+        <v-col cols="12" sm="3">
+            <transition name="fade">
+                <v-file-input
+                    v-if="show"
+                    label="Добавьте превью для видео"
+                    variant="filled"
+                    class="text-pink-lighten-4"
+                    append-inner-icon="mdi-camera-plus-outline"
+                ></v-file-input>
+            </transition>
+        </v-col>
+        <v-col cols="12" sm="3">
+             <v-btn class="w-100 h-75" variant="outlined" color="pink-lighten-4">
+                Добавить
+            </v-btn>
+        </v-col>
+
+        </v-row>
+        </div>
+    </div>
+    <!-- КАТЕГОРИИ -->
     <div class="d-flex justify-center w-75">
       <v-sheet
         class="bd pa-2 w-100"
@@ -33,6 +80,7 @@
   </v-sheet>
     </div>
     <v-divider></v-divider>
+    <!-- ПОСТЫ -->
     <div class="w-75 mt-10">
       <v-card class="bg-transparent">
     <div class="post d-flex flex-row">
@@ -112,6 +160,8 @@
 export default {
   data() {
     return {
+        show: false,
+        src_video: '',
       tab: 'option-1',
       amenities: [1, 4],
       neighborhoods: [1],
@@ -169,6 +219,15 @@ export default {
 };
 </script>
 <style scoped>
+.w-20{
+    width: 20%;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s ease;
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}
 .v-carousel{
     height:100%
 }

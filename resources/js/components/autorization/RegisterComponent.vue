@@ -121,7 +121,7 @@
                                     ref="file"
                                     required
                                     v-on:change="handleFileUpload()" clearable label="Выберите аватарку" variant="underlined"></v-file-input>
-                                <p v-show="file.name">{{ file.name }}</p>
+                                <!-- <p v-show="file.name">{{ file.name }}</p> -->
                                 <!-- <button @click.prevent="submitFile()">
                                     Загрузить
                                 </button> -->
@@ -361,7 +361,7 @@ export default {
       }
     },
 
-   
+
 };
 </script>
 
