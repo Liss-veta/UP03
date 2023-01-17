@@ -2,16 +2,37 @@
   <div class="mt-12 d-flex flex-column align-center justify-center">
     <!-- ДОБАВЛЕНИЕ ПОСТОВ -->
     <div class="w-75">
-        <v-text-field
-            label="Добавить пост"
-            append-inner-icon="mdi-plus"
-            class="text-pink-lighten-4"
+        <div class="w-100 d-flex align-strtech">
+          <v-text-field
+              v-model="text"
+              label="Добавить пост"
+              append-inner-icon="mdi-plus"
+              class="text-pink-lighten-4 w-75"
           ></v-text-field>
+          <div class="w-25 h-100">
+              <v-btn class="w-100 h-100" variant="outlined" color="pink-lighten-4" @click.prevent="add_post">
+                  Добавить
+              </v-btn>
+          </div>
+          </div>
         <div class="d-flex align-stretch justify-space-between">
             <v-row>
+              <v-col>
+                <v-select
+                v-model="category"
+                  class="text-pink-lighten-4"
+                  label="Select"
+                  :items="['Игры', 'Colorado', 'Florida', 'Georgia', 'Texas', 'Wyoming']"
+              ></v-select>
+              </v-col>
+              
             <v-col cols="12" sm="3">
                 <v-file-input
+                v-on:change="handleFileUpload()"
                 v-if="!show"
+                    ref="file"
+                    id="file"
+                    name="file"
                     label="Добавьте фотографию"
                     variant="filled"
                     class="text-pink-lighten-4"
@@ -38,9 +59,7 @@
             </transition>
         </v-col>
         <v-col cols="12" sm="3">
-             <v-btn class="w-100 h-75" variant="outlined" color="pink-lighten-4">
-                Добавить
-            </v-btn>
+             
         </v-col>
 
         </v-row>
@@ -81,78 +100,77 @@
     </div>
     <v-divider></v-divider>
     <!-- ПОСТЫ -->
-    <div class="w-75 mt-10">
-      <v-card class="bg-transparent">
-    <div class="post d-flex flex-row">
-      <v-tabs
-        v-model="tab"
-        direction="vertical"
-        color="pink-lighten-4"
-        class="d-flex flex-column justify-space-between"
-      >
-        <v-btn variant="outline" color="pink-lighten-4" class="h-33 d-flex flex-column align-center justify-center">
-          <!-- <v-icon start>
-            mdi-heart-outline
-          </v-icon> -->
-          <v-icon start>
-            mdi-heart
-          </v-icon>
-          <span>15</span>
-        </v-btn>
-        <v-tab class="h-33 d-flex align-center justify-center" value="option-1">
-          <v-icon large>
-            mdi-post
-          </v-icon>
-        </v-tab>
-        <v-tab value="option-2" class="h-33 d-flex align-center justify-center">
-          <v-icon>
-            mdi-comment-account
-          </v-icon>
-        </v-tab>
-      </v-tabs>
-      <v-window class="w-100" v-model="tab">
-        <v-window-item class="h-auto big_height" value="option-1">
-          <v-card class="h-auto bg-pink-lighten-3" style="align-self: stretch; align-content: stretch;" variant="tonal">
-            <v-card-title class="px-12 py-8 d-flex justify-space-between align-center">
-                <div class="d-flex w-25 align-center">
-                    <v-avatar size="60" class="mr-4" image="uploads/image 13.jpg"></v-avatar>
-                    <h4>Имя фамилия</h4>
-                </div>
-                <p class="text-disabled">22.12.2022</p>
-            </v-card-title>
-            <v-card-text class="w-100 d-flex px-12 pb-8">
-                <div class="w-50">
-                    <p class="text-body-1 pr-12 text-justify d-flex align-center">
-                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Natus voluptatum magni mollitia consequuntur, molestiae sequi distinctio ad suscipit ratione unde earum vitae consectetur praesentium quo autem laboriosam corporis quae fuga!                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Natus voluptatum magni mollitia consequuntur, molestiae sequi distinctio ad suscipit ratione unde earum vitae consectetur praesentium quo autem laboriosam corporis quae fuga!
-                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Natus voluptatum magni mollitia consequuntur, molestiae sequi distinctio ad suscipit ratione unde earum vitae consectetur praesentium quo autem laboriosam corporis quae fuga!
-                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Natus voluptatum magni mollitia consequuntur, molestiae sequi distinctio ad suscipit ratione unde earum vitae consectetur praesentium quo autem laboriosam corporis quae fuga!
-                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Natus voluptatum magni mollitia consequuntur, molestiae sequi distinctio ad suscipit ratione unde earum vitae consectetur praesentium quo autem laboriosam corporis quae fuga!
-                    </p>
-                </div>
-            <div class="w-50 align-stretch">
-                <v-carousel style="height: 100%" :show-arrows="false">
-                    <v-carousel-item
-                    v-for="(item,i) in items"
-                    :key="i"
-                    :src="item.src"
-                    cover
-                    ></v-carousel-item>
-                </v-carousel>
-            </div>
-            </v-card-text>
-          </v-card>
-        </v-window-item>
-        <v-window-item class="w-100 min_height" value="option-2">
-          <v-card style="align-self: stretch; align-content: stretch;" class="h-100 bg-pink-lighten-3" flat>
-            <v-card-text class="h-100">
-                <v-avatar image="uploads/image 13.jpg"></v-avatar>
-            </v-card-text>
-          </v-card>
-        </v-window-item>
-      </v-window>
+    <div class="d-flex align-center flex-column w-100" v-for="post in posts" :key="post">
+      <div class="w-75 mt-10" >
+        <v-card class="bg-transparent">
+      <div class="post d-flex flex-row">
+        <v-tabs
+          v-model="tab"
+          direction="vertical"
+          color="pink-lighten-4"
+          class="d-flex flex-column justify-space-between"
+        >
+          <v-btn variant="outline" color="pink-lighten-4" class="h-33 d-flex flex-column align-center justify-center">
+            <!-- <v-icon start>
+              mdi-heart-outline
+            </v-icon> -->
+            <v-icon start>
+              mdi-heart
+            </v-icon>
+            <span>15</span>
+          </v-btn>
+          <v-tab class="h-33 d-flex align-center justify-center" value="option-1">
+            <v-icon large>
+              mdi-post
+            </v-icon>
+          </v-tab>
+          <v-tab value="option-2" class="h-33 d-flex align-center justify-center">
+            <v-icon>
+              mdi-comment-account
+            </v-icon>
+          </v-tab>
+        </v-tabs>
+        <v-window class="w-100" v-model="tab">
+          <v-window-item class="h-auto big_height" value="option-1">
+            <v-card class="h-auto bg-pink-lighten-3" style="align-self: stretch; align-content: stretch;" variant="tonal">
+              <v-card-title class="px-12 py-8 d-flex justify-space-between align-center">
+                  <div class="d-flex w-25 align-center">
+                      <v-avatar size="60" class="mr-4" :image="post.avatar"></v-avatar>
+                      <h4>{{ post.name + " " + post.surname }}</h4>
+                  </div>
+                  <p class="text-disabled">{{ post.created_at }}</p>
+              </v-card-title>
+              <v-card-text class="w-100 d-flex px-12 pb-8">
+                  <div class="w-50">
+                      <p class="text-body-1 pr-12 text-justify d-flex align-center">
+                          {{ post.text }} {{ post.category }}
+                      </p>
+                  </div>
+              <div class="w-50 align-stretch">
+                <img :src="post.images" alt="">
+                  <v-carousel style="height: 100%" :show-arrows="false">
+                      <v-carousel-item
+                      :src="post.images"
+                      cover
+                      ></v-carousel-item>
+                  </v-carousel>
+              </div>
+              </v-card-text>
+            </v-card>
+          </v-window-item>
+          <v-window-item class="w-100 min_height" value="option-2">
+            <v-card style="align-self: stretch; align-content: stretch;" class="h-100 bg-pink-lighten-3" flat>
+              <v-card-text class="h-100">
+                  <v-avatar image="uploads/image 13.jpg"></v-avatar>
+              </v-card-text>
+            </v-card>
+          </v-window-item>
+        </v-window>
+      </div>
+    </v-card>
+      </div>
     </div>
-  </v-card>
-    </div>
+    
   </div>
 </template>
 <script>
@@ -160,8 +178,8 @@
 export default {
   data() {
     return {
-        show: false,
-        src_video: '',
+      show: false,
+      src_video: '',
       tab: 'option-1',
       amenities: [1, 4],
       neighborhoods: [1],
@@ -185,35 +203,77 @@ export default {
         'Хуйня',
       ],
       items: [
-          {
-            src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
-          },
-          {
-            src: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
-          },
-          {
-            src: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg',
-          },
-          {
-            src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
-          },
+          // {
+          //   src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
+          // },
+          // {
+          //   src: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
+          // },
+          // {
+          //   src: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg',
+          // },
+          // {
+          //   src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
+          // },
         ],
+      text: '',
+      category: '',
+      file: '',
+      posts: []
     };
   },
 
     mounted(){
+        console.log(this.posts)
         document.title = "Новости",
-        this.getBiggestHeight();
+        // this.getBiggestHeight();
+        this.all_post();
     },
 
     methods: {
-    getBiggestHeight() {
-        let biggestHeight = 0;
-        let elements = document.querySelector('.big_height').offsetHeight;
-        // console.log(elements);
-        document.querySelector('.min_height').style.height = elements + 'px';
-        // console.log(document.querySelector('.min_height'))
-        // console.log('biggestHeight = ' + biggestHeight + 'px');
+    // getBiggestHeight() {
+    //     let biggestHeight = 0;
+    //     let elements = document.querySelector('.big_height').offsetHeight;
+    //     // console.log(elements);
+    //     document.querySelector('.min_height').style.height = elements + 'px';
+    //     // console.log(document.querySelector('.min_height'))
+    //     // console.log('biggestHeight = ' + biggestHeight + 'px');
+    // },
+    handleFileUpload(){
+        this.file = this.$refs.file.files[0];
+    },
+    add_post(){
+      let formData = new FormData();
+            formData.append('text', this.text);
+            formData.append('category', this.category);
+            formData.append('file', this.file);
+            axios.post('/api/add_post',
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                },
+            ).then(r => {
+                this.text = ''
+                this.category = ''
+                this.file = ''
+                this.all_post();
+            })
+            .catch(function(){
+                console.log('FAILURE!!');
+            });
+    },
+    all_post(){
+      axios.get('/api/all_posts')
+        .then(res => {
+          console.log(res.data);
+          this.posts = res.data;
+          for (let index = 0; index < res.data.length; index++) {
+            this.items = res.data[index]['images']  
+            console.log(this.items);          
+          }
+        })
     }
   }
 };
