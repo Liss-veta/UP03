@@ -96,7 +96,7 @@
     <v-divider></v-divider>
     <!-- ПОСТЫ -->
     <div class="d-flex align-center flex-column w-100" v-for="post in posts" :key="post">
-      <div class="w-75 mt-10"  >
+      <div class="w-75 mt-10" >
         <v-card class="bg-transparent">
       <div class="post d-flex flex-row">
         <v-tabs
