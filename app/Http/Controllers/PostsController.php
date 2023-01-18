@@ -34,16 +34,14 @@ class PostsController extends Controller
         $post->category = $request->category;
 
         $images = $request->file('image');
-        
+
         $fullPath = '';
-
         foreach($images as $image){
-            $path = Storage::disk('local')->putFile('posts_img', $image);
-            $fullPath .=  'storage/'. $path .',';
+            $path = Storage::disk('local')->putFile('public/posts_img', $image) .',';
+            $fullPath .= Storage::url($path);
         }
-
         $post->images = $fullPath;
-
+    
         $post->save();
     }
 }

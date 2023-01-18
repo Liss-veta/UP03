@@ -144,6 +144,7 @@
                       </v-chip>
                   </div>
               <div class="w-50 align-stretch">
+                <img src="storage/app/posts_img/7hFs3WQt6LQFcof8fxJ9YHU4qhtzjCdAf8ajSToh.png" alt="">
                   <v-carousel style="height: 100%" :show-arrows="false">
                       <v-carousel-item
                       v-for="item in items"
