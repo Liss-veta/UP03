@@ -96,7 +96,7 @@
     <v-divider></v-divider>
     <!-- ПОСТЫ -->
     <div class="d-flex align-center flex-column w-100" v-for="post in posts" :key="post">
-      <div class="w-75 mt-10" :id="post.category">
+      <div class="w-75 mt-10"  >
         <v-card class="bg-transparent">
       <div class="post d-flex flex-row">
         <v-tabs
@@ -147,7 +147,7 @@
                 <img src="storage/app/posts_img/7hFs3WQt6LQFcof8fxJ9YHU4qhtzjCdAf8ajSToh.png" alt="">
                   <v-carousel style="height: 100%" :show-arrows="false">
                       <v-carousel-item
-                      v-for="item in items"
+                      v-for="item in post.items"
                       :key="item"
                       :src="item"
                       cover
@@ -274,13 +274,13 @@ export default {
     all_post(){
       axios.get('/api/all_posts')
         .then(res => {
-          // console.log(res.data);
           this.posts = res.data;
-          for (let index = 0; index < res.data.length; index++) {
-            this.items = res.data[index]['images'].split(',');
-
-            console.log(this.items);               
+          for (let index = 0; index < this.posts.length; index++) {
+            this.posts[index]['items'] = res.data[index]['images'].split(',');
+            this.posts[index]['items'].pop();
+            // console.log(this.items);               
           }
+          // console.log(this.posts);
         })
     }
   }
