@@ -30,6 +30,7 @@
                 <v-file-input
                 v-on:change="handleFileUpload()"
                 v-if="!show"
+                    multiple
                     ref="file"
                     id="file"
                     name="file"
@@ -145,7 +146,9 @@
               <div class="w-50 align-stretch">
                   <v-carousel style="height: 100%" :show-arrows="false">
                       <v-carousel-item
-                      :src="post.images"
+                      v-for="item in items"
+                      :key="item"
+                      :src="item"
                       cover
                       ></v-carousel-item>
                   </v-carousel>
@@ -237,13 +240,17 @@ export default {
     //     // console.log('biggestHeight = ' + biggestHeight + 'px');
     // },
     handleFileUpload(){
-        this.file = this.$refs.file.files[0];
+        this.file = this.$refs.file.files;
     },
     add_post(){
       let formData = new FormData();
             formData.append('text', this.text);
             formData.append('category', this.category);
-            formData.append('file', this.file);
+            
+            for (let index = 0; index < this.file.length; index++) {
+              let image = this.file[index];
+              formData.append('image[]', image);
+            }
             console.log(formData);
             axios.post('/api/add_post',
                 formData,
@@ -255,7 +262,8 @@ export default {
             ).then(r => {
                 this.text = ''
                 this.category = ''
-                this.file = ''
+                //this.file = ''
+                // console.log(this.file);
                 this.all_post();
             })
             .catch(function(){
@@ -267,6 +275,11 @@ export default {
         .then(res => {
           // console.log(res.data);
           this.posts = res.data;
+          for (let index = 0; index < res.data.length; index++) {
+            this.items = res.data[index]['images'].split(',');
+
+            console.log(this.items);               
+          }
         })
     }
   }

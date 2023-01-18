@@ -32,30 +32,18 @@ class PostsController extends Controller
         $post->id_user = $id_user;
         $post->text = $request->text;
         $post->category = $request->category;
-        $image = $request->file('file');
-        // dd($image->getClientOriginalName());
-        if ($image) {
-            $path = Storage::putFile('public/posts_img', $image);
-            $post->images = Storage::url($path);
+
+        $images = $request->file('image');
+        
+        $fullPath = '';
+
+        foreach($images as $image){
+            $path = Storage::disk('local')->putFile('posts_img', $image);
+            $fullPath .=  'storage/'. $path .',';
         }
+
+        $post->images = $fullPath;
+
         $post->save();
     }
-    // public function add_post(Request $request)
-    // {
-    //     //$fileName = $request->file('images')->getClientOriginalName();
-
-    //     $fileName = $request->file('file')->store('/posts_img');
-    //     $data = $request->all();
-    //     $image = $request->file('file');
-    //     if ($image) {
-    //         $path = Storage::putFile('public', $image);
-    //         $data->image = Storage::url($path);
-    //     }
-    //     $data['images'] = $fileName;
-    //     $data['id_user'] = Auth::user()->id;
-
-    //     //$request->file->move(public_path('posts_img'), $fileName);
-
-    //     Post::query()->create($data);
-    // }
 }
