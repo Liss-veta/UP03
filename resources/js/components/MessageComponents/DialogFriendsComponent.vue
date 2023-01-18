@@ -1,5 +1,5 @@
 <template>
-    <div class="w-85 mx-auto" v-for="index in 10" :key="index">
+    <div class="w-75 mx-auto" v-for="index in 10" :key="index">
         <div class="pa-4 d-flex text-white">
             <v-badge dot color="success">
                 <!-- Аватарка друга -->

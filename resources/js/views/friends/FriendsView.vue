@@ -1,5 +1,5 @@
 <template>
-        <div class="d-flex justify-end">
+        <div class="d-flex justify-center">
             <FriendsComponent/>
         </div>
 </template>

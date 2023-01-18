@@ -1,5 +1,5 @@
 <template>
-    <div class="w-90 mt-6">
+    <div class="w-75 mt-6">
         <div class="tab-adap">
             <v-tabs
             class="mb-4"

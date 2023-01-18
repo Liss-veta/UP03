@@ -1,7 +1,7 @@
 <template>
-        <div class="d-flex justify-space-around">
+        <div class="d-flex justify-center mt-12">
             <!-- Левая часть мессенджера -->
-            <div class="w-60 ml-12">
+            <div class="w-50 ml-12">
                 <DialogComponent/>
             </div>
             <!-- Правая часть мессенджера -->

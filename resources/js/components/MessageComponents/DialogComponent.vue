@@ -1,7 +1,7 @@
 <template>
     <!-- Блок диалога -->
-    <div class="d-flex pb-6" v-for="index in 10" :key="index">
-        <div class="pa-4 d-flex text-white border-pink">
+    <div class="d-flex pb-6 mb-4" v-for="index in 10" :key="index">
+        <div class="pa-6 d-flex text-white border-pink">
             <!-- Следующая строка фрагмент "content" счетчик новых сообщений -->
             <v-badge content="+1" color="success">
                 <!-- Аватарка друга -->
