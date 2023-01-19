@@ -121,8 +121,9 @@
               </v-window-item>
               <v-window-item class="w-100 min_height" value="option-2">
                 <v-card style="align-self: stretch; align-content: stretch;" class="h-100 bg-pink-lighten-3" flat>
-                  <v-card-text class="h-100" style="min-height: 25vw;">
-                    <div class="d-flex w-100 align-center mb-4" v-for="comment in post.comments" :key="comment"
+                  <v-card-text class="h-100 d-flex flex-column justify-space-between" style="min-height: 25vw; max-height: 25vw;">
+                    <div style=" overflow-y: auto;">
+                        <div class="d-flex w-100 align-center mb-4" v-for="comment in post.comments" :key="comment"
                       v-if="post.comments.length != 0">
                       <v-banner lines="three w-100" class="bg-transparent">
                         <div class="d-flex align-center justify-space-between mb-2">
@@ -138,10 +139,12 @@
                         <p class="pl-2">{{ comment.comm }}</p>
                       </v-banner>
                     </div>
-                    <div v-else>
-                      Комментарии отсутствуют
+                    <div v-else class="ma-auto">
+                      <h4 class="text-h5">Комментарии отсутствуют</h4>
                     </div>
-                    <div class="d-flex">
+                    </div>
+
+                    <div class="d-flex position-sticky">
                       <v-text-field class="w-90" label="Оставьте комментарий" hint="какой должен быть коммент"
                         v-model="comm"></v-text-field>
                       <v-btn class="py-2 mt-3 ml-4" color="indigo" variant="outlined" icon size="small"
@@ -270,7 +273,7 @@ export default {
       ).then(r => {
         this.text = ''
         this.category = ''
-        //this.file = ''
+        this.file = ''
         // console.log(this.file);
         this.all_post();
         // this.output_comm();
@@ -285,7 +288,7 @@ export default {
           if (res.data.data != []) {
             this.posts = res.data.data;
           }
-          
+
           console.log(this.posts);
           this.posts.forEach(post => {
             post.tab = "option-1";
@@ -295,7 +298,7 @@ export default {
           for (let index = 0; index < this.posts.length; index++) {
             this.posts[index]['items'] = res.data.data[index]['images'].split(',');
             this.posts[index]['items'].pop();
-            // console.log(this.items);               
+            // console.log(this.items);
           }
         })
     },

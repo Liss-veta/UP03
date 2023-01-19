@@ -1,7 +1,8 @@
 <template>
-        <div class="d-flex justify-center mt-12">
+    <div class="w-100 d-flex justify-center">
+         <div class="d-flex justify-space-between w-75 mt-12">
             <!-- Левая часть мессенджера -->
-            <div class="w-50 ml-12">
+            <div class="w-75">
                 <DialogComponent/>
             </div>
             <!-- Правая часть мессенджера -->
@@ -9,6 +10,8 @@
                 <DialogFriendsComponent/>
             </div>
         </div>
+    </div>
+
 </template>
 
 <script>
