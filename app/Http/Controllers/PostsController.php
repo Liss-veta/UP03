@@ -22,11 +22,19 @@ class PostsController extends Controller
 
     public function posts_user()
     {
-        $id = Auth::user()->id;
-        return DB::table('users')
-            ->join('posts', 'posts.id_user', '=', 'users.id')
-            ->where('id_user', '=', $id)
-            ->get();
+        return PostResource::collection(Post::all()->where('id_user', '=', Auth::user()->id));
+    }
+
+    public function posts_user_view($id)
+    {
+        return PostResource::collection(Post::all()->where('id_user', '=', $id));
+    }
+
+    public function delete_post($id)
+    {
+        $post = Post::find($id);
+        $post->delete();
+        return Post::all();
     }
 
     public function add_post(Request $request) {

@@ -71,7 +71,7 @@ export default {
                         localStorage.setItem("age", r.data["age"]);
                         localStorage.setItem("city", r.data["city"]);
                         if (r.data["role"] == 0) {
-                            this.$router.push("/dashboard");
+                            this.$router.push("/profile");
                         } else {
                             this.$router.push("/admin");
                         }

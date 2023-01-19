@@ -84,7 +84,8 @@
                   <v-card-text class="w-100 d-flex px-12 py-8">
                     <div class="w-50">
                       <div class="d-flex w-75 align-center mb-4">
-                        <router-link class="d-flex align-center text-black" v-if="id != post.id_user" :to="{ path: '/user/' + post.id_user }">
+                        <router-link class="d-flex align-center text-black" v-if="id != post.id_user"
+                          :to="{ path: '/user/' + post.id_user }">
                           <v-avatar size="90" class="mr-4"
                             v-if="post.users.avatar == 'NULL' || post.users.avatar == '../uploads/undefined'"
                             image="img/no_avatar.jpg"></v-avatar>
@@ -121,7 +122,8 @@
               <v-window-item class="w-100 min_height" value="option-2">
                 <v-card style="align-self: stretch; align-content: stretch;" class="h-100 bg-pink-lighten-3" flat>
                   <v-card-text class="h-100" style="min-height: 25vw;">
-                    <div class="d-flex w-100 align-center mb-4" v-for="comment in post.comments" :key="comment" v-if="post.comments.length != 0">
+                    <div class="d-flex w-100 align-center mb-4" v-for="comment in post.comments" :key="comment"
+                      v-if="post.comments.length != 0">
                       <v-banner lines="three w-100" class="bg-transparent">
                         <div class="d-flex align-center justify-space-between mb-2">
                           <div class="d-flex align-center">
@@ -213,7 +215,7 @@ export default {
     document.title = "Новости",
       // this.getBiggestHeight();
       this.all_post();
-    this.output_comm();
+    // this.output_comm();
   },
   methods: {
     add_comm(id_post) {
@@ -223,16 +225,18 @@ export default {
       axios.post('/api/add_comm', formData)
         .then(res => {
           this.comm = '';
-          this.output_comm();
+          // this.posts[id_post]
+          this.all_post()
+          // this.output_comm();
         })
     },
-    output_comm() {
-      axios.get('/api/output_comm')
-        .then(res => {
-          // console.log(res.data);
-          this.comments = res.data;
-        })
-    },
+    // output_comm() {
+    //   axios.get('/api/output_comm')
+    //     .then(res => {
+    //       console.log(res.data);
+    //       this.comments = res.data;
+    //     })
+    // },
     getHumanDate: function (date) {
       return moment(date).fromNow();
     },
@@ -269,6 +273,7 @@ export default {
         //this.file = ''
         // console.log(this.file);
         this.all_post();
+        // this.output_comm();
       })
         .catch(function () {
           console.log('FAILURE!!');
@@ -277,9 +282,13 @@ export default {
     all_post() {
       axios.get('/api/all_posts')
         .then(res => {
-          this.posts = res.data.data;
+          if (res.data.data != []) {
+            this.posts = res.data.data;
+          }
+          
+          console.log(this.posts);
           this.posts.forEach(post => {
-            post.tab = null;
+            post.tab = "option-1";
             post.countLikes = post.likes.length;
           });
           console.log(this.posts);
@@ -290,7 +299,7 @@ export default {
           }
         })
     },
-    addLike(idPost, index){
+    addLike(idPost, index) {
       axios.post('/api/likes/create', {
         'id_post': idPost
       }).then(res => {

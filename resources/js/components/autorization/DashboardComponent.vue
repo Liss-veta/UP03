@@ -1,107 +1,85 @@
 <template>
     <div class="w-100 d-flex justify-end flex-column">
         <div class="w-100 bg-grad d-flex flex-column justify-end align-end pb-4">
-            <h2 class="text-h3 mb-2 w-60"><span>{{ this.$store.state.user.name + ' ' + this.$store.state.user.surname}}</span>, <span v-if="this.$store.state.user.age != 'NULL' || this.$store.state.user.age != 'undefined'">{{ this.$store.state.user.age }}</span></h2>
-            <h3 class="text-h4 w-60" v-if="this.$store.state.user.city != 'NULL'">{{this.$store.state.user.city}}</h3>
+            <h2 class="text-h3 mb-2 w-60"><span>{{
+                this.$store.state.user.name + ' ' +
+                    this.$store.state.user.surname
+            }}</span>, <span
+                    v-if="this.$store.state.user.age != 'NULL' || this.$store.state.user.age != 'undefined'">{{
+                        this.$store.state.user.age
+                    }}</span></h2>
+            <h3 class="text-h4 w-60" v-if="this.$store.state.user.city != 'NULL'">{{ this.$store.state.user.city }}</h3>
         </div>
         <div class="d-flex flex-row align-end">
-            <img class="avatar" src="img/no_avatar.jpg"
-                v-if="
-                    this.$store.state.avatar === 'NULL' ||
-                    this.$store.state.avatar === '../uploads/undefined'"
-                alt=""/>
-            <img class="avatar" :src="this.$store.state.avatar"
-                alt=""  v-else />
-            <img v-on:click="edit = 'show'" class="edit_avatar"
-                src="img/Edit Profile.png" alt="" />
+            <img class="avatar" src="img/no_avatar.jpg" v-if="
+            this.$store.state.avatar === 'NULL' ||
+            this.$store.state.avatar === '../uploads/undefined'" alt="" />
+            <img class="avatar" :src="this.$store.state.avatar" alt="" v-else />
+            <img v-on:click="edit = 'show'" class="edit_avatar" src="img/Edit Profile.png" alt="" />
         </div>
         <div class="w-100 d-flex justify-end">
             <div class="w-60 d-flex justify-space-between">
-                <v-btn variant="outlined" color="pink-lighten-4" class="w-25 mt-n12" v-on:click="edit_data = 'show'">Редактировать профиль</v-btn>
+                <v-btn variant="outlined" color="pink-lighten-4" class="w-25 mt-n12"
+                    v-on:click="edit_data = 'show'">Редактировать профиль</v-btn>
                 <div class="w-50 mt-min text-pink-lighten-4 d-flex text-h4 justify-space-around mr-12">
                     <p class="d-flex flex-column align-center">
                         <span>{{ col_true }}</span>
                         <span>дру{{ ending }}</span>
                     </p>
                     <p class="d-flex flex-column align-center">
-                        <span>55</span>
-                        <span>постов</span>
+                        <span>{{ posts }}</span>
+                        <span>{{ post_ending }}</span>
                     </p>
                 </div>
             </div>
         </div>
     </div>
-     <div class="d-f">
+    <div class="d-f">
         <div class="all_info">
-             <!-- <div class="info_user"> -->
-                <transition name="bounce">
-                    <div v-if="edit == 'show'" class="modal_bg">
-                        <div class="modal">
-                            <div class="modal_header">
-                                <img
-                                    v-on:click="edit = 'none'"
-                                    src="img/Close.png"
-                                    alt=""
-                                />
-                            </div>
-                            <div class="modal_body">
-                                <img
-                                    class="avatar"
-                                    src="img/no_avatar.jpg"
-                                    v-if="
-                                        this.$store.state.avatar === 'NULL' ||
-                                        this.$store.state.avatar === 'undefined'
-                                    "
-                                    alt=""
-                                />
-                                <img
-                                    class="avatar ml-0"
-                                    :src="this.$store.state.avatar"
-                                    alt=""
-                                    v-else
-                                />
-                                <label for="file">Выберите аватарку</label>
-                                <input
-                                    type="file"
-                                    id="file"
-                                    ref="file"
-                                    required
-                                    v-on:change="handleFileUpload()"
-                                />
-                                <p v-show="file.name">{{ file.name }}</p>
-                                <button @click.prevent="submitFile()">
-                                    Загрузить
-                                </button>
-                            </div>
+            <!-- <div class="info_user"> -->
+            <transition name="bounce">
+                <div v-if="edit == 'show'" class="modal_bg">
+                    <div class="modal">
+                        <div class="modal_header">
+                            <img v-on:click="edit = 'none'" src="img/Close.png" alt="" />
+                        </div>
+                        <div class="modal_body">
+                            <img class="avatar" src="img/no_avatar.jpg" v-if="
+                                this.$store.state.avatar === 'NULL' ||
+                                this.$store.state.avatar === 'undefined'
+                            " alt="" />
+                            <img class="avatar ml-0" :src="this.$store.state.avatar" alt="" v-else />
+                            <label for="file">Выберите аватарку</label>
+                            <input type="file" id="file" ref="file" required v-on:change="handleFileUpload()" />
+                            <p v-show="file.name">{{ file.name }}</p>
+                            <button @click.prevent="submitFile()">
+                                Загрузить
+                            </button>
                         </div>
                     </div>
-                </transition>
+                </div>
+            </transition>
         </div>
         <div>
-                <transition name="bounce">
-                    <div v-if="edit_data == 'show'" class="modal_bg">
-                        <div class="modal">
-                            <div class="modal_header">
-                                <img
-                                    v-on:click="edit_data = 'none'"
-                                    src="img/Close.png"
-                                    alt=""
-                                />
-                            </div>
-                            <div class="modal_body">
-                                <ChangeComponent v-if="show == 'change'"></ChangeComponent>
-                                <DataOrderComponent
-                                    v-else-if="show == 'data_order'"
-                                ></DataOrderComponent>
-                            </div>
+            <transition name="bounce">
+                <div v-if="edit_data == 'show'" class="modal_bg">
+                    <div class="modal">
+                        <div class="modal_header">
+                            <img v-on:click="edit_data = 'none'" src="img/Close.png" alt="" />
+                        </div>
+                        <div class="modal_body">
+                            <ChangeComponent v-if="show == 'change'"></ChangeComponent>
+                            <DataOrderComponent v-else-if="show == 'data_order'"></DataOrderComponent>
                         </div>
                     </div>
-                </transition>
+                </div>
+            </transition>
         </div>
     </div>
 </template>
 
 <script>
+import { EMPTY_ARR } from "@vue/shared";
 import HeaderComponent from "../header_footer/HeaderComponent.vue";
 import ChangeComponent from "./ChangeComponent.vue";
 import DataOrderComponent from "./DataOrderComponent.vue";
@@ -125,10 +103,10 @@ export default {
             edit_data: "none",
             col_true: 0,
             ending: '',
-            posts: []
+            posts: 0,
+            post_ending: 'постов'
         };
     },
-
     mounted() {
         if (localStorage.getItem("x_xsrf_token")) {
             HeaderComponent.data.token = localStorage.getItem("x_xsrf_token");
@@ -153,11 +131,59 @@ export default {
     },
 
     methods: {
-        getPosts_user(){
+        getPosts_user() {
             axios.get('/api/user_post')
                 .then(res => {
-                    console.log(res.data);
-                    this.posts = res.data;
+                    this.posts = 0
+                    this.posts = res.data.data.length;
+                    // console.log(res.data.data);
+                    // if (this.posts.length != 0) {
+                    //     let i = this.posts;
+                    //     if (i > 100) {
+                    //         i = i % 100
+                    //         if (i == 1) {
+                    //             this.post_ending = 'пост'
+                    //         }
+                    //         else if (i > 1 && i < 5) {
+                    //             this.post_ending = 'поста'
+                    //         }
+                    //         else {
+                    //             this.post_ending = 'постов'
+                    //         }
+
+                    //     }
+                    //     else if (i > 20 && i < 100) {
+                    //         i = i % 10
+                    //         if (i == 1) {
+                    //             this.post_ending = 'пост'
+                    //         }
+                    //         else if (i > 1 && i < 5) {
+                    //             this.post_ending = 'поста'
+                    //         }
+                    //         else {
+                    //             this.post_ending = 'постов'
+                    //         }
+
+                    //     }
+                    //     else if (i > 10 && i < 20) {
+                    //         i = i % 10
+                    //         this.post_ending = 'постов'
+                    //     }
+                    //     else {
+                    //         if (i == 1) {
+                    //             this.post_ending = 'пост'
+                    //         }
+                    //         else if (i > 1 && i < 5) {
+                    //             this.post_ending = 'поста'
+                    //         }
+                    //         else {
+                    //             this.post_ending = 'постов'
+                    //         }
+                    //     }
+
+                    //     this.getPosts_user()
+                    // }
+
                 })
         },
         getId() {
@@ -242,36 +268,36 @@ export default {
             });
         },
 
-        friends_request(){
-                axios.get(`/api/friends/${this.id}`)
-                    .then(res => {
-                            this.requests_0 = res.data[0];
-                            this.requests_1 = res.data[1];
+        friends_request() {
+            axios.get(`/api/friends/${this.id}`)
+                .then(res => {
+                    this.requests_0 = res.data[0];
+                    this.requests_1 = res.data[1];
 
-                            this.col_true = 0;
+                    this.col_true = 0;
 
-                            for (let index = 0; index < res.data.length; index++) {
-                                console.log(res.data[index]);
-                                if(res.data[index] != 0){
-                                    for (let index1 = 0; index1 < res.data[index].length; index1++) {
-                                        if(res.data[index][index1]['status'] == 'true'){
-                                            this.col_true++;
-                                        }
-                                    }
+                    for (let index = 0; index < res.data.length; index++) {
+                        // console.log(res.data[index]);
+                        if (res.data[index] != 0) {
+                            for (let index1 = 0; index1 < res.data[index].length; index1++) {
+                                if (res.data[index][index1]['status'] == 'true') {
+                                    this.col_true++;
                                 }
                             }
+                        }
+                    }
 
-                            if(this.col_true == 1){
-                                this.ending = 'г'
-                            }
-                            else if(this.col_true > 1 && this.col_true < 5){
-                                this.ending = 'га'
-                            }
-                            else{
-                                this.ending = 'зей'
-                            }
-                    })
-            },
+                    if (this.col_true == 1) {
+                        this.ending = 'г'
+                    }
+                    else if (this.col_true > 1 && this.col_true < 5) {
+                        this.ending = 'га'
+                    }
+                    else {
+                        this.ending = 'зей'
+                    }
+                })
+        },
     },
 };
 </script>
@@ -280,30 +306,38 @@ export default {
 .mt-min {
     margin-top: -7%;
 }
-.w-60{
+
+.w-60 {
     width: 67%;
 }
-.bg-grad{
+
+.bg-grad {
     height: 300px;
     background: #7986CB;
 }
+
 .bounce-enter-active {
     animation: bounce-in 0.5s;
 }
+
 .bounce-leave-active {
     animation: bounce-in 0.5s reverse;
 }
+
 @keyframes bounce-in {
     0% {
         transform: scale(0);
     }
+
     50% {
         transform: scale(1.25);
     }
+
     100% {
         transform: scale(1);
     }
 }
+
 .modal_bg {
     width: 100%;
     height: 60vw;
@@ -316,6 +350,7 @@ export default {
     justify-content: center;
     align-items: center;
 }
+
 .modal {
     margin-top: 5%;
     padding: 20px;
@@ -325,9 +360,11 @@ export default {
     display: flex;
     flex-direction: column;
 }
+
 .modal input[type="file"] {
     display: none;
 }
+
 .modal label {
     color: white;
     font-family: "Comfortaa", serif;
@@ -335,11 +372,13 @@ export default {
     cursor: pointer;
     transition: 0.5s;
 }
+
 .modal label:hover {
     background: #f8bbd0;
     color: #212529;
     font-weight: bold;
 }
+
 .modal button {
     width: 40%;
     height: 40px;
@@ -352,17 +391,20 @@ export default {
     cursor: pointer;
     transition: 0.5s;
 }
+
 .modal button:hover {
     background: #f8bbd0;
     color: #212529;
     font-weight: bold;
 }
+
 .modal_header img {
     float: right;
     margin: 20px;
     width: 50px;
     cursor: pointer;
 }
+
 .modal_body {
     display: flex;
     flex-direction: column;
@@ -370,33 +412,40 @@ export default {
     align-items: center;
     gap: 1vw;
 }
+
 .modal_body label {
     border: 2px #f8bbd0 solid;
     padding: 15px 50px;
     border-radius: 10px;
 }
+
 .slide-fade-enter-active {
     transition: all 0.5s ease;
 }
+
 .slide-fade-leave-active {
     transition: all 0.5s;
 }
+
 .slide-fade-enter,
 .slide-fade-leave-to {
     transform: translateX(200px);
     opacity: 0;
 }
+
 .d-f {
     margin-top: 100px;
     display: flex;
     align-items: flex-start;
     justify-content: space-evenly;
 }
+
 .all_info {
     display: flex;
     flex-direction: column;
     gap: 5px;
 }
+
 .info_user {
     background: rgba(22, 24, 27, 0.7);
     width: auto;
@@ -408,6 +457,7 @@ export default {
     align-items: center;
     gap: 25px;
 }
+
 .avatar {
     width: 300px;
     height: 300px;
@@ -416,6 +466,7 @@ export default {
     border: 2px rgba(255, 255, 255, 0.5) solid;
     object-fit: cover;
 }
+
 .edit_avatar {
     border: none;
     cursor: pointer;
@@ -424,15 +475,18 @@ export default {
     margin-bottom: -20px;
     margin-left: -30px;
 }
+
 .info_user p {
     color: white;
     font-family: "Comfortaa", serif;
     font-size: 20px;
 }
+
 .info_user p:last-child {
     font-family: "Roboto", sans-serif;
     font-size: 16px;
 }
+
 .click {
     width: 290px;
     height: 85px;
@@ -442,30 +496,35 @@ export default {
     cursor: pointer;
     background: rgba(22, 24, 27, 0.7);
 }
+
 .active {
     background: rgba(175, 49, 49, 0.58);
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
     transition: 0.5s;
 }
+
 .click p {
     font-size: 20px;
     font-family: "Comfortaa", serif;
     color: white;
     cursor: pointer;
 }
+
 .info_data {
     background: rgba(22, 24, 27, 0.7);
     border-radius: 15px;
     padding: 50px;
     margin-bottom: 100px;
 }
+
 .pagination,
 a {
     color: #af3131;
     font-size: 18px;
     font-family: "Comfortaa", serif;
 }
+
 h2 {
     font-family: "Comfortaa", serif;
     font-size: 32px;
@@ -473,59 +532,74 @@ h2 {
     margin-top: 15px;
     margin-bottom: 30px;
 }
+
 @media screen and (max-width: 1025px) {
-    .all_info{
+    .all_info {
         width: 200px;
     }
-    .info_user p{
+
+    .info_user p {
         font-size: 17px;
     }
-    .click{
+
+    .click {
         width: 200px;
     }
-    .click p{
+
+    .click p {
         font-size: 17px;
     }
-    .avatar{
+
+    .avatar {
         width: 100px;
         height: 100px;
     }
 }
+
 @media screen and (max-width: 900px) {
-    .d-f{
+    .d-f {
         flex-direction: column;
         align-items: center;
         justify-content: center;
     }
-    .all_info{
+
+    .all_info {
         width: auto;
     }
-    .info_user{
+
+    .info_user {
         width: 70vw;
     }
-    .click{
+
+    .click {
         width: 70vw;
     }
-    .pagination{
+
+    .pagination {
         text-align: center;
         margin-top: 50px;
     }
-    h2{
+
+    h2 {
         text-align: center;
         margin-bottom: 50px;
     }
-    .info_data{
+
+    .info_data {
         padding: 30px;
     }
-    .modal_body{
+
+    .modal_body {
         gap: 10vw;
     }
-    .modal label{
+
+    .modal label {
         font-size: 17px;
         padding: 2vw 3.5vw;
         text-align: center;
     }
-    .modal button{
+
+    .modal button {
         padding: 2vw 3.5vw;
         font-size: 13px;
         text-align: center;
@@ -533,7 +607,7 @@ h2 {
 }
 
 @media screen and (max-width: 540px) {
-    .d-f{
+    .d-f {
         width: 100%;
     }
 

@@ -3,7 +3,7 @@
         <div class="w-100 d-flex justify-end flex-column">
             <div class="w-100 bg-grad d-flex flex-column justify-end align-end pb-4">
                 <!-- Имя Возраст пользователя друга -->
-                <h2 class="text-h3 mb-2 w-60"><span>{{this.$store.state.check_profile.name}}</span>, <span>{{ this.$store.state.check_profile.age }}</span></h2>
+                <h2 class="text-h3 mb-2 w-60"><span>{{ user.name + " " + }}</span>, <span>{{ this.$store.state.check_profile.age }}</span></h2>
                 <!-- Город пользователя -->
                 <h3 class="text-h4 w-60">{{ user['city'] }}</h3>
             </div>
