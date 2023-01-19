@@ -50,21 +50,21 @@
     </div>
     <v-divider></v-divider>
     <!-- ПОСТЫ -->
-    <div class="d-flex align-center flex-column w-100" v-for="post in posts" :key="post">
+    <div class="d-flex align-center flex-column w-100" v-for="(post, index) in posts">
       <div class="w-75 mt-10">
         <v-card class="bg-transparent">
           <div class="post d-flex flex-row">
-            <v-tabs v-model="tab" direction="vertical" color="pink-lighten-4"
+            <v-tabs v-model="post.tab" direction="vertical" color="pink-lighten-4"
               class="d-flex flex-column justify-space-between">
               <v-btn variant="outline" color="pink-lighten-4"
-                class="h-33 d-flex flex-column align-center justify-center">
+                class="h-33 d-flex flex-column align-center justify-center" @click.prevent="addLike(post.id, index)">
                 <!-- <v-icon start>
               mdi-heart-outline
             </v-icon> -->
                 <v-icon start>
                   mdi-heart
                 </v-icon>
-                <span>15</span>
+                <span> {{ post.countLikes }} </span>
               </v-btn>
               <v-tab class="h-33 d-flex align-center justify-center" value="option-1">
                 <v-icon large>
@@ -77,7 +77,7 @@
                 </v-icon>
               </v-tab>
             </v-tabs>
-            <v-window class="w-100" v-model="tab">
+            <v-window class="w-100" v-model="post.tab">
               <v-window-item class="h-auto big_height" value="option-1">
                 <v-card class="h-auto bg-pink-lighten-3" style="align-self: stretch; align-content: stretch;"
                   variant="tonal">
@@ -86,17 +86,17 @@
                       <div class="d-flex w-75 align-center mb-4">
                         <router-link class="d-flex align-center text-black" v-if="id != post.id_user" :to="{ path: '/user/' + post.id_user }">
                           <v-avatar size="90" class="mr-4"
-                            v-if="post.avatar == 'NULL' || post.avatar == '../uploads/undefined'"
+                            v-if="post.users.avatar == 'NULL' || post.users.avatar == '../uploads/undefined'"
                             image="img/no_avatar.jpg"></v-avatar>
-                          <v-avatar size="90" class="mr-4" v-else :image="post.avatar"></v-avatar>
-                          <h4 class="text-h5 ">{{ post.name + " " + post.surname }}</h4>
+                          <v-avatar size="90" class="mr-4" v-else :image="post.users.avatar"></v-avatar>
+                          <h4 class="text-h5 ">{{ post.users.name + " " + post.users.surname }}</h4>
                         </router-link>
-                        <router-link v-else to="/dashboard">
+                        <router-link class="d-flex align-center text-black" v-else to="/dashboard">
                           <v-avatar size="90" class="mr-4"
-                            v-if="post.avatar == 'NULL' || post.avatar == '../uploads/undefined'"
+                            v-if="post.users.avatar == 'NULL' || post.users.avatar == '../uploads/undefined'"
                             image="img/no_avatar.jpg"></v-avatar>
-                          <v-avatar size="90" class="mr-4" v-else :image="post.avatar"></v-avatar>
-                          <h4 class="text-h5 ">{{ post.name + " " + post.surname }}</h4>
+                          <v-avatar size="90" class="mr-4" v-else :image="post.users.avatar"></v-avatar>
+                          <h4 class="text-h5 ">{{ post.users.name + " " + post.users.surname }}</h4>
                         </router-link>
                       </div>
                       <p class="text-disabled mb-4">{{ getHumanDate(post.created_at) }}</p>
@@ -107,32 +107,37 @@
                         {{ post.category }}
                       </v-chip>
                     </div>
-                    <div class="w-50 align-stretch">
-                      <img src="storage/app/posts_img/7hFs3WQt6LQFcof8fxJ9YHU4qhtzjCdAf8ajSToh.png" alt="">
+                    <div v-if="post.items.length > 1" class="w-50 align-stretch" style="max-height: 25vw;">
                       <v-carousel style="height: 100%" :show-arrows="false">
                         <v-carousel-item v-for="item in post.items" :key="item" :src="item" cover></v-carousel-item>
                       </v-carousel>
+                    </div>
+                    <div v-else class="w-50 align-stretch" style="max-height: 25vw;">
+                      <img :src="post.items[0]" class="w-100 h-100" style="object-fit: cover" alt="">
                     </div>
                   </v-card-text>
                 </v-card>
               </v-window-item>
               <v-window-item class="w-100 min_height" value="option-2">
                 <v-card style="align-self: stretch; align-content: stretch;" class="h-100 bg-pink-lighten-3" flat>
-                  <v-card-text class="h-100">
-                    <div class="d-flex w-100 align-center mb-4" v-for="comment in comments" :key="comment">
-                      <v-banner lines="three w-100" class="bg-transparent" v-if="comment.id_post == post.id">
+                  <v-card-text class="h-100" style="min-height: 25vw;">
+                    <div class="d-flex w-100 align-center mb-4" v-for="comment in post.comments" :key="comment" v-if="post.comments.length != 0">
+                      <v-banner lines="three w-100" class="bg-transparent">
                         <div class="d-flex align-center justify-space-between mb-2">
                           <div class="d-flex align-center">
                             <v-avatar size="50" class="mr-4"
-                              v-if="comment.avatar == 'NULL' || comment.avatar == '../uploads/undefined'"
+                              v-if="comment.user.avatar == 'NULL' || comment.user.avatar == '../uploads/undefined'"
                               image="img/no_avatar.jpg"></v-avatar>
-                            <v-avatar size="50" class="mr-4" v-else :image="comment.avatar"></v-avatar>
-                            <h4 class="text-h6 ">{{ comment.name + " " + comment.surname }}</h4>
+                            <v-avatar size="50" class="mr-4" v-else :image="comment.user.avatar"></v-avatar>
+                            <h4 class="text-h6 ">{{ comment.user.name + " " + comment.user.surname }}</h4>
                           </div>
                           <p class="text-disabled mb-4 mr-2">{{ getHumanDate(comment.created_at) }}</p>
                         </div>
                         <p class="pl-2">{{ comment.comm }}</p>
                       </v-banner>
+                    </div>
+                    <div v-else>
+                      Комментарии отсутствуют
                     </div>
                     <div class="d-flex">
                       <v-text-field class="w-90" label="Оставьте комментарий" hint="какой должен быть коммент"
@@ -159,7 +164,6 @@ export default {
     return {
       show: false,
       src_video: '',
-      tab: null,
       amenities: [1, 4],
       neighborhoods: [1],
       tags: [
@@ -227,7 +231,6 @@ export default {
         .then(res => {
           // console.log(res.data);
           this.comments = res.data;
-    console.clear();
         })
     },
     getHumanDate: function (date) {
@@ -253,7 +256,6 @@ export default {
         let image = this.file[index];
         formData.append('image[]', image);
       }
-      console.log(formData);
       axios.post('/api/add_post',
         formData,
         {
@@ -275,15 +277,26 @@ export default {
     all_post() {
       axios.get('/api/all_posts')
         .then(res => {
-          this.posts = res.data;
+          this.posts = res.data.data;
+          this.posts.forEach(post => {
+            post.tab = null;
+            post.countLikes = post.likes.length;
+          });
+          console.log(this.posts);
           for (let index = 0; index < this.posts.length; index++) {
-            this.posts[index]['items'] = res.data[index]['images'].split(',');
+            this.posts[index]['items'] = res.data.data[index]['images'].split(',');
             this.posts[index]['items'].pop();
             // console.log(this.items);               
           }
-          console.log(this.posts);
         })
-    }
+    },
+    addLike(idPost, index){
+      axios.post('/api/likes/create', {
+        'id_post': idPost
+      }).then(res => {
+        this.posts[index].countLikes = res.data.count;
+      });
+    },
   }
 };
 </script>

@@ -5,6 +5,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DeleteProductController;
 use App\Http\Controllers\DeleteUser;
 use App\Http\Controllers\FriendsController;
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\LoadAvatarController;
 use App\Http\Controllers\PostsController;
 use Illuminate\Http\Request;
@@ -54,3 +55,6 @@ Route::get('/user_post', [PostsController::class, 'posts_user']);
 
 Route::get('/output_comm', [CommentController::class, 'output_comm']);
 Route::post('/add_comm', [CommentController::class, 'add_comm']);
+
+Route::post('/likes/create',[LikeController::class, 'store']);
+Route::delete('/likes/{id}/delete', [LikeController::class, 'destroy']);

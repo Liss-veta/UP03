@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Http\Resources\PostResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -11,10 +13,11 @@ class PostsController extends Controller
 {
     public function all()
     {
-        return DB::table('users')
-            ->join('posts', 'posts.id_user', '=', 'users.id')
-            // ->where('id_user', '=', $id)
-            ->get();
+        // return DB::table('users')
+        //     ->join('posts', 'posts.id_user', '=', 'users.id')
+        //     // ->where('id_user', '=', $id)
+        //     ->get();
+        return PostResource::collection(Post::all());
     }
 
     public function posts_user()

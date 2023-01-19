@@ -9,7 +9,10 @@ use Illuminate\Support\Facades\DB;
 
 class CommentController extends Controller
 {
-    public function output_comm(Request $request)
+    public function all(){
+        return Comment::all();
+    }
+    public function output_comm()
     {
         return DB::table('comments')
             // ->join('posts', 'posts.id', '=', 'id_post')
