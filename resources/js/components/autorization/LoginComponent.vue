@@ -59,6 +59,7 @@ export default {
                         console.log(r);
                         this.email = "";
                         this.password = "";
+
                         localStorage.setItem(
                             "x_xsrf_token",
                             r.config.headers["X-XSRF-TOKEN"]

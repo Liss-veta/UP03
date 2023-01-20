@@ -12,7 +12,8 @@ export default createStore({
                 number: '',
                 age: '',
                 city: ''
-            }
+            },
+            isFocusRoom: false,
         }
     },
     mutations: {

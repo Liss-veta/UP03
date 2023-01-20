@@ -7,11 +7,13 @@ use App\Http\Controllers\DeleteUser;
 use App\Http\Controllers\FriendsController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\LoadAvatarController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PostsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\RoomController;
 use App\Http\Controllers\UserOutputController;
 
 /*
@@ -60,3 +62,10 @@ Route::post('/add_comm', [CommentController::class, 'add_comm']);
 
 Route::post('/likes/create',[LikeController::class, 'store']);
 Route::delete('/likes/{id}/delete', [LikeController::class, 'destroy']);
+
+Route::get('/rooms', [RoomController::class, 'all']);
+
+Route::get('/rooms/{id}/messages', [MessageController::class, 'all']);
+
+Route::get('/messages/{id}',[MessageController::class, 'getMessages']);
+Route::post('/messages/create', [MessageController::class, 'store']);

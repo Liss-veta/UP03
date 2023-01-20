@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Friends;
+use App\Models\Room;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -19,6 +20,11 @@ class FriendsController extends Controller
             'id_user' => $id_user,
             'id_friend' => $id_friend,
             'status' => 'false'
+        ]);
+        Room::create([
+            'name' => 'default',
+            'id_user' => $id_user,
+            'id_user_second' => $id_friend,
         ]);
     }
 
