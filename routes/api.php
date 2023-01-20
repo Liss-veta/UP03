@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AddProductController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DeleteProductController;
 use App\Http\Controllers\DeleteUser;
@@ -69,3 +70,5 @@ Route::get('/rooms/{id}/messages', [MessageController::class, 'all']);
 
 Route::get('/messages/{id}',[MessageController::class, 'getMessages']);
 Route::post('/messages/create', [MessageController::class, 'store']);
+
+Route::get('/category', [CategoryController::class, 'all']);

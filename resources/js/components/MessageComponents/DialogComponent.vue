@@ -88,7 +88,7 @@ export default {
             })
         },
         getHumanDate: function (date) {
-            return moment(date).fromNow();
+            return moment(date).format('LT');
         },
         fetchMessages(id){
             axios.get(`/api/messages/${id}`).then(response => {

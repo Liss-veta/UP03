@@ -41,7 +41,7 @@
           <v-slide-group-item v-for="n in 1" :key="n" class="w-100">
             <v-chip-group v-model="amenities" column multiple :color="isSelected ? 'green' : 'pink-lighten-4'">
               <v-chip filter variant="outlined" v-for="tag in tags" :key="tag">
-                {{ tag }}
+                  {{ tag }}                
               </v-chip>
             </v-chip-group>
           </v-slide-group-item>
@@ -50,7 +50,7 @@
     </div>
     <v-divider></v-divider>
     <!-- ПОСТЫ -->
-    <div class="d-flex align-center flex-column w-100" v-for="(post, index) in posts">
+    <div class="d-flex align-center flex-column w-100" v-for="(post, index) in posts" :key="index">
       <div class="w-75 mt-10">
         <v-card class="bg-transparent">
           <div class="post d-flex flex-row">
@@ -172,85 +172,67 @@ export default {
       amenities: [1, 4],
       neighborhoods: [1],
       tags: [
-        'Спорт',
-        'Музыка',
-        'Кино',
-        'Котяры',
-        'Капибары',
-        'Собакены',
-        'Еда',
-        'Мода',
-        'Еноты',
-        'Игры',
-        'Аниме',
-        'Айти',
-        'Автомобили',
-        'Такие как юра',
-        'Такие как юра',
-        'Киберспорт',
-        'Хуйня',
+        // 'Спорт',
+        // 'Музыка',
+        // 'Кино',
+        // 'Котяры',
+        // 'Капибары',
+        // 'Собакены',
+        // 'Еда',
+        // 'Мода',
+        // 'Еноты',
+        // 'Игры',
+        // 'Аниме',
+        // 'Айти',
+        // 'Автомобили',
+        // 'Такие как юра',
+        // 'Такие как юра',
+        // 'Киберспорт',
+        // 'Хуйня',
       ],
-      items: [
-        // {
-        //   src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
-        // },
-        // {
-        //   src: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
-        // },
-        // {
-        //   src: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg',
-        // },
-        // {
-        //   src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
-        // },
-      ],
+      items: [],
       text: '',
       category: '',
       file: '',
       posts: [],
       comments: [],
-      id: localStorage.getItem('id')
+      id: localStorage.getItem('id'),
+      select_filter: ''
     };
   },
 
   mounted() {
     console.log(this.posts)
     document.title = "Новости",
-      // this.getBiggestHeight();
       this.all_post();
-    // this.output_comm();
+      this.categories()
+      
   },
   methods: {
-    add_comm(id_post) {
+    getFilter(tag){
+        this.select_filter = tag;
+    },
+    categories(){
+      axios.get('/api/category')
+        .then(res =>{
+          for (let index = 0; index < res.data.length; index++) {
+             this.tags.push(res.data[index].category);       
+          }
+        })
+    },
+    add_comm(_id_post) {
       let formData = new FormData();
       formData.append('comm', this.comm);
       formData.append('id_post', this.id_post);
       axios.post('/api/add_comm', formData)
-        .then(res => {
+        .then(_res => {
           this.comm = '';
-          // this.posts[id_post]
           this.all_post()
-          // this.output_comm();
         })
     },
-    // output_comm() {
-    //   axios.get('/api/output_comm')
-    //     .then(res => {
-    //       console.log(res.data);
-    //       this.comments = res.data;
-    //     })
-    // },
     getHumanDate: function (date) {
       return moment(date).fromNow();
     },
-    // getBiggestHeight() {
-    //     let biggestHeight = 0;
-    //     let elements = document.querySelector('.big_height').offsetHeight;
-    //     // console.log(elements);
-    //     document.querySelector('.min_height').style.height = elements + 'px';
-    //     // console.log(document.querySelector('.min_height'))
-    //     // console.log('biggestHeight = ' + biggestHeight + 'px');
-    // },
     handleFileUpload() {
       this.file = this.$refs.file.files;
     },
@@ -270,13 +252,11 @@ export default {
             'Content-Type': 'multipart/form-data'
           }
         },
-      ).then(r => {
+      ).then(_r => {
         this.text = ''
         this.category = ''
         this.file = ''
-        // console.log(this.file);
         this.all_post();
-        // this.output_comm();
       })
         .catch(function () {
           console.log('FAILURE!!');

@@ -157,7 +157,7 @@ export default {
             .then(res => {
                 for (let index = 0; index < res.data.length; index++) {
                     this.states.push(res.data[index]['name']+" "+res.data[index]['surname'])
-                    console.log(this.states);
+                    // console.log(this.states);
                 }
             })
     },
