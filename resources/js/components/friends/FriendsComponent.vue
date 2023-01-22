@@ -51,7 +51,7 @@
             <v-window class="mt-6 w-76" v-model="tab">
                 <!-- Список друзей -->
                 <v-window-item value="one">
-                    <div class="d-flex pb-6" v-for="request in requests_0" :key="request">
+                    <div class="d-flex pb-6" v-for="request in requests" :key="request">
                         <row class="px-2 px-sm-4 px-md-4 px-lg-4 px-xl-4 py-1 d-flex align-center border-pink-hov w-100" v-if="request.status == 'true'">
                                 <!-- Аватарка друга -->
                                 <!-- Добавить ссылку -->
@@ -78,37 +78,10 @@
                                 </v-col>
                         </row>
                     </div>
-                    <div class="d-flex pb-6" v-for="request in requests_1" :key="request">
-                        <row class="px-2 px-sm-4 px-md-4 px-lg-4 px-xl-4 py-1 d-flex align-center border-pink-hov w-100" v-if="request.status == 'true'">
-                                <!-- Аватарка друга -->
-                                <!-- Добавить ссылку -->
-                                <v-col cols="2" sm="2" md="1" lg="1" xl="1" >
-                                    <v-avatar v-if="request.avatar === 'NULL'" image="img/no_avatar.jpg" size="50" class="mr-2"></v-avatar>
-                                    <v-avatar v-else :image="request.avatar" size="50" class="mr-2"></v-avatar>
-                                </v-col>
-                                <!-- Имя фамилия друга -->
-                                <!-- Добавить ссылку -->
-                                <v-col cols="5" sm="5" md="7" lg="7" xl="7">
-                                    <router-link :to="{ path: '/user/'+request.id_friend }"><h4>{{ request.name + ' ' + request.surname}}</h4></router-link>
-                                </v-col>
-                                <!-- Добавить в чс -->
-                                <v-col cols="2.5" sm="3" md="2" lg="2" xl="2">
-                                    <v-btn class="d-none d-sm-block d-md-block d-lg-block d-xl-block" variant="text" @click.prevent="block_friend(request.id)">Заблокировать</v-btn>
-                                    <v-btn class="d-block d-sm-none d-md-none d-lg-none d-xl-none" variant="outlined" color="pink-lighten-4" icon="mdi-account-cancel">
-                                    </v-btn>
-                                </v-col>
-                                <!-- Удалить из друзей -->
-                                <v-col cols="2.5" sm="2" md="2" lg="2" xl="2" >
-                                    <v-btn class="d-none d-sm-block d-md-block d-lg-block d-xl-block" variant="text" @click.prevent="delete_friend(request.id)">Удалить</v-btn>
-                                    <v-btn class="d-block d-sm-none d-md-none d-lg-none d-xl-none" variant="outlined" color="pink-lighten-4" icon="mdi-trash-can">
-                                    </v-btn>
-                                </v-col>
-                        </row>
-                    </div>
                 </v-window-item>
                 <!-- Список заявок в друзья -->
                 <v-window-item value="two">
-                    <div class="d-flex pb-6" v-for="request in requests_0" :key="request">
+                    <div class="d-flex pb-6" v-for="request in requests" :key="request">
                         <row class="px-4 py-1 d-flex align-center border-pink-hov w-100" v-if="request.status == 'false'">
                                 <!-- Аватарка друга -->
                                 <!-- Добавить ссылку -->
@@ -119,11 +92,12 @@
                                 <!-- Имя фамилия друга -->
                                 <!-- Добавить ссылку -->
                                 <v-col cols="7" sm="7"  md="9" lg="9" xl="9">
-                                    <h4>{{ request.name + ' ' + request.surname}}</h4>
+                                    <h4>{{ request.name + ' ' + request.surname }}</h4>
                                 </v-col>
                                 <!-- Принять в друзья -->
                                 <v-col cols="3" sm="4"  md="2" lg="2" xl="2">
-                                    <v-btn class="d-none d-sm-block d-md-block d-lg-block d-xl-block" variant="text" @click.prevent="accept_friend(request.id)">Принять</v-btn>
+                                    <v-btn class="d-none d-sm-block d-md-block d-lg-block d-xl-block" variant="text" v-if="request.id_friend == id" @click.prevent="accept_friend(request.id)">Принять</v-btn>
+                                    <v-btn class="d-none d-sm-block d-md-block d-lg-block d-xl-block" variant="text" v-else @click.prevent="delete_friend(request.id)">Отменить заявку</v-btn>
                                     <v-btn class="d-block d-sm-none d-md-none d-lg-none d-xl-none" variant="outlined" color="pink-lighten-4" icon="mdi-check">
                                     </v-btn>
                                 </v-col>
@@ -133,29 +107,7 @@
                 <!-- Черный список -->
                 <v-window-item value="three">
                     <!-- Цикл перебора списка -->
-                    <div class="d-flex pb-6" v-for="request in requests_0" :key="request">
-                        <row class="px-4 py-1 d-flex align-center border-pink-hov w-100"  v-if="request.status == 'block'">
-                                <!-- Аватарка друга -->
-                                <!-- Добавить ссылку -->
-                                <v-col cols="2" sm="2" md="1" lg="1" xl="1">
-                                    <v-avatar v-if="request.avatar === 'NULL'" image="img/no_avatar.jpg" size="50" class="mr-2"></v-avatar>
-                                    <v-avatar v-else :image="request.avatar" size="50" class="mr-2"></v-avatar>
-                                </v-col>
-                                <!-- Имя фамилия друга -->
-                                <!-- Добавить ссылку -->
-                                <v-col cols="7" sm="7"  md="9" lg="9" xl="9">
-                                    <h4>{{ request.name + ' ' + request.surname}}</h4>
-                                </v-col>
-                                <!-- Вытащить из чс -->
-                                <v-col cols="3" sm="4" md="2" lg="2" xl="2">
-                                    <v-btn class="d-none d-sm-block d-md-block d-lg-block d-xl-block" variant="text" @click.prevent="accept_friend(request.id)">Разблокировать</v-btn>
-                                    <v-btn class="d-block d-sm-none d-md-none d-lg-none d-xl-none" variant="outlined" color="pink-lighten-4" icon="mdi-account-check">
-                                    </v-btn>
-                                </v-col>
-                        </row>
-                    </div>
-                    <!-- Черный список -->
-                    <div class="d-flex pb-6" v-for="request in requests_1" :key="request">
+                    <div class="d-flex pb-6" v-for="request in requests" :key="request">
                         <row class="px-4 py-1 d-flex align-center border-pink-hov w-100"  v-if="request.status == 'block'">
                                 <!-- Аватарка друга -->
                                 <!-- Добавить ссылку -->
@@ -198,8 +150,7 @@
         data: ()=>({
             tab: null,
             id: localStorage.getItem("id"),
-            requests_0: [],
-            requests_1: [],
+            requests: [],
             col_true: 0,
             col_false: 0,
             col_block: 0,
@@ -209,45 +160,30 @@
             this.friends_request()
             axios.get('/api/five_users')
             .then(res => {
-                // console.log(res.data);
                 this.users = res.data;
-                console.log(this.users);
-
-                // console.log(Math.floor(Math.random() * res.data.length));
-
-                // for(let i = 0; i < 3; i++){
-                //     this.users = Math.floor(Math.random() * res.data.length);
-                // }
             })
-        },
-        updated() {
-
         },
 
         methods: {
             friends_request(){
                 axios.get(`/api/friends/${this.id}`)
                     .then(res => {
-                            this.requests_0 = res.data[0];
-                            this.requests_1 = res.data[1];
-
+                            console.log(res.data);
+                            this.requests = res.data;
                             this.col_true = 0;
                             this.col_false = 0;
                             this.col_block = 0;
-
-                            console.log(res.data)
+                            // console.log(res.data)
                             for(let count = 0; res.data.length > count; count++){
-                                    for(let count1 = 0; res.data[count].length > count1; count1++){
-                                        if(res.data[count][count1]['status'] == 'true'){
-                                            this.col_true++;
-                                        }
-                                        if(res.data[count][count1]['status'] == 'false'){
-                                            this.col_false++;
-                                        }
-                                        if(res.data[count][count1]['status'] == 'block'){
-                                            this.col_block++;
-                                        }
-                                    }
+                                if(res.data[count]['status'] == 'true'){
+                                    this.col_true++;
+                                }
+                                if(res.data[count]['status'] == 'false'){
+                                    this.col_false++;
+                                }
+                                if(res.data[count]['status'] == 'block'){
+                                    this.col_block++;
+                                }
                             }
 
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\FriendResource;
 use App\Models\Friends;
 use App\Models\Room;
 use Illuminate\Http\Request;
@@ -33,17 +34,16 @@ class FriendsController extends Controller
         Auth::user()->id;
         // return DB::table('users')->where('friends.id_friend',$id)->get();
 
-        $arr = [
-            DB::table('users')
+        $arr = DB::table('users')
             ->join('friends', 'friends.id_user', '=', 'users.id')
-            ->where('id_friend', '=', $id)
-            ->get(),
+            ->where('id_friend',$id or 'id_user',$id)
+            ->get();
+           
 
-            DB::table('users')
-            ->join('friends', 'friends.id_friend', '=', 'users.id')
-            ->where('id_user', '=', $id)
-            ->get(),
-        ];
+            // DB::table('users')
+            // ->join('friends', 'friends.id_friend', '=', 'users.id')
+            // ->where('id_user', '=', $id)
+            // ->get(),
 
         return $arr;
     }

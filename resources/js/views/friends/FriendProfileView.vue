@@ -176,7 +176,7 @@ export default {
             posts: [],
             comments: [],
             posts_count: 0,
-            post_ending: ''
+            post_ending: 'постов'
         }
     },
     mounted() {
@@ -186,24 +186,16 @@ export default {
         this.friends_request2()
         this.all_post()
         this.getPosts_user()
-        this.output_comm()
     },
     methods: {
-        add_comm(id_post) {
+        add_comm(_id_post) {
             let formData = new FormData();
             formData.append('comm', this.comm);
             formData.append('id_post', this.id_post);
             axios.post('/api/add_comm', formData)
-                .then(res => {
+                .then(_res => {
                     this.comm = '';
                     this.output_comm();
-                })
-        },
-        output_comm() {
-            axios.get('/api/output_comm')
-                .then(res => {
-                    // console.log(res.data);
-                    this.comments = res.data;
                 })
         },
         getHumanDate: function (date) {
@@ -221,48 +213,48 @@ export default {
                 .then(res => {
                     this.posts_count = 0
                     this.posts_count = res.data.data.length;
-                    let i = this.posts_count;
-                    if (i > 100) {
-                        i = i % 100
-                        if (i == 1) {
-                            this.post_ending = 'пост'
-                        }
-                        else if(i > 1 && i < 5){
-                            this.post_ending = 'поста'
-                        }
-                        else{
-                            this.post_ending = 'постов'
-                        }
+                    // let i = this.posts_count;
+                    // if (i > 100) {
+                    //     i = i % 100
+                    //     if (i == 1) {
+                    //         this.post_ending = 'пост'
+                    //     }
+                    //     else if(i > 1 && i < 5){
+                    //         this.post_ending = 'поста'
+                    //     }
+                    //     else{
+                    //         this.post_ending = 'постов'
+                    //     }
 
-                    }
-                    else if (i > 20 && i < 100) {
-                        i = i % 10
-                        if (i == 1) {
-                            this.post_ending = 'пост'
-                        }
-                        else if(i > 1 && i < 5){
-                            this.post_ending = 'поста'
-                        }
-                        else{
-                            this.post_ending = 'постов'
-                        }
+                    // }
+                    // else if (i > 20 && i < 100) {
+                    //     i = i % 10
+                    //     if (i == 1) {
+                    //         this.post_ending = 'пост'
+                    //     }
+                    //     else if(i > 1 && i < 5){
+                    //         this.post_ending = 'поста'
+                    //     }
+                    //     else{
+                    //         this.post_ending = 'постов'
+                    //     }
 
-                    }
-                    else if (i > 10 && i < 20) {
-                        i = i % 10
-                            this.post_ending = 'постов'
-                    }
-                    else {
-                        if (i == 1) {
-                            this.post_ending = 'пост'
-                        }
-                        else if(i > 1 && i < 5){
-                            this.post_ending = 'поста'
-                        }
-                        else{
-                            this.post_ending = 'постов'
-                        }
-                    }
+                    // }
+                    // else if (i > 10 && i < 20) {
+                    //     i = i % 10
+                    //         this.post_ending = 'постов'
+                    // }
+                    // else {
+                    //     if (i == 1) {
+                    //         this.post_ending = 'пост'
+                    //     }
+                    //     else if(i > 1 && i < 5){
+                    //         this.post_ending = 'поста'
+                    //     }
+                    //     else{
+                    //         this.post_ending = 'постов'
+                    //     }
+                    // }
                 })
         },
         all_post() {
@@ -305,26 +297,21 @@ export default {
                     }
                 },
             )
-                .then(res => {
-                    console.log(res);
+                .then(_res => {
+                    // console.log(res);
                     this.friends_request()
                 })
         },
 
         friends_request2() {
-            axios.get(`/api/friends/${this.id}`)
+            axios.get(`/api/friends/${this.my_id}`)
                 .then(res => {
-                    this.requests_0 = res.data[0];
-                    this.requests_1 = res.data[1];
-
                     this.col_true = 0;
-
+                    console.log(res.data);
                     for (let index = 0; index < res.data.length; index++) {
                         if (res.data[index] != 0) {
-                            for (let index1 = 0; index1 < res.data[index].length; index1++) {
-                                if (res.data[index][index1]['status'] == 'true') {
-                                    this.col_true++;
-                                }
+                            if (res.data[index]['status'] == 'true') {
+                                this.col_true++;
                             }
                         }
                     }
@@ -344,49 +331,23 @@ export default {
         friends_request() {
             axios.get(`/api/friends/${this.my_id}`)
                 .then(res => {
-                    console.log(res.data);
-                    this.requests_0 = res.data[0];
-                    this.requests_1 = res.data[1];
+                    // console.log(res.data);                    
 
-                    if (res.data[0].length == 0) {
-                        for (let index = 0; index < res.data[1].length; index++) {
-                            // console.log(res.data[1][index]);
-                            if (this.user['id'] == res.data[1][index]['id_friend'] || this.user['id'] == res.data[1][index]['id_user']) {
-                                if (res.data[1][index]['status'] == 'false') {
+                        for (let index = 0; index < res.data.length; index++) {
+                            if (this.user['id'] == res.data[index]['id_friend'] || this.user['id'] == res.data[index]['id_user']) {
+                                if (res.data[index]['status'] == 'false') {
                                     this.request_status = 'Заявка отправлена'
                                 }
 
-                                if (res.data[1][index]['status'] == 'true') {
+                                if (res.data[index]['status'] == 'true') {
                                     this.request_status = 'У вас в друзьях'
                                 }
 
-                                if (res.data[1][index]['status'] == 'block') {
+                                if (res.data[index]['status'] == 'block') {
                                     this.request_status = 'В черном списке'
                                 }
                             }
                         }
-
-                    }
-
-                    if (res.data[1].length == 0) {
-                        for (let index = 0; index < res.data[0].length; index++) {
-                            if (this.user['id'] == res.data[0][index]['id_friend'] || this.user['id'] == res.data[0][index]['id_user']) {
-                                if (res.data[0][index]['status'] == 'false') {
-                                    this.request_status = 'Заявка отправлена'
-                                }
-
-                                if (res.data[0][index]['status'] == 'true') {
-                                    this.request_status = 'У вас в друзьях'
-                                }
-
-                                if (res.data[0][index]['status'] == 'block') {
-                                    this.request_status = 'В черном списке'
-                                }
-                            }
-                        }
-                    }
-
-                    console.log(this.request_status)
 
                     if (this.request_status == 'Заявка отправлена' || this.request_status == 'В черном списке' || this.request_status == 'У вас в друзьях') {
                         this.check_add = true;
