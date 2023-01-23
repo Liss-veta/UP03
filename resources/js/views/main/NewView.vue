@@ -123,16 +123,26 @@
                 <v-card style="align-self: stretch; align-content: stretch;" class="h-100 bg-pink-lighten-3" flat>
                   <v-card-text class="h-100 d-flex flex-column justify-space-between" style="min-height: 25vw; max-height: 25vw;">
                     <div style=" overflow-y: auto;">
-                        <div class="d-flex w-100 align-center mb-4" v-for="comment in post.comments" :key="comment"
+                        <div class="d-flex w-100 align-center mb-4"
                       v-if="post.comments.length != 0">
-                      <v-banner lines="three w-100" class="bg-transparent">
+                      <v-banner lines="three w-100" class="bg-transparent"  v-for="comment in post.comments" :key="comment">
                         <div class="d-flex align-center justify-space-between mb-2">
                           <div class="d-flex align-center">
-                            <v-avatar size="50" class="mr-4"
-                              v-if="comment.user.avatar == 'NULL' || comment.user.avatar == '../uploads/undefined'"
-                              image="img/no_avatar.jpg"></v-avatar>
-                            <v-avatar size="50" class="mr-4" v-else :image="comment.user.avatar"></v-avatar>
-                            <h4 class="text-h6 ">{{ comment.user.name + " " + comment.user.surname }}</h4>
+                            <router-link class="d-flex align-center text-black" v-if="id != post.id_user"
+                          :to="{ path: '/user/' + post.id_user }">
+                          <v-avatar size="50" class="mr-4"
+                            v-if="post.users.avatar == 'NULL' || post.users.avatar == '../uploads/undefined'"
+                            image="img/no_avatar.jpg"></v-avatar>
+                          <v-avatar size="50" class="mr-4" v-else :image="post.users.avatar"></v-avatar>
+                          <h4 class="text-h6 ">{{ post.users.name + " " + post.users.surname }}</h4>
+                        </router-link>
+                        <router-link class="d-flex align-center text-black" v-else to="/dashboard">
+                          <v-avatar size="50" class="mr-4"
+                            v-if="post.users.avatar == 'NULL' || post.users.avatar == '../uploads/undefined'"
+                            image="img/no_avatar.jpg"></v-avatar>
+                          <v-avatar size="50" class="mr-4" v-else :image="post.users.avatar"></v-avatar>
+                          <h4 class="text-h6 ">{{ post.users.name + " " + post.users.surname }}</h4>
+                        </router-link>
                           </div>
                           <p class="text-disabled mb-4 mr-2">{{ getHumanDate(comment.created_at) }}</p>
                         </div>

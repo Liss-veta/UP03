@@ -22,6 +22,11 @@ class FriendsController extends Controller
             'id_friend' => $id_friend,
             'status' => 'false'
         ]);
+        Friends::create([
+            'id_user' => $id_friend,
+            'id_friend' => $id_user,
+            'status' => 'false'
+        ]);
         Room::create([
             'name' => 'default',
             'id_user' => $id_user,
@@ -34,11 +39,11 @@ class FriendsController extends Controller
         Auth::user()->id;
         // return DB::table('users')->where('friends.id_friend',$id)->get();
 
-        $arr = DB::table('users')
-            ->join('friends', 'friends.id_user', '=', 'users.id')
-            ->where('id_friend',$id or 'id_user',$id)
-            ->get();
-           
+        // $arr = DB::table('users')
+        //     ->join('friends', 'friends.id_user', '=', 'users.id')
+        //     ->where('id_friend',$id || 'id_user',$id)
+        //     ->get();
+        $arr = FriendResource::collection(Friends::all()->where('id_user', $id));
 
             // DB::table('users')
             // ->join('friends', 'friends.id_friend', '=', 'users.id')
@@ -56,20 +61,41 @@ class FriendsController extends Controller
         //     'status' => 'true',
         // ]);
 
-        DB::table('friends')->where('id',$id)->update([
+        // DB::table('friends')->where('id',$id)->update([
+        //     'status' => 'true'
+        // ]);
+        DB::table('friends')->where('id_friend', $id)->where('id_user', Auth::user()->id)->update([
+            'status' => 'true'
+        ]);
+
+        DB::table('friends')->where('id_friend', Auth::user()->id)->where('id_user', $id)->update([
             'status' => 'true'
         ]);
     }
 
     public function delete_friend($id)
     {
-        DB::table('friends')->where('id',$id)->delete();
+        // DB::table('friends')->where('id',$id)->delete();
+        // dd($id);
+        DB::table('friends')->where('id_friend', $id)->where('id_user', Auth::user()->id)->delete();
+        DB::table('friends')->where('id_friend', Auth::user()->id)->where('id_user', $id)->delete();
+
+        DB::table('rooms')->where('id_user', Auth::user()->id)->where('id_user_second', $id)->delete();
+        DB::table('rooms')->where('id_user', $id)->where('id_user_second', Auth::user()->id)->delete();
     }
 
     public function block_friend($id)
     {
-        DB::table('friends')->where('id',$id)->update([
+        // DB::table('friends')->where('id',$id)->update([
+        //     'status' => 'block'
+        // ]);
+        // dd($id, Auth::user()->id);
+        DB::table('friends')->where('id_friend', $id)->where('id_user', Auth::user()->id)->update([
             'status' => 'block'
+        ]);
+
+        DB::table('friends')->where('id_friend', Auth::user()->id)->where('id_user', $id)->update([
+            'status' => 'invisible'
         ]);
     }
 }

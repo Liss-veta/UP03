@@ -79,7 +79,6 @@
 </template>
 
 <script>
-import { EMPTY_ARR } from "@vue/shared";
 import HeaderComponent from "../header_footer/HeaderComponent.vue";
 import ChangeComponent from "./ChangeComponent.vue";
 import DataOrderComponent from "./DataOrderComponent.vue";
@@ -181,7 +180,7 @@ export default {
                     //         }
                     //     }
 
-                    //     this.getPosts_user()
+                    //     // this.getPosts_user()
                     // }
 
                 })
@@ -271,18 +270,14 @@ export default {
         friends_request() {
             axios.get(`/api/friends/${this.id}`)
                 .then(res => {
-                    this.requests_0 = res.data[0];
-                    this.requests_1 = res.data[1];
-
+                    console.log(res.data.data);
                     this.col_true = 0;
 
-                    for (let index = 0; index < res.data.length; index++) {
+                    for (let index = 0; index < res.data.data.length; index++) {
                         // console.log(res.data[index]);
-                        if (res.data[index] != 0) {
-                            for (let index1 = 0; index1 < res.data[index].length; index1++) {
-                                if (res.data[index][index1]['status'] == 'true') {
-                                    this.col_true++;
-                                }
+                        if (res.data.data[index] != 0) {
+                            if (res.data.data[index]['status'] == 'true') {
+                                this.col_true++;
                             }
                         }
                     }

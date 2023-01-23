@@ -36,6 +36,7 @@ export default {
         name: String,
         nameSecond: String,
         avatarSecond: String,
+        room: Object,
     },
     mounted(){
 

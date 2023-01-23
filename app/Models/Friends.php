@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Friends extends Model
 {
     use HasFactory;
-
+    protected $guarded = false;
     public function users()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'id_user', 'id');
     }
 }

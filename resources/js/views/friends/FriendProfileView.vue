@@ -33,8 +33,11 @@
         </div>
     </div>
 
-    <div class="d-flex align-center flex-column w-100" v-if="request_status != 'В черном списке'" v-for="(post, index) in posts">
-        <div class="w-75 mt-10">
+    <div class="d-flex align-center flex-column w-100" 
+     v-if="request_status != 'В черном списке' && request_status != 'Вы в черном списке'"
+     >
+        <div class="w-75 mt-10"
+        v-for="(post, index) in posts" :key="index">
             <v-card class="bg-transparent">
                 <div class="post d-flex flex-row">
                     <v-tabs v-model="post.tab" direction="vertical" color="pink-lighten-4"
@@ -115,20 +118,26 @@
                             <v-card style="align-self: stretch; align-content: stretch;" class="h-100 bg-pink-lighten-3"
                                 flat>
                                 <v-card-text class="h-100" style="min-height: 25vw;">
-                                    <div class="d-flex w-100 align-center mb-4" v-for="comment in post.comments"
-                                        :key="comment" v-if="post.comments.length != 0">
-                                        <v-banner lines="three w-100" class="bg-transparent">
+                                    <div class="d-flex w-100 align-center mb-4" v-if="post.comments.length != 0">
+                                        <v-banner lines="three w-100" class="bg-transparent"  v-for="comment in post.comments"
+                                        :key="comment">
                                             <div class="d-flex align-center justify-space-between mb-2">
                                                 <div class="d-flex align-center">
-                                                    <v-avatar size="50" class="mr-4"
-                                                        v-if="comment.user.avatar == 'NULL' || comment.user.avatar == '../uploads/undefined'"
+                                                    <router-link class="d-flex align-center text-black" v-if="id != post.id_user"
+                                                      :to="{ path: '/user/' + post.id_user }">
+                                                      <v-avatar size="50" class="mr-4"
+                                                        v-if="post.users.avatar == 'NULL' || post.users.avatar == '../uploads/undefined'"
                                                         image="img/no_avatar.jpg"></v-avatar>
-                                                    <v-avatar size="50" class="mr-4" v-else
-                                                        :image="comment.user.avatar"></v-avatar>
-                                                    <h4 class="text-h6 ">{{
-                                                        comment.user.name + " " +
-                                                            comment.user.surname
-                                                    }}</h4>
+                                                      <v-avatar size="50" class="mr-4" v-else :image="post.users.avatar"></v-avatar>
+                                                      <h4 class="text-h6 ">{{ post.users.name + " " + post.users.surname }}</h4>
+                                                    </router-link>
+                                                    <router-link class="d-flex align-center text-black" v-else to="/dashboard">
+                                                      <v-avatar size="50" class="mr-4"
+                                                        v-if="post.users.avatar == 'NULL' || post.users.avatar == '../uploads/undefined'"
+                                                        image="img/no_avatar.jpg"></v-avatar>
+                                                      <v-avatar size="50" class="mr-4" v-else :image="post.users.avatar"></v-avatar>
+                                                      <h4 class="text-h6 ">{{ post.users.name + " " + post.users.surname }}</h4>
+                                                    </router-link>
                                                 </div>
                                                 <p class="text-disabled mb-4 mr-2">{{
                                                     getHumanDate(comment.created_at)
@@ -304,13 +313,13 @@ export default {
         },
 
         friends_request2() {
-            axios.get(`/api/friends/${this.my_id}`)
+            axios.get(`/api/friends/${this.id}`)
                 .then(res => {
                     this.col_true = 0;
-                    console.log(res.data);
-                    for (let index = 0; index < res.data.length; index++) {
-                        if (res.data[index] != 0) {
-                            if (res.data[index]['status'] == 'true') {
+                    // console.log(res.data);
+                    for (let index = 0; index < res.data.data.length; index++) {
+                        if (res.data.data[index] != 0) {
+                            if (res.data.data[index]['status'] == 'true') {
                                 this.col_true++;
                             }
                         }
@@ -329,27 +338,31 @@ export default {
         },
 
         friends_request() {
-            axios.get(`/api/friends/${this.my_id}`)
+            axios.get(`/api/friends/${this.id}`)
                 .then(res => {
-                    // console.log(res.data);                    
+                    // console.log(res.data.data);                    
 
-                        for (let index = 0; index < res.data.length; index++) {
-                            if (this.user['id'] == res.data[index]['id_friend'] || this.user['id'] == res.data[index]['id_user']) {
-                                if (res.data[index]['status'] == 'false') {
+                        for (let index = 0; index < res.data.data.length; index++) {
+                            if (this.user['id'] == res.data.data[index]['id_friend'] || this.user['id'] == res.data.data[index]['id_user']) {
+                                if (res.data.data[index]['status'] == 'false') {
                                     this.request_status = 'Заявка отправлена'
                                 }
 
-                                if (res.data[index]['status'] == 'true') {
+                                if (res.data.data[index]['status'] == 'true') {
                                     this.request_status = 'У вас в друзьях'
                                 }
 
-                                if (res.data[index]['status'] == 'block') {
+                                if (res.data.data[index]['status'] == 'block') {
                                     this.request_status = 'В черном списке'
+                                }
+
+                                if (res.data.data[index]['status'] == 'invisible') {
+                                    this.request_status = 'Вы в черном списке'
                                 }
                             }
                         }
 
-                    if (this.request_status == 'Заявка отправлена' || this.request_status == 'В черном списке' || this.request_status == 'У вас в друзьях') {
+                    if (this.request_status == 'Заявка отправлена' || this.request_status == 'В черном списке' || this.request_status == 'У вас в друзьях' || this.request_status == 'Вы в черном списке') {
                         this.check_add = true;
                         this.but = 'tonal';
                     }

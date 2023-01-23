@@ -77,7 +77,6 @@ export default {
                     user: e.user,
                     'id_user': e.user.id,
                 })
-                console.log('12132')
                 console.log(e);
             });
     },

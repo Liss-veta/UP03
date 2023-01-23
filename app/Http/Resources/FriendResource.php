@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\User;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class FriendResource extends JsonResource
@@ -14,11 +15,11 @@ class FriendResource extends JsonResource
      */
     public function toArray($request)
     {
-        // return [
-        //     'id' => $this->id,
-        //     'id_user' => $this->id_user,
-        //     'id_friend' => $this->id_friend,
-        //     'status' => $this->status,
-        // ];
+        return [
+            'id' => $this->id,
+            'id_user' => $this->id_user,
+            'id_friend' => User::find($this->id_friend),
+            'status' => $this->status,
+        ];
     }
 }

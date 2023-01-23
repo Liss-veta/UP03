@@ -14,6 +14,7 @@ export default createStore({
                 city: ''
             },
             isFocusRoom: false,
+            focusRooM: {},
         }
     },
     mutations: {
