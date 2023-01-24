@@ -85,7 +85,7 @@
                           <v-avatar size="90" class="mr-4" v-else :image="post.users.avatar"></v-avatar>
                           <h4 class="text-h5 ">{{ post.users.name + " " + post.users.surname }}</h4>
                         </router-link>
-                        <router-link class="d-flex align-center text-black" v-else to="/dashboard">
+                        <router-link class="d-flex align-center text-black" v-else to="/profile">
                           <v-avatar size="90" class="mr-4"
                             v-if="post.users.avatar == 'NULL' || post.users.avatar == '../uploads/undefined'"
                             image="img/no_avatar.jpg"></v-avatar>
@@ -143,6 +143,9 @@
                           <p class="text-disabled mb-4 mr-2">{{ getHumanDate(comment.created_at) }}</p>
                         </div>
                         <p class="pl-2">{{ comment.comm }}</p>
+                        <v-btn color="error" variant="plain" v-if="id == comment.user.id" @click.prevent="del_comm(comment.id)">
+                          Delete
+                        </v-btn>
                       </v-banner>
                     </div>
                     <div v-else class="ma-auto mt-16 pt-16">
@@ -214,6 +217,12 @@ export default {
       
   },
   methods: {
+    del_comm(id){
+      axios.post(`/api/del_comm/${id}`)
+        .then(res =>{
+          this.all_post();
+        })
+    },
     getFilter(tag){
         this.select_filter = tag;
     },

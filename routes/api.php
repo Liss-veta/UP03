@@ -60,6 +60,7 @@ Route::post('/delete_post/{id}', [PostsController::class, 'delete_post']);
 
 Route::get('/output_comm', [CommentController::class, 'output_comm']);
 Route::post('/add_comm', [CommentController::class, 'add_comm']);
+Route::post('/del_comm/{id}', [CommentController::class, 'del_comm']);
 
 Route::post('/likes/create',[LikeController::class, 'store']);
 Route::delete('/likes/{id}/delete', [LikeController::class, 'destroy']);

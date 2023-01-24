@@ -134,6 +134,9 @@
                           <p class="text-disabled mb-4 mr-2">{{ getHumanDate(comment.created_at) }}</p>
                         </div>
                         <p class="pl-2">{{ comment.comm }}</p>
+                        <v-btn color="error" variant="plain" v-if="my_id == comment.user.id" @click.prevent="del_comm(comment.id)">
+                          Delete
+                        </v-btn>
                       </v-banner>
                     </div>
                     <div v-else class="ma-auto mt-16 pt-16">
@@ -190,6 +193,12 @@ export default {
         this.getPosts_user()
     },
     methods: {
+        del_comm(id){
+            axios.post(`/api/del_comm/${id}`)
+                .then(res =>{
+                this.all_post();
+            })
+        },
         add_comm(_id_post) {
             let formData = new FormData();
             formData.append('comm', this.comm);

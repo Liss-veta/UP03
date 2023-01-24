@@ -30,4 +30,9 @@ class CommentController extends Controller
             'comm' => $request->input('comm'),
         ]);
     }
+
+    public function del_comm($id)
+    {
+        DB::table('comments')->where('id',$id)->delete();
+    }
 }
