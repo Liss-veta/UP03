@@ -48,7 +48,7 @@
                                                     }}</h4>
                                                 </router-link>
                                                 <router-link class="d-flex align-center text-black" v-else
-                                                    to="/dashboard">
+                                                    to="/profile">
                                                     <v-avatar size="90" class="mr-4"
                                                         v-if="post.users.avatar == 'NULL' || post.users.avatar == '../uploads/undefined'"
                                                         image="img/no_avatar.jpg"></v-avatar>

@@ -85,15 +85,17 @@
                         <row class="px-4 py-1 d-flex align-center border-pink-hov w-100" v-if="request.status == 'false'">
                                 <!-- Аватарка друга -->
                                 <!-- Добавить ссылку -->
+                                <router-link :to="{path: '/user/'+request.id_friend.id}">
                                 <v-col cols="2" sm="2" md="1" lg="1" xl="1">
                                     <v-avatar v-if="request.id_friend.avatar === 'NULL'" image="img/no_avatar.jpg" size="50" class="mr-2"></v-avatar>
                                     <v-avatar v-else :image="request.id_friend.avatar" size="50" class="mr-2"></v-avatar>
-                                </v-col>
+                                </v-col></router-link>
                                 <!-- Имя фамилия друга -->
                                 <!-- Добавить ссылку -->
+                                <router-link :to="{path: '/user/'+request.id_friend.id}">
                                 <v-col cols="7" sm="7"  md="9" lg="9" xl="9">
                                     <h4>{{ request.id_friend.name + ' ' + request.id_friend.surname }}</h4>
-                                </v-col>
+                                </v-col></router-link>
                                 <!-- Принять в друзья -->
                                 <v-col cols="3" sm="4"  md="2" lg="2" xl="2">
                                     <v-btn class="d-none d-sm-block d-md-block d-lg-block d-xl-block" variant="text" v-if="request.id_friend == id" @click.prevent="accept_friend(request.id_friend.id)">Принять</v-btn>
@@ -111,15 +113,17 @@
                         <row class="px-4 py-1 d-flex align-center border-pink-hov w-100"  v-if="request.status == 'block'">
                                 <!-- Аватарка друга -->
                                 <!-- Добавить ссылку -->
+                                <router-link :to="{path: '/user/'+request.id_friend.id}">
                                 <v-col cols="2" sm="2" md="1" lg="1" xl="1">
                                     <v-avatar v-if="request.id_friend.avatar === 'NULL'" image="img/no_avatar.jpg" size="50" class="mr-2"></v-avatar>
                                     <v-avatar v-else :image="request.id_friend.avatar" size="50" class="mr-2"></v-avatar>
-                                </v-col>
+                                </v-col></router-link>
                                 <!-- Имя фамилия друга -->
                                 <!-- Добавить ссылку -->
+                                <router-link :to="{path: '/user/'+request.id_friend.id}">
                                 <v-col cols="7" sm="7"  md="9" lg="9" xl="9">
                                     <h4>{{ request.id_friend.name + ' ' + request.id_friend.surname}}</h4>
-                                </v-col>
+                                </v-col></router-link>
                                 <!-- Вытащить из чс -->
                                 <v-col cols="3" sm="4" md="2" lg="2" xl="2">
                                     <v-btn class="d-none d-sm-block d-md-block d-lg-block d-xl-block" variant="text" @click.prevent="accept_friend(request.id_friend.id)">Разблокировать</v-btn>
@@ -134,7 +138,10 @@
                     <div class="d-flex pb-6">
                         <div class="all_users">
                             <div v-for="user in users" :key="user">
-                                <router-link v-if="this.id != user.id" :to="{ path: '/user/'+user.id }"><p>{{ user.name + ' ' + user.surname }}</p></router-link>
+                                <router-link v-if="this.id != user.id" :to="{ path: '/user/'+user.id }">
+                                    <img :src="user.avatar" alt="">
+                                    <p>{{ user.name + ' ' + user.surname }}</p>
+                                </router-link>
                             </div>
                         </div>
                     </div>
