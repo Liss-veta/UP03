@@ -33,10 +33,9 @@
         </div>
     </div>
 
-    <div class="d-flex align-center flex-column w-100" 
-     v-if="request_status != 'В черном списке' && request_status != 'Вы в черном списке'"
-     >
-     <div class="d-flex align-center flex-column w-100" v-for="(post, index) in posts" :key="index">
+    <div class="d-flex align-center flex-column w-100"
+     v-if="request_status != 'В черном списке' && request_status != 'Вы в черном списке'">
+     <div class="d-flex align-center flex-column w-100 my-12" v-for="(post, index) in posts" :key="index">
       <div class="w-75 mt-10">
         <v-card class="bg-transparent">
           <div class="post d-flex flex-row">
@@ -96,7 +95,7 @@
                     <div v-if="post.items.length > 1" class="w-50 align-stretch" style="max-height: 25vw;">
                       <v-carousel style="height: 100%" :show-arrows="false">
                         <v-carousel-item v-for="item in post.items" :key="item" :src="item" cover></v-carousel-item>
-                        
+
                       </v-carousel>
                     </div>
                     <div v-else-if="post.items.length == 1" class="w-50 align-stretch" style="max-height: 25vw;">
@@ -133,10 +132,12 @@
                           </div>
                           <p class="text-disabled mb-4 mr-2">{{ getHumanDate(comment.created_at) }}</p>
                         </div>
-                        <p class="pl-2">{{ comment.comm }}</p>
-                        <v-btn color="error" variant="plain" v-if="my_id == comment.user.id" @click.prevent="del_comm(comment.id)">
-                          Delete
-                        </v-btn>
+                        <div class="w-100 d-flex justify-space-between">
+                                <p class="pl-2 text-body-1">{{ comment.comm }}</p>
+                                <v-btn color="error" variant="plain" v-if="my_id == comment.user.id" @click.prevent="del_comm(comment.id)">
+                                    Delete
+                                </v-btn>
+                            </div>
                       </v-banner>
                     </div>
                     <div v-else class="ma-auto mt-16 pt-16">
@@ -224,6 +225,15 @@ export default {
                 .then(res => {
                     this.posts_count = 0
                     this.posts_count = res.data.data.length;
+                    if (this.posts_count == 1) {
+                        this.post_ending = 'пост'
+                    }
+                    else if (this.posts_count > 1 && this.posts_count < 5) {
+                        this.post_ending = 'поста'
+                    }
+                    else {
+                        this.post_ending = 'постов'
+                    }
                     // let i = this.posts_count;
                     // if (i > 100) {
                     //     i = i % 100
@@ -280,7 +290,7 @@ export default {
                     for (let index = 0; index < this.posts.length; index++) {
                         this.posts[index]['items'] = res.data.data[index]['images'].split(',');
                         this.posts[index]['items'].pop();
-                        // console.log(this.items);               
+                        // console.log(this.items);
                     }
                 })
         },
@@ -342,7 +352,7 @@ export default {
         friends_request() {
             axios.get(`/api/friends/${this.id}`)
                 .then(res => {
-                    // console.log(res.data.data);                    
+                    // console.log(res.data.data);
 
                         for (let index = 0; index < res.data.data.length; index++) {
                             if (this.user['id'] == res.data.data[index]['id_friend'] || this.user['id'] == res.data.data[index]['id_user']) {
@@ -381,6 +391,24 @@ export default {
 <style scoped>
 .w-60 {
     width: 67%;
+}
+.v-tabs .v-btn.v-btn--density-default {
+  height: 33%;
+}
+
+.h-33 {
+  height: 33%;
+}
+
+.post {
+  height: auto;
+}
+
+.v-slide-group__content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .mt-min {

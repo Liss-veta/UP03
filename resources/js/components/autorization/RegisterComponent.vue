@@ -92,7 +92,7 @@
                     >
                 <template v-slot:activator="{ props }">
                         <div class="w-75 d-flex align-center ma-auto pt-4">
-                                    <v-btn v-bind="props">
+                                    <v-btn @keyup.enter="enterClicked()" v-bind="props">
                                         Создать
                                     </v-btn>
                                     <p>или <router-link to="/login">войдите в систему</router-link></p>

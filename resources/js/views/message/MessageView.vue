@@ -6,8 +6,11 @@
                 <!-- <DialogComponent :idRoom="this.$store.state.focusRoom.id" v-if="this.$store.state.isFocusRoom"/> -->
                 <!-- Блок диалога -->
                 <div v-if="this.$store.state.isFocusRoom" class="d-flex pb-6 mr-8 h-d">
-                    <v-responsive aspect-ratio="4 / 3" class="border-pink pa-4 position-relative">
-                        <div class="d-flex flex-column w-100">
+                    <v-responsive aspect-ratio="4 / 3" class="border-pink py-4 position-relative">
+                        <div class="w-100 text-center text-pink-lighten-4 py-2" style="border-bottom: 1px solid #f8bbf8">
+                            Пихаем имя собеседника
+                        </div>
+                        <div class="d-flex flex-column w-100 pa-4" style="height: 80%; overflow-y:auto;">
                             <div v-for="message in messages" :key="message" class="d-flex flex-column w-100">
                                 <div class="d-flex flex-column mb-6 ml-2" style="max-width: 60%;" v-if="message.user.id != this.$store.state.user.id">
                                     <p class="mes1 text-body pa-4 d-flex flex-column bg-indigo-darken-4" style="align-self: baseline;">
@@ -16,36 +19,36 @@
                                             {{ message.message }}
                                         </span>
                                             <span class="text-end">{{ getHumanDate(message.created_at) }}</span>
-                                    
+
                                     </p>
                                 </div>
                                 <div class="d-flex flex-column align-self-end mb-6" style="max-width: 60%;" v-else>
                                     <p class="text-body pa-4 d-flex flex-column bg-indigo-darken-4" style="align-self: baseline;">
                                         <span class="d-flex align-center justify-end mb-2">
                                             {{ message.message }}
-                                            <v-avatar size="40" :image="message.user.avatar" class="mr-2"></v-avatar>
+                                            <v-avatar size="40" :image="message.user.avatar" class="ml-2"></v-avatar>
                                         </span>
                                         <span class="text-end">{{ getHumanDate(message.created_at) }}</span>
                                     </p>
                                 </div>
                             </div>
-                            
-                        </div> 
-                            <div class="d-flex position-absolute text-pink-lighten-4 w-95" style="width: 96%; bottom: 0;left:auto;">
-                                <v-text-field class="w-90" label="Оставьте комментарий" hint="какой должен быть коммент"
+
+                        </div>
+                            <form v-on:keyup.enter="sendMessage(this.$store.state.focusRoom.id)" class="d-flex position-absolute text-pink-lighten-4 pl-4" style="width: 96%; bottom: 0;left:auto;">
+                                <v-text-field class="w-90" label="Сообщение..."
                                     v-model="textMessage"></v-text-field>
                                 <v-btn class="py-2 mt-3 ml-4" color="indigo" variant="outlined" icon size="small"
-                                    @click.prevent="sendMessage(this.$store.state.focusRoom.id)" @MediaKeyStatusMap.enter="sendMessage(this.$store.state.focusRoom.id)">
+                                    @click.prevent="sendMessage(this.$store.state.focusRoom.id)">
                                     <v-icon>mdi-send</v-icon></v-btn>
-                                </div>
+                                </form>
                     </v-responsive>
                 </div>
             </div>
             <!-- Правая часть мессенджера -->
             <div class="w-25 border-pink mb-6 pt-4">
-                <div style="overflow-y: scroll" class="h-100">
+                <div style="overflow-y: auto" class="h-100">
                     <div class="w-75 mx-auto" style="position: relative; z-index: 100;" v-for="room in rooms" :key="room" @click.prevent="setFocusRoom(room)">
-                        <DialogFriendsComponent 
+                        <DialogFriendsComponent
                             :room="room"
                             :id="room.user.id"
                             :name="room.user.name"
@@ -54,7 +57,7 @@
                             :avatarSecond="room.userSecond.avatar" />
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </div>

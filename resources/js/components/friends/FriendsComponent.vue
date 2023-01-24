@@ -136,12 +136,18 @@
                 <v-window-item value="four">
                     <!-- Цикл перебора списка -->
                     <div class="d-flex pb-6">
-                        <div class="all_users">
-                            <div v-for="user in users" :key="user">
-                                <router-link v-if="this.id != user.id" :to="{ path: '/user/'+user.id }">
-                                    <img :src="user.avatar" alt="">
-                                    <p>{{ user.name + ' ' + user.surname }}</p>
-                                </router-link>
+                        <div class="all_users mx-4">
+                            <div v-for="user in users" :key="user" class="d-flex justify-space-around">
+                                <div class="px-2 px-sm-4 px-md-4 px-lg-4 px-xl-4 py-1 d-flex align-center border-pink-hov w-100">
+                                        <router-link v-if="this.id != user.id" :to="{ path: '/user/'+user.id }" class="d-flex flex-column align-center">
+                                            <div class="ma-2">
+                                                <v-avatar v-if="user.avatar === 'NULL'" image="img/no_avatar.jpg" size="200"></v-avatar>
+                                                <v-avatar v-else :image="user.avatar" size="200"></v-avatar>
+                                            </div>
+                                            <!-- <img :src="user.avatar" alt=""> -->
+                                            <h3 class="text-h5 my-2">{{ user.name + ' ' + user.surname }}</h3>
+                                        </router-link>
+                                </div>
                             </div>
                         </div>
                     </div>

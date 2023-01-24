@@ -60,13 +60,11 @@
                             this.$route.path === '/'
                         "
                     ></div>
-                    <FooterComponentVue v-else></FooterComponentVue>
             </div>
         </div>
 </template>
 <script>
 import HeaderComponentVue from "../../components/header_footer/HeaderComponent.vue";
-import FooterComponentVue from "../../components/header_footer/FooterComponent.vue";
 export default {
     data(){
         return {
@@ -138,7 +136,7 @@ export default {
             ],
         }
     },
-    components: { HeaderComponentVue, FooterComponentVue },
+    components: { HeaderComponentVue },
 
     computed: {
         headerTab() {

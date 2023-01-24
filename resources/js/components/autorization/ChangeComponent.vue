@@ -1,13 +1,20 @@
 <template>
     <div class="background">
         <form>
-            <h2>Изменить данные</h2>
-            <v-text-field class="w-75" v-model="name" type="text" label="Имя"></v-text-field>
-            <v-text-field class="w-75" v-model="surname" type="text" label="Фамилия"></v-text-field>
-            <v-text-field class="w-75" v-model="email" type="text" label="Электронная почта"></v-text-field>
-            <v-text-field class="w-75" v-model="age" type="text" label="Возраст"></v-text-field>
-            <v-text-field class="w-75" v-model="city" type="text" label="Город"></v-text-field>
-            <v-text-field class="w-75" v-model="password" required type="password" label="Пароль"></v-text-field>
+            <div class="d-flex w-100 justify-space-around">
+                <div class="w-50 d-flex justify-center flex-column align-center">
+                    <v-text-field class="w-75" v-model="name" type="text" label="Имя"></v-text-field>
+                    <v-text-field class="w-75" v-model="surname" type="text" label="Фамилия"></v-text-field>
+                    <v-text-field class="w-75" v-model="email" type="text" label="Электронная почта"></v-text-field>
+                </div>
+                <div class="w-50 d-flex justify-center flex-column align-center">
+                    <v-text-field class="w-75" v-model="age" type="text" label="Возраст"></v-text-field>
+                    <v-text-field class="w-75" v-model="city" type="text" label="Город"></v-text-field>
+                    <v-text-field class="w-75" v-model="password" required type="password" label="Пароль"></v-text-field>
+                </div>
+
+            </div>
+
 
             <!-- <input type="text" placeholder="Имя" />
             <input v-model="surname" placeholder="Имя" />
@@ -15,7 +22,7 @@
             <input v-model="password" required type="password" placeholder="Пароль" />
             <input v-model="age" type="text" placeholder="Введите ваш возраст" />
             <input v-model="city" type="text" placeholder="Ваш город" /> -->
-            <button @click.prevent="changeInfoUser"><button style="opasity: 0" @click.prevent="dop_info"></button>Сохранить</button>
+            <button v-on:click.prevent="changeInfoUser(); dop_info();">Сохранить</button>
         </form>
     </div>
     <!-- <div class="background">
@@ -169,13 +176,10 @@ export default {
 
 <style scoped>
 .background {
-    background: #202428;
     border-left: 4px solid #f8bbd0;
     border-right: 4px solid #f8bbd0;
     width: 60vw;
-    height: auto;
     color: white;
-    margin-bottom: 10%;
 }
 h2 {
     font-size: 24px;

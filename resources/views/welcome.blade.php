@@ -22,11 +22,30 @@
             }
             html{
                 overflow-x: hidden;
+                overflow-y: auto
+            }
+            * {
+                scrollbar-width: thin;
+                scrollbar-color: #bca8bc #7986CB;
+            }
+
+            /* для Chrome/Edge/Safari */
+            *::-webkit-scrollbar {
+                height: 12px;
+                width: 12px;
+            }
+            *::-webkit-scrollbar-track {
+                background: #7986CB;
+            }
+            *::-webkit-scrollbar-thumb {
+                background-color: #bca8bc;
+                border-radius: 5px;
+                border: 3px solid #7986CB;
             }
         </style>
     </head>
     <body id="app">
 
-    
+
     </body>
 </html>

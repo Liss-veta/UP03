@@ -43,7 +43,7 @@
                         <div class="modal_header">
                             <img v-on:click="edit = 'none'" src="img/Close.png" alt="" />
                         </div>
-                        <div class="modal_body">
+                        <div class="modal_body mt-8">
                             <img class="avatar" src="img/no_avatar.jpg" v-if="
                                 this.$store.state.avatar === 'NULL' ||
                                 this.$store.state.avatar === 'undefined'
@@ -52,7 +52,7 @@
                             <label for="file">Выберите аватарку</label>
                             <input type="file" id="file" ref="file" required v-on:change="handleFileUpload()" />
                             <p v-show="file.name">{{ file.name }}</p>
-                            <button @click.prevent="submitFile()">
+                            <button v-on:click="edit = 'none'" @click.prevent="submitFile()">
                                 Загрузить
                             </button>
                         </div>
@@ -65,11 +65,11 @@
                 <div v-if="edit_data == 'show'" class="modal_bg">
                     <div class="modal">
                         <div class="modal_header">
+                            <h2 class="ml-13">Изменить данные</h2>
                             <img v-on:click="edit_data = 'none'" src="img/Close.png" alt="" />
                         </div>
                         <div class="modal_body">
-                            <ChangeComponent v-if="show == 'change'"></ChangeComponent>
-                            <DataOrderComponent v-else-if="show == 'data_order'"></DataOrderComponent>
+                            <ChangeComponent></ChangeComponent>
                         </div>
                     </div>
                 </div>
@@ -81,11 +81,9 @@
 <script>
 import HeaderComponent from "../header_footer/HeaderComponent.vue";
 import ChangeComponent from "./ChangeComponent.vue";
-import DataOrderComponent from "./DataOrderComponent.vue";
 export default {
     components: {
-        ChangeComponent,
-        DataOrderComponent,
+        ChangeComponent
     },
 
     data() {
@@ -344,10 +342,11 @@ export default {
 
 .modal_bg {
     width: 100%;
-    height: 60vw;
+    height: 50vw;
     position: fixed;
     top: 0;
     left: 0;
+    z-index: 100;
     background-color: #0000008a;
     /* display: none; */
     display: flex;
@@ -356,11 +355,10 @@ export default {
 }
 
 .modal {
-    margin-top: 5%;
     padding: 20px;
     width: 60%;
     border: 4px #f8bbd0 solid;
-    background: #212529;
+    background: #060A30;
     display: flex;
     flex-direction: column;
 }
@@ -402,8 +400,14 @@ export default {
     font-weight: bold;
 }
 
+.modal_header{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .modal_header img {
-    float: right;
     margin: 20px;
     width: 50px;
     cursor: pointer;

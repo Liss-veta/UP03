@@ -7,8 +7,9 @@
                 rail
                 class="bg-pink-lighten-4 h-100"
             >
-                <v-list>
+                <v-list class="h-12">
                 <v-list-item
+                size="100"
                     prepend-avatar="img/1098360-200 1.png"
                     title="Ithiantes"
                 ></v-list-item>
@@ -22,7 +23,7 @@
                 <router-link class="w-100" to="/friends"><v-list-item prepend-icon="mdi-account-multiple" title="Друзья" value="starred" class="w-100"></v-list-item></router-link>
                 </v-list>
                 <v-divider></v-divider>
-                <v-list>
+                <v-list class="h-12">
                 <router-link to="/profile">
                     <v-list-item v-if="this.$store.state.avatar === 'NULL' || this.$store.state.avatar === '../uploads/undefined'"
                     prepend-avatar="img/no_avatar.jpg"
@@ -174,11 +175,10 @@ export default {
 </script>
 
 <style scoped>
-.v-navigation-drawer__content{
-    height: 100%;
+.h-12{
+    height: 12%;
     display: flex;
-    flex-direction: column;
-    justify-items: space-between;
+    align-items: center;
 }
 .navig{
     display: block;
