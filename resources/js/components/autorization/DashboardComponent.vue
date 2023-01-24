@@ -135,6 +135,15 @@ export default {
                 .then(res => {
                     this.posts = 0
                     this.posts = res.data.data.length;
+                    if (this.posts == 1) {
+                        this.post_ending = 'поcт'
+                    }
+                    else if (this.posts > 1 && this.posts < 5) {
+                        this.post_ending = 'поста'
+                    }
+                    else {
+                        this.post_ending = 'постов'
+                    }
                     // console.log(res.data.data);
                     // if (this.posts.length != 0) {
                     //     let i = this.posts;

@@ -13,31 +13,25 @@
       </div>
       <div class="d-flex align-stretch justify-space-between">
         <v-row>
-          <v-col>
+          <v-col cols="12" sm="4">
             <v-select v-model="category" class="text-pink-lighten-4" label="Select" :items="tags"></v-select>
           </v-col>
-
-          <v-col cols="12" sm="3">
+          <v-col cols="12" sm="4">
             <v-file-input v-on:change="handleFileUpload()" v-if="!show" multiple ref="file" id="file" name="file"
               label="Добавьте фотографию" variant="filled" class="text-pink-lighten-4"></v-file-input>
           </v-col>
-          <v-col cols="12" sm="3">
+          <v-col cols="12" sm="4">
             <v-text-field label="Вставьте ссылку на видео" append-inner-icon="mdi-youtube" class="text-pink-lighten-4"
-              v-model="src_video" @click.prevent="show = !show"></v-text-field>
-          </v-col>
-          <v-col cols="12" sm="3">
-            <transition name="fade">
-              <v-file-input v-if="show" label="Добавьте превью для видео" variant="filled" class="text-pink-lighten-4"
-                append-inner-icon="mdi-camera-plus-outline"></v-file-input>
-            </transition>
+              v-model="video_url" @click.prevent="show = !show"></v-text-field>
           </v-col>
         </v-row>
       </div>
     </div>
+    <v-divider></v-divider>
     <!-- КАТЕГОРИИ -->
-    <div class="d-flex justify-center w-75">
+    <div class="d-flex justify-center w-75 mt-12">
       <v-sheet class="bd pa-2 w-100">
-        <v-slide-group show-arrows>
+        <v-slide-group show-arrows class="d-flex justify-center w-100">
           <v-slide-group-item v-for="n in 1" :key="n" class="w-100">
             <v-chip-group v-model="amenities" column multiple :color="isSelected ? 'green' : 'pink-lighten-4'">
               <v-chip filter variant="outlined" v-for="tag in tags" :key="tag">
@@ -79,8 +73,7 @@
             </v-tabs>
             <v-window class="w-100" v-model="post.tab">
               <v-window-item class="h-auto big_height" value="option-1">
-                <v-card class="h-auto bg-pink-lighten-3" style="align-self: stretch; align-content: stretch;"
-                  variant="tonal">
+                <v-card class="h-auto bg-pink-lighten-3" style="align-self: stretch; align-content: stretch;" variant="tonal">
                   <v-card-text class="w-100 d-flex px-12 py-8">
                     <div class="w-50">
                       <div class="d-flex w-75 align-center mb-4">
@@ -102,7 +95,7 @@
                       </div>
                       <p class="text-disabled mb-4">{{ getHumanDate(post.created_at) }}</p>
                       <p class="text-body-1 mb-4 pr-12 text-justify d-flex align-center">
-                        {{ post.text }}
+                        {{ post.text}}
                       </p>
                       <v-chip color="indigo" label variant="tonal">
                         {{ post.category }}
@@ -111,37 +104,40 @@
                     <div v-if="post.items.length > 1" class="w-50 align-stretch" style="max-height: 25vw;">
                       <v-carousel style="height: 100%" :show-arrows="false">
                         <v-carousel-item v-for="item in post.items" :key="item" :src="item" cover></v-carousel-item>
+                        
                       </v-carousel>
                     </div>
-                    <div v-else class="w-50 align-stretch" style="max-height: 25vw;">
+                    <div v-else-if="post.items.length == 1" class="w-50 align-stretch" style="max-height: 25vw;">
                       <img :src="post.items[0]" class="w-100 h-100" style="object-fit: cover" alt="">
                     </div>
+                    <div v-else>
+                      <iframe width="560" height="315" :src="post.video_url" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen><img :src="post.preview" alt=""></iframe>
+                    </div>
                   </v-card-text>
-                </v-card>
+                  </v-card>
               </v-window-item>
               <v-window-item class="w-100 min_height" value="option-2">
                 <v-card style="align-self: stretch; align-content: stretch;" class="h-100 bg-pink-lighten-3" flat>
                   <v-card-text class="h-100 d-flex flex-column justify-space-between" style="min-height: 25vw; max-height: 25vw;">
-                    <div style=" overflow-y: auto;">
-                        <div class="d-flex w-100 align-center mb-4"
-                      v-if="post.comments.length != 0">
-                      <v-banner lines="three w-100" class="bg-transparent"  v-for="comment in post.comments" :key="comment">
+                    <div class="d-flex flex-column w-100 h-100" style=" overflow-y: auto;">
+                        <div class="d-flex flex-column w-100 align-center mb-4" v-if="post.comments.length != 0">
+                      <v-banner lines="three w-100" class="bg-transparent d-flex flex-column" v-for="comment in post.comments" :key="comment">
                         <div class="d-flex align-center justify-space-between mb-2">
                           <div class="d-flex align-center">
-                            <router-link class="d-flex align-center text-black" v-if="id != post.id_user"
-                          :to="{ path: '/user/' + post.id_user }">
+                            <router-link class="d-flex align-center text-black" v-if="id != comment.user.id"
+                          :to="{ path: '/user/' + comment.user.id }">
                           <v-avatar size="50" class="mr-4"
-                            v-if="post.users.avatar == 'NULL' || post.users.avatar == '../uploads/undefined'"
+                            v-if="comment.user.avatar == 'NULL' || comment.user.avatar == '../uploads/undefined'"
                             image="img/no_avatar.jpg"></v-avatar>
-                          <v-avatar size="50" class="mr-4" v-else :image="post.users.avatar"></v-avatar>
-                          <h4 class="text-h6 ">{{ post.users.name + " " + post.users.surname }}</h4>
+                          <v-avatar size="50" class="mr-4" v-else :image="comment.user.avatar"></v-avatar>
+                          <h4 class="text-h6 ">{{ comment.user.name + " " + comment.user.surname }}</h4>
                         </router-link>
-                        <router-link class="d-flex align-center text-black" v-else to="/dashboard">
+                        <router-link class="d-flex align-center text-black" v-else to="/profile">
                           <v-avatar size="50" class="mr-4"
-                            v-if="post.users.avatar == 'NULL' || post.users.avatar == '../uploads/undefined'"
+                            v-if="comment.user.avatar == 'NULL' || comment.user.avatar == '../uploads/undefined'"
                             image="img/no_avatar.jpg"></v-avatar>
-                          <v-avatar size="50" class="mr-4" v-else :image="post.users.avatar"></v-avatar>
-                          <h4 class="text-h6 ">{{ post.users.name + " " + post.users.surname }}</h4>
+                          <v-avatar size="50" class="mr-4" v-else :image="comment.user.avatar"></v-avatar>
+                          <h4 class="text-h6 ">{{ comment.user.name + " " + comment.user.surname }}</h4>
                         </router-link>
                           </div>
                           <p class="text-disabled mb-4 mr-2">{{ getHumanDate(comment.created_at) }}</p>
@@ -149,7 +145,7 @@
                         <p class="pl-2">{{ comment.comm }}</p>
                       </v-banner>
                     </div>
-                    <div v-else class="ma-auto">
+                    <div v-else class="ma-auto mt-16 pt-16">
                       <h4 class="text-h5">Комментарии отсутствуют</h4>
                     </div>
                     </div>
@@ -169,7 +165,6 @@
         </v-card>
       </div>
     </div>
-
   </div>
 </template>
 <script>
@@ -204,13 +199,13 @@ export default {
       text: '',
       category: '',
       file: '',
+      preview: '',
       posts: [],
       comments: [],
       id: localStorage.getItem('id'),
       select_filter: ''
     };
   },
-
   mounted() {
     console.log(this.posts)
     document.title = "Новости",
@@ -250,6 +245,7 @@ export default {
       let formData = new FormData();
       formData.append('text', this.text);
       formData.append('category', this.category);
+      formData.append('video_url', this.video_url);
 
       for (let index = 0; index < this.file.length; index++) {
         let image = this.file[index];
@@ -319,6 +315,9 @@ export default {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+.v-chip-group{
+  color: #6d606d;
 }
 
 .v-carousel {

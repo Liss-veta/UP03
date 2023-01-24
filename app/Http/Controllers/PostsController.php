@@ -43,15 +43,23 @@ class PostsController extends Controller
         $post->id_user = $id_user;
         $post->text = $request->text;
         $post->category = $request->category;
+        $array_replace = ("watch?v=");
+        $post->video_url = str_replace($array_replace, "embed/",$request->video_url);
 
         $images = $request->file('image');
 
-        $fullPath = '';
-        foreach($images as $image){
-            $path = Storage::disk('local')->putFile('public/posts_img', $image) .',';
-            $fullPath .= Storage::url($path);
+        if ($images != null) {
+            $fullPath = '';
+            foreach($images as $image){
+                $path = Storage::disk('local')->putFile('public/posts_img', $image) .',';
+                $fullPath .= Storage::url($path);
+            }
+            $post->images = $fullPath;
+        } else{
+            $post->images = 'NULL';
         }
-        $post->images = $fullPath;
+
+        
     
         $post->save();
     }

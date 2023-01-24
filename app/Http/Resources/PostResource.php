@@ -23,6 +23,8 @@ class PostResource extends JsonResource
             'comments' => CommentResource::collection($this->comments),
             'users' => $this->users,
             'likes' => $this->likes,
+            'video_url' => $this->video_url,
+            'preview' => $this->preview,
             'created_at' => $this->created_at,
         ];
     }
