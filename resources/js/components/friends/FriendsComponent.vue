@@ -82,7 +82,7 @@
                 <!-- Список заявок в друзья -->
                 <v-window-item value="two">
                     <div class="d-flex pb-6" v-for="request in requests" :key="request">
-                        <row class="px-4 py-1 d-flex align-center border-pink-hov w-100" v-if="request.status == 'false'">
+                        <row class="px-4 py-1 d-flex align-center border-pink-hov w-100" v-if="request.status == 'false' && request.id_friend.surname != surname">
                                 <!-- Аватарка друга -->
                                 <!-- Добавить ссылку -->
                                 <router-link :to="{path: '/user/'+request.id_friend.id}">
@@ -98,8 +98,7 @@
                                 </v-col></router-link>
                                 <!-- Принять в друзья -->
                                 <v-col cols="3" sm="4"  md="2" lg="2" xl="2">
-                                    <v-btn class="d-none d-sm-block d-md-block d-lg-block d-xl-block" variant="text" v-if="request.id_friend == id" @click.prevent="accept_friend(request.id_friend.id)">Принять</v-btn>
-                                    <v-btn class="d-none d-sm-block d-md-block d-lg-block d-xl-block" variant="text" v-else @click.prevent="delete_friend(request.id_friend.id)">Отменить заявку</v-btn>
+                                    <v-btn class="d-none d-sm-block d-md-block d-lg-block d-xl-block" variant="text" @click.prevent="accept_friend(request.id_friend.id)">Принять</v-btn>
                                     <v-btn class="d-block d-sm-none d-md-none d-lg-none d-xl-none" variant="outlined" color="pink-lighten-4" icon="mdi-check">
                                     </v-btn>
                                 </v-col>
@@ -162,6 +161,7 @@
     export default {
         data: ()=>({
             tab: null,
+            surname: localStorage.getItem("surname"),
             id: localStorage.getItem("id"),
             requests: [],
             col_true: 0,

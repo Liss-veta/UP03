@@ -27,6 +27,7 @@
                                 <v-icon>
                                     mdi-comment-account
                                 </v-icon>
+                                <span> {{ post.comments.length }} </span>
                             </v-tab>
                         </v-tabs>
                         <v-window class="w-100" v-model="post.tab">
@@ -84,6 +85,7 @@
                                                 label="Label"
                                                 auto-grow
                                                 :model-value="post.text"
+                                                v-model="text"
                                                 class=" pr-12"
                                                 ></v-textarea>
                                             </v-container>
@@ -93,7 +95,7 @@
                                             <div class="pl-4 w-75" v-if="!show_input">
                                                 <v-select v-model="category" label="Select" :items="tags" :value="post.category"></v-select>
                                             </div>
-                                            <button v-if="!show_input" @click.prevent="show_input = true" class="pa-2 ml-4 border text-center" >Изменить</button>
+                                            <button v-if="!show_input" @click.prevent="edit_post(post.id), show_input = true" class="pa-2 ml-4 border text-center">Изменить</button>
                                         </div>
                                         <div v-if="post.items.length > 1" class="w-50 align-stretch" style="max-height: 25vw;">
                                             <v-carousel style="height: 100%" :show-arrows="false">
@@ -202,6 +204,12 @@ export default {
             this.categories()
     },
     methods: {
+        edit_post(id){
+            axios.post(`/api/edit_post/${id}`, {text: this.text, category: this.category})
+                .then(res =>{
+                    this.all_post();
+                })
+        },
         del_comm(id){
             axios.post(`/api/del_comm/${id}`)
                 .then(res =>{

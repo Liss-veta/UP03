@@ -70,6 +70,7 @@
                     <v-icon>
                     mdi-comment-account
                     </v-icon>
+                    <span> {{ post.comments.length }} </span>
                 </v-tab>
                 </v-tabs>
                 <v-window class="w-100" v-model="post.tab">

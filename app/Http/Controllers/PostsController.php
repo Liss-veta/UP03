@@ -58,9 +58,18 @@ class PostsController extends Controller
         } else{
             $post->images = 'NULL';
         }
-
-        
     
         $post->save();
+    }
+
+    public function edit_post(Request $request, $id)
+    {
+        $text = $request->input('text');
+        $category = $request->input('category');
+
+        DB::table('posts')->where('id',$id)->update([
+            'text' => $text,
+            'category' => $category
+        ]);
     }
 }

@@ -58,6 +58,7 @@ Route::post('/add_post', [PostsController::class, 'add_post']);
 Route::get('/user_post', [PostsController::class, 'posts_user']);
 Route::get('/posts_user_view/{id}', [PostsController::class, 'posts_user_view']);
 Route::post('/delete_post/{id}', [PostsController::class, 'delete_post']);
+Route::post('/edit_post/{id}', [PostsController::class, 'edit_post']);
 
 Route::get('/output_comm', [CommentController::class, 'output_comm']);
 Route::post('/add_comm', [CommentController::class, 'add_comm']);

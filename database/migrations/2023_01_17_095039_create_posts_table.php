@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('id_user');
             $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
-            $table->string('text');
+            $table->string('text', 700);
             $table->string('images')->default('NULL');
             $table->string('video_url')->default('NULL');
             $table->string('preview')->default('NULL');
