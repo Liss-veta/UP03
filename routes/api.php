@@ -40,13 +40,14 @@ Route::post('/load-avatar', [LoadAvatarController::class, 'store']);
 Route::post('/changeInfoUser', [UserOutputController::class, 'changeInfoUser']);
 Route::post('/dataOrder', [UserOutputController::class, 'dataOrder']);
 Route::post('/dop_info', [UserOutputController::class, 'dop_info']);
-
 Route::get('/all_users', [UserOutputController::class, 'all_users']);
 Route::get("/five_users", [UserOutputController::class, 'random_five']);
 Route::get('/user/{id}', [UserOutputController::class, 'index']);
 Route::get('/view/{id}', [UserOutputController::class, 'get']);
-Route::post('/addFriend', [FriendsController::class, 'addFriend']);
+Route::post('/user_ban/{id}', [UserOutputController::class, 'user_ban']);
+Route::post('/user_unban/{id}', [UserOutputController::class, 'user_unban']);
 
+Route::post('/addFriend', [FriendsController::class, 'addFriend']);
 Route::get('/friends/{id}', [FriendsController::class, 'index']);
 Route::post('/friends/accept/{id}', [FriendsController::class, 'accept_friend']);
 Route::post('/friends/delete/{id}', [FriendsController::class, 'delete_friend']);
@@ -68,8 +69,9 @@ Route::delete('/likes/{id}/delete', [LikeController::class, 'destroy']);
 Route::get('/rooms', [RoomController::class, 'all']);
 
 Route::get('/rooms/{id}/messages', [MessageController::class, 'all']);
-
 Route::get('/messages/{id}',[MessageController::class, 'getMessages']);
 Route::post('/messages/create', [MessageController::class, 'store']);
 
 Route::get('/category', [CategoryController::class, 'all']);
+Route::post('/add_category', [CategoryController::class, 'add_category']);
+Route::post('/delete_category/{id}', [CategoryController::class, 'delete_category']);

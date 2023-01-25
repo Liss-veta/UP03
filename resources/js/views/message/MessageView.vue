@@ -1,14 +1,15 @@
 <template>
     <div class="w-100 d-flex justify-center">
-         <div class="d-flex justify-space-between w-75 mt-12 h-d">
+         <div class="d-flex justify-space-between my-12 ml-12 h-d" style="width: 90%">
             <!-- Левая часть мессенджера -->
             <div class="w-75">
                 <!-- <DialogComponent :idRoom="this.$store.state.focusRoom.id" v-if="this.$store.state.isFocusRoom"/> -->
                 <!-- Блок диалога -->
                 <div v-if="this.$store.state.isFocusRoom" class="d-flex pb-6 mr-8 h-d">
                     <v-responsive aspect-ratio="4 / 3" class="border-pink py-4 position-relative">
-                        <div class="w-100 text-center text-pink-lighten-4 py-2" style="border-bottom: 1px solid #f8bbf8">
-                            Пихаем имя собеседника
+                        <div class="w-100 text-center text-pink-lighten-4 py-auto pb-4" style="border-bottom: 1px solid #f8bbf8">
+                            <h4 v-if="name_second.user.id == this.$store.state.user.id">{{ name_second.userSecond.name }} {{ name_second.userSecond.surname }}</h4>
+                            <h4 v-else>{{ name_second.user.name }} {{ name_second.userSecond.surname }}</h4>
                         </div>
                         <div class="d-flex flex-column w-100 pa-4" style="height: 80%; overflow-y:auto;">
                             <div v-for="message in messages" :key="message" class="d-flex flex-column w-100">
@@ -34,13 +35,14 @@
                             </div>
 
                         </div>
-                            <form v-on:keyup.enter="sendMessage(this.$store.state.focusRoom.id)" class="d-flex position-absolute text-pink-lighten-4 pl-4" style="width: 96%; bottom: 0;left:auto;">
+                            <div class="d-flex position-absolute text-pink-lighten-4 pl-4" style="width: 96%; bottom: 0;left:auto;">
                                 <v-text-field class="w-90" label="Сообщение..."
+                                    @keyup.enter="sendMessage(this.$store.state.focusRoom.id)"
                                     v-model="textMessage"></v-text-field>
-                                <v-btn class="py-2 mt-3 ml-4" color="indigo" variant="outlined" icon size="small"
+                                <v-btn class="py-2 mt-3 ml-4" color="indigo" variant="outlined" icon size="small" 
                                     @click.prevent="sendMessage(this.$store.state.focusRoom.id)">
                                     <v-icon>mdi-send</v-icon></v-btn>
-                                </form>
+                            </div>
                     </v-responsive>
                 </div>
             </div>
@@ -77,7 +79,8 @@ export default {
         return {
             rooms: [],
             messages: [],
-            textMessage: ''
+            textMessage: '',
+            name_second: '',
         }
     },
     mounted() {
@@ -102,11 +105,14 @@ export default {
                     }
                 }
                 this.rooms = rooms;
+                console.log(this.rooms);
             })
         },
         setFocusRoom(room){
             console.log('Клик')
             console.log(room)
+            this.name_second = room;
+            console.log(this.name_second)
             delete this.$store.state.focusRoom;
             this.$store.state.focusRoom = room;
             this.$store.state.isFocusRoom = true;

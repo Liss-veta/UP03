@@ -1,5 +1,5 @@
 <template>
-    <div class="pa-4 d-flex text-white" style="cursor:pointer;" v-if="id == this.$store.state.user.id">
+    <div class="px-auto py-4 d-flex text-white" style="cursor:pointer;" v-if="id == this.$store.state.user.id">
                 <v-badge dot color="success">
                     <!-- Аватарка друга -->
                     <v-avatar :image="avatarSecond" size="50" class="mr-2"></v-avatar>

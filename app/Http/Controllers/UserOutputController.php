@@ -56,4 +56,18 @@ class UserOutputController extends Controller
             'city' => $city
         ]);
     }
+
+    public function user_ban($id)
+    {
+        DB::table('users')->where('id',$id)->update([
+        'role' => 2
+        ]);
+    }
+
+    public function user_unban($id)
+    {
+        DB::table('users')->where('id',$id)->update([
+        'role' => 0
+        ]);
+    }
 }

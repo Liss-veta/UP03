@@ -32,11 +32,6 @@
         </form>
 
     </div> -->
-        <div class="all_users">
-            <div v-for="user in users" :key="user">
-                <router-link v-if="this.id != user.id" :to="{ path: '/user/'+user.id }"><p>{{ user.name + ' ' + user.surname }}</p></router-link>
-            </div>
-        </div>
 </template>
 
 <script>
@@ -176,8 +171,6 @@ export default {
 
 <style scoped>
 .background {
-    border-left: 4px solid #f8bbd0;
-    border-right: 4px solid #f8bbd0;
     width: 60vw;
     color: white;
 }

@@ -57,29 +57,43 @@ export default {
                     })
                     .then((r) => {
                         console.log(r);
-                        this.email = "";
-                        this.password = "";
+                        // this.email = "";
+                        // this.password = "";
 
-                        localStorage.setItem(
-                            "x_xsrf_token",
-                            r.config.headers["X-XSRF-TOKEN"]
-                        );
-                        localStorage.setItem("name", r.data["name"]);
-                        localStorage.setItem("surname", r.data["surname"]);
-                        localStorage.setItem("email", r.data["email"]);
-                        localStorage.setItem("id", r.data["id"]);
-                        localStorage.setItem("avatar", r.data["avatar"]);
-                        localStorage.setItem("age", r.data["age"]);
-                        localStorage.setItem("city", r.data["city"]);
+
                         if (r.data["role"] == 0) {
+                            localStorage.setItem(
+                                "x_xsrf_token",
+                                r.config.headers["X-XSRF-TOKEN"]
+                            );
+
+                            localStorage.setItem("name", r.data["name"]);
+                            localStorage.setItem("surname", r.data["surname"]);
+                            localStorage.setItem("email", r.data["email"]);
+                            localStorage.setItem("id", r.data["id"]);
+                            localStorage.setItem("avatar", r.data["avatar"]);
+                            localStorage.setItem("age", r.data["age"]);
+                            localStorage.setItem("city", r.data["city"]);
                             this.$router.push("/profile");
-                        } else {
+                        } else if(r.data["role"] == 1){
+                            localStorage.setItem(
+                                "x_xsrf_token",
+                                r.config.headers["X-XSRF-TOKEN"]
+                            );
+
+                            localStorage.setItem("name", r.data["name"]);
+                            localStorage.setItem("surname", r.data["surname"]);
+                            localStorage.setItem("email", r.data["email"]);
+                            localStorage.setItem("id", r.data["id"]);
+                            localStorage.setItem("avatar", r.data["avatar"]);
+                            localStorage.setItem("age", r.data["age"]);
+                            localStorage.setItem("city", r.data["city"]);
                             this.$router.push("/admin");
+                        } else if(r.data["role"] == 2){
+                            console.log('Вы забанены!');
+                            this.$router.push("/login");
                         }
                     })
-                    .catch((err) => {
-                        console.log(err.response);
-                    });
             });
         },
     },

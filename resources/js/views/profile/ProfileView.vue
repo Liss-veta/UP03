@@ -62,10 +62,11 @@
                                             <div class="d-flex justify-space-between mr-8">
                                                 <p class="text-disabled mb-4">{{ getHumanDate(post.created_at) }}</p>
                                                 <div>
-                                                    <v-btn color="indigo" variant="plain">
+                                                    <v-btn color="indigo" variant="plain" v-if="show_input" @click.prevent="show_input = false">
                                                         Edit
                                                     </v-btn>
                                                     <v-btn color="error" variant="plain"
+                                                        v-if="show_input"
                                                         @click.prevent="delete_post(id = post.id)">
                                                         Delete
                                                     </v-btn>
@@ -73,12 +74,26 @@
 
                                             </div>
 
-                                            <p class="text-body-1 mb-4 pr-12 text-justify d-flex align-center">
+                                            <p class="text-body-1 mb-4 pr-12 text-justify d-flex align-center" v-if="show_input">
                                                 {{ post.text }}
                                             </p>
-                                            <v-chip color="indigo" label variant="tonal">
+                                            <v-container fluid>
+                                                <v-textarea
+                                                v-if="!show_input"
+                                                variant="filled"
+                                                label="Label"
+                                                auto-grow
+                                                :model-value="post.text"
+                                                class=" pr-12"
+                                                ></v-textarea>
+                                            </v-container>
+                                            <v-chip color="indigo" label variant="tonal" v-if="show_input">
                                                 {{ post.category }}
                                             </v-chip>
+                                            <div class="pl-4 w-75" v-if="!show_input">
+                                                <v-select v-model="category" label="Select" :items="tags" :value="post.category"></v-select>
+                                            </div>
+                                            <button v-if="!show_input" @click.prevent="show_input = true" class="pa-2 ml-4 border text-center" >Изменить</button>
                                         </div>
                                         <div v-if="post.items.length > 1" class="w-50 align-stretch" style="max-height: 25vw;">
                                             <v-carousel style="height: 100%" :show-arrows="false">
@@ -153,6 +168,8 @@ import moment from 'moment';
 export default {
     data() {
         return {
+            tags: [],
+            show_input: true,
             items: [
                 // {
                 //   src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
@@ -182,12 +199,21 @@ export default {
         document.title = 'Профиль',
             this.all_post();
             // output_comm();
+            this.categories()
     },
     methods: {
         del_comm(id){
             axios.post(`/api/del_comm/${id}`)
                 .then(res =>{
                 this.all_post();
+            })
+        },
+        categories(){
+        axios.get('/api/category')
+            .then(res =>{
+            for (let index = 0; index < res.data.length; index++) {
+                this.tags.push(res.data[index].category);
+            }
             })
         },
         add_comm(id_post) {
