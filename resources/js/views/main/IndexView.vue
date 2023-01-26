@@ -8,9 +8,9 @@
         ></div>
         <div v-else>
             <HeaderComponentVue v-if="this.$route.path !== '/admin'"></HeaderComponentVue>
-            <div class="d-flex justify-end">
-                <div class="w-97 mt-8 d-flex justify-space-around justify-sm-space-between justify-md-space-between justify-lg-space-around justify-xl-space-around align-center pa-6">
-                    <div class="d-flex otstup">
+            <div class="d-flex justify-center w-100">
+                <div class="w-75 mt-8 d-flex justify-space-around justify-sm-space-between justify-md-space-between justify-lg-space-around justify-xl-space-around align-center pa-6">
+                    <div class="d-flex w-75">
                         <v-btn  v-if="this.$route.path !== '/admin'" icon class="mr-3 mr-sm-4 mr-md-4 mr-lg-4 mr-xl-4 bg-transparent" @click="$router.go(-1)">
                             <v-icon color="pink-lighten-4">mdi-arrow-left</v-icon>
                         </v-btn>
@@ -20,32 +20,11 @@
                         <h1 v-else-if="this.$route.path === '/admin'" class=" d-sm-none d-md-block d-lg-block text-h4 text-sm-h2 text-md-h2 text-lg-h2 text-xl-h2 text-pink-lighten-4 ">Админка</h1>
                         <h1 v-else class="text-pink-lighten-4 pl-16"></h1>
                     </div>
-                    <div class="d-flex justify-end w-100">
-                        <div class="w-75 d-flex justify-space-around">
-                            <v-toolbar class="w-100 text-pink-lighten-4"
-                            
-                                color="transparent"
-                            >
-                                <!-- <v-autocomplete 
-                                v-if="this.$route.path !== '/admin'"
-                                v-model="select"
-                                v-model:search="search"
-                                :loading="loading"
-                                :items="items"
-                                cache-items
-                                class="mx-12"
-                                flat
-                                hide-no-data
-                                append-icon="mdi-account-search-outline"
-                                hide-details
-                                label="Найти друга"
-                                solo-inverted
-                                variant="underlined"
-                                ></v-autocomplete> -->
+                    <div class="d-flex justify-end w-25">
+                        <div class="w-100 d-flex justify-end">
                                 <button  @click.prevent="logout" class="click">
                                     <img src="img/exit.png" alt="">
                                 </button>
-                            </v-toolbar>
                             <div>
                                 
                             </div>
@@ -211,7 +190,4 @@ button > img {
 .v-input__append{
     padding: 0;
 }
-/* .otstup{
-    padding-left: 170px;
-} */
 </style>

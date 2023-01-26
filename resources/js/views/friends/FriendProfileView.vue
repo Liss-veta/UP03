@@ -162,7 +162,7 @@
       </div>
     </div>
     </div>
-    <div v-else>
+    <div v-else class="w-100 text-center text-pink-lighten-4 text-h4 mt-16">
         Вы не можете просматривать записи!
     </div>
 </template>
