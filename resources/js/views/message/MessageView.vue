@@ -3,13 +3,12 @@
          <div class="d-flex justify-space-between my-12 ml-12 h-d" style="width: 90%">
             <!-- Левая часть мессенджера -->
             <div class="w-75">
-                <!-- <DialogComponent :idRoom="this.$store.state.focusRoom.id" v-if="this.$store.state.isFocusRoom"/> -->
                 <!-- Блок диалога -->
                 <div v-if="this.$store.state.isFocusRoom" class="d-flex pb-6 mr-8 h-d">
                     <v-responsive aspect-ratio="4 / 3" class="border-pink py-4 position-relative">
                         <div class="w-100 text-center text-pink-lighten-4 py-auto pb-4" style="border-bottom: 1px solid #f8bbf8">
                             <h4 v-if="name_second.user.id == this.$store.state.user.id">{{ name_second.userSecond.name }} {{ name_second.userSecond.surname }}</h4>
-                            <h4 v-else>{{ name_second.user.name }} {{ name_second.userSecond.surname }}</h4>
+                            <h4 v-else>{{ name_second.user.name }} {{ name_second.user.surname }}</h4>
                         </div>
                         <div class="d-flex flex-column w-100 pa-4" style="height: 80%; overflow-y:auto;">
                             <div v-for="message in messages" :key="message" class="d-flex flex-column w-100">
@@ -20,7 +19,6 @@
                                             {{ message.message }}
                                         </span>
                                             <span class="text-end">{{ getHumanDate(message.created_at) }}</span>
-
                                     </p>
                                 </div>
                                 <div class="d-flex flex-column align-self-end mb-6" style="max-width: 60%;" v-else>
@@ -56,7 +54,9 @@
                             :name="room.user.name"
                             :avatar="room.user.avatar"
                             :nameSecond="room.userSecond.name"
-                            :avatarSecond="room.userSecond.avatar" />
+                            :avatarSecond="room.userSecond.avatar"
+                            
+                            />
                     </div>
                 </div>
 

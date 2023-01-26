@@ -16,8 +16,20 @@
                     <v-text-field label="Добавьте категорию" v-model="category" class="mr-16" variant="underlined"></v-text-field>
                     <v-btn variant="outlined" class="w-25" @click.prevent="add_categoty">Добавить</v-btn>
                 </div>
-                <v-table theme="dark" class="w-75 mt-10">
+                <v-table id="myTable" theme="dark" class="w-75 mt-10" :search="search"  :headers="headers">
                     <thead>
+                        <v-card-title>
+                        Поиск
+                        <v-spacer></v-spacer>
+                        <v-text-field
+                            v-model="search"
+                            append-icon="mdi-magnify"
+                            label="Search"
+                            single-line
+                            hide-details
+                            @keyup="this.search_tables()"
+                        ></v-text-field>
+                        </v-card-title>
                     <tr>
                         <th class="text-left">
                         id
@@ -40,6 +52,7 @@
                             variant="outlined"
                             icon
                             color="error"
+                            v-if="category.category != 'Все посты'"
                             @click.prevent="delete_category(category.id)"
                             >
                             <v-icon>mdi-trash-can</v-icon>
@@ -98,54 +111,15 @@
 
 <script>
 export default {
-    data: () => ({
-      tab: null,
-      desserts: [
-          {
-            name: 'Frozen Yogurt',
-            calories: 159,
-          },
-          {
-            name: 'Ice cream sandwich',
-            calories: 237,
-          },
-          {
-            name: 'Eclair',
-            calories: 262,
-          },
-          {
-            name: 'Cupcake',
-            calories: 305,
-          },
-          {
-            name: 'Gingerbread',
-            calories: 356,
-          },
-          {
-            name: 'Jelly bean',
-            calories: 375,
-          },
-          {
-            name: 'Lollipop',
-            calories: 392,
-          },
-          {
-            name: 'Honeycomb',
-            calories: 408,
-          },
-          {
-            name: 'Donut',
-            calories: 452,
-          },
-          {
-            name: 'KitKat',
-            calories: 518,
-          },
-        ],
-        users: [],
-        categories: [],
-        category: '',
-    }),
+    data () {
+        return {
+            tab: null,
+            search: '',
+            users: [],
+            categories: [],
+            category: '',
+        }
+    },
     mounted() {
         document.title = "Админка";
         this.all_users();
@@ -153,6 +127,50 @@ export default {
     },
    
     methods: {
+        search_tables() {
+            let words = [];
+            console.log(this.search)
+            for(let i = 0; this.categories.length > i; i++){
+                words[i] = (this.categories[i]['category'])
+            }
+            let filter = this.search.toUpperCase();
+            let table = document.getElementById("myTable");
+            let tr = table.getElementsByTagName("tr");
+            for (let i = 0; i < tr.length; i++) {
+                let td = tr[i].getElementsByTagName("td")[1];
+                if (td) {
+                let txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+                }
+            }
+            // this.categories = this.filterItems(words, this.search);
+            // console.log(this.categories);
+            // let categories_two = this.categories;
+                // if(word.length > 1){
+                //     for(let i = 0; categories_two.length > i; i++){
+                //         for(let x = 0; word.length > x; x++){
+                //             if(categories_two[i]['category'] == word[x]){
+                //                 this.categories.push(categories_two[i]['category'])
+                //             }
+                //         }
+                //     }
+                // }
+                // else if(word.length == 1){
+                //     for(let i = 0; categories_two.length > i; i++){
+                //         if(categories_two[i]['category'] == word){
+                //             this.categories = categories_two[i]['category'];
+                //             console.log(this.categories);
+                //         }
+                //     }
+                // }
+        },
+        filterItems(arr, query) {
+            return arr.filter((el) => el.toLowerCase().includes(query.toLowerCase()));
+        },
         user_ban(id){
             axios.post(`/api/user_ban/${id}`)
                 .then(res =>{
@@ -185,6 +203,7 @@ export default {
                 .then(res =>{
                     this.categories = res.data;
                     this.category = '';
+                    
                 })
         },
         all_users(){

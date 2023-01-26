@@ -1,8 +1,8 @@
 <template>
     <div class="px-auto py-4 d-flex text-white" style="cursor:pointer;" v-if="id == this.$store.state.user.id">
-                <v-badge dot color="success">
+                <v-badge :content="1" floating color="success" class="mr-2">
                     <!-- Аватарка друга -->
-                    <v-avatar :image="avatarSecond" size="50" class="mr-2"></v-avatar>
+                    <v-avatar :image="avatarSecond" size="50" ></v-avatar>
                 </v-badge>
                 <div class="w-90 pl-6">
                     <!-- Вставить ссылку на профиль друга -->
@@ -14,9 +14,9 @@
                 </div>
             </div>
             <div class="pa-4 d-flex text-white" v-if="id != this.$store.state.user.id">
-                <v-badge dot color="success">
+                <v-badge :content="1" floating color="success">
                     <!-- Аватарка друга -->
-                    <v-avatar :image="avatar" size="50" class="mr-2"></v-avatar>
+                    <v-avatar :image="avatar" size="50"></v-avatar>
                 </v-badge>
                 <div class="w-90 pl-6">
                     <!-- Вставить ссылку на профиль друга -->

@@ -26,7 +26,7 @@
                             
                                 color="transparent"
                             >
-                                <v-autocomplete
+                                <v-autocomplete 
                                 v-if="this.$route.path !== '/admin'"
                                 v-model="select"
                                 v-model:search="search"
@@ -43,10 +43,12 @@
                                 variant="underlined"
                                 ></v-autocomplete>
                                 <button  @click.prevent="logout" class="click">
-                                <img src="img/exit.png" alt="">
-                            </button>
+                                    <img src="img/exit.png" alt="">
+                                </button>
                             </v-toolbar>
-
+                            <div>
+                                
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -153,13 +155,13 @@ export default {
       },
     },
     mounted(){
-            axios.get('/api/all_users')
-            .then(res => {
-                for (let index = 0; index < res.data.length; index++) {
-                    this.states.push(res.data[index]['name']+" "+res.data[index]['surname'])
-                    // console.log(this.states);
-                }
-            })
+        axios.get('/api/all_users')
+        .then(res => {
+            for (let index = 0; index < res.data.length; index++) {
+                this.states.push(res.data[index]['name']+" "+res.data[index]['surname'])
+                
+            }
+        })
     },
     methods:{
         querySelections (v) {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Like;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -69,5 +70,12 @@ class UserOutputController extends Controller
         DB::table('users')->where('id',$id)->update([
         'role' => 0
         ]);
+    }
+
+    public function find_user(Request $request)
+    {
+        $search = $request->input('search');
+
+        return DB::table('users')->where('name');
     }
 }

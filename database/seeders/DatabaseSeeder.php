@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
 
         \App\Models\Category::factory()->create([
             'id' => 1,
-            'category' => 'Аниме'
+            'category' => 'Все посты'
         ]);
 
         \App\Models\Category::factory()->create([
